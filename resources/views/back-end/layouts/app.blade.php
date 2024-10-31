@@ -238,6 +238,7 @@
     <!-- End Rightbar -->
 
     @include('back-end.layouts.partials.footer')
+    @livewireScripts
     <button id="toTopBtn" onclick="scrollToTop()">
         <i class="fas fa-arrow-up"></i>
     </button>
@@ -399,5 +400,30 @@
     });
 </script>
 @stack('js')
+@push('javascripts')
+    <script>
+        document.addEventListener('livewire:load', function() {
+            Livewire.on('printInvoice', function(htmlContent) {
+                // Set the generated HTML content
+                $("#receipt_section").html(htmlContent);
+                // Trigger the print action
+                window.print("#receipt_section");
+            });
+        });
+        $(document).on("click", ".print-invoice", function() {
+            // $(".modal").modal("hide");
+            $.ajax({
+                method: "get",
+                url: $(this).data("href"),
+                data: {},
+                success: function(result) {
+                    if (result.success) {
+                        Livewire.emit('printInvoice', result.html_content);
+                    }
+                },
+            });
+        });
+    </script>
+@endpush
 </body>
 </html>

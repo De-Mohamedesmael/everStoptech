@@ -64,7 +64,7 @@
                                             <tr>
                                                 <th>@lang('lang.job_title')</th>
                                                 <th>@lang('lang.date_of_creation')</th>
-                                                <th>@lang('lang.updated_by')</th>
+                                                <th>@lang('lang.created_by')</th>
                                                 <th class="notexport">@lang('lang.action')</th>
                                             </tr>
                                         </thead>
@@ -76,10 +76,10 @@
                                                             class="custom-tooltip  d-flex justify-content-center align-items-center"
                                                             style="font-size: 12px;font-weight: 600"
                                                             data-tooltip="@lang('lang.job_title')">
-                                                            @if (in_array($job->title, ['Cashier', 'Representative', 'Preparer']))
-                                                                @lang('lang.' . $job->title)
+                                                            @if (in_array($job->job_title, ['Cashier', 'Representative', 'Preparer']))
+                                                                {{translate($job->job_title)}}
                                                             @else
-                                                                {{ $job->title }}
+                                                                {{ $job->job_title }}
                                                             @endif
                                                         </span>
                                                     </td>
@@ -93,14 +93,13 @@
                                                     </td>
 
                                                     <td>
-                                                        @if (isset($job->updated_by))
+
                                                             <span
                                                                 class="custom-tooltip  d-flex justify-content-center align-items-center"
                                                                 style="font-size: 12px;font-weight: 600"
-                                                                data-tooltip="@lang('lang.updated_by')">
-                                                                {{ $job->updated_by()->get()[0]->name }}
+                                                                data-tooltip="@lang('lang.created_by')">
+                                                                {{ $job->createdBy?->name }}
                                                             </span>
-                                                        @endif
                                                     </td>
                                                     <td>
                                                         <a data-href="{{ route('jobs.edit', $job->id) }}"
@@ -108,8 +107,8 @@
                                                             class="btn btn-primary btn-modal text-white edit_job">
                                                             <i class="fa fa-pencil-square-o"></i>
                                                         </a>
-                                                        {{-- @if (!in_array($jobs->title, ['Cashier', 'Deliveryman', 'Representative', 'Preparer'])) --}}
-                                                        @if (!in_array($job->id, [1, 2, 3, 4]))
+                                                         @if (!in_array($job->job_title, ['Cashier', 'Representative', 'Preparer']))
+{{--                                                        @if (!in_array($job->id, [1, 2, 3, 4]))--}}
                                                             <a data-href="{{ route('jobs.destroy', $job->id) }}"
                                                                 class="btn btn-danger text-white delete_item">
                                                                 <i class="fa fa-trash"></i>

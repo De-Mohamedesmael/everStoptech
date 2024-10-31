@@ -267,7 +267,7 @@ for (var i = 0; i < dollarCells.length; i++) {
 
 
 <!-- Pnotify js -->
-<script src="{{ asset('assets/back-end/plugins/pnotify/assets/back-end/js/pnotify.custom.min.js') }}"></script>
+<script src="{{ asset('assets/back-end/plugins/pnotify/js/pnotify.custom.min.js') }}"></script>
 <script src="{{ asset('assets/back-end/js/custom/custom-pnotify.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 

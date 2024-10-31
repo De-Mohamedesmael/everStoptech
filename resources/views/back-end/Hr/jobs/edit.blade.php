@@ -18,10 +18,10 @@
                     <label class="width-140" for="job_title">@lang('lang.job_title')</label>
                     <input type="text"
                         class="form-control initial-balance-input my-0 @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                        value="{{ $job->title }}" name="title" id="title" required>
+                        value="{{ $job->job_title }}" name="job_title" id="job_title" required>
 
                 </div>
-                @if (!in_array($job->id, [1, 2, 3, 4]))
+                @if (!in_array($job->job_title, ['Cashier', 'Representative', 'Preparer']))
                     <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
                         <div class="col-md-12 pt-2">
                             <h5 class="@if (app()->isLocale('ar')) text-end @else text-start @endif">

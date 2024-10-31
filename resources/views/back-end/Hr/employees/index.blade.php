@@ -31,7 +31,7 @@
 
 @section('button')
     <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
-        <a class="btn btn-primary" href="{{ route('employees.create') }}">@lang('lang.add_employee')</a>
+        <a class="btn btn-primary" href="{{ action('EmployeeController@create') }}">@lang('lang.add_employee')</a>
     </div>
 @endsection
 

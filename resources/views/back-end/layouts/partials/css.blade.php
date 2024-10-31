@@ -76,4 +76,31 @@
     .hide {
         display: none;
     }
+
+
+    .wrapper1{
+        display: none ;
+    }
+    .card-header h6 {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .table-top-head {
+        top: 0;
+        left: 5% !important;
+        right: 5% !important;
+    }
+    select.form-control {
+
+        height: 80% !important;
+    }
 </style>
+
+
+@if(app()->getLocale() =="ar")
+    <style>
+        a.item-list-a {
+        direction: rtl;
+        }
+    </style>
+@endif

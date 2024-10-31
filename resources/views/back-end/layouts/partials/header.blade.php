@@ -14,7 +14,7 @@
                     class="horizontal-menu navbar-nav d-flex flex-wrap justify-content-start mt-md-0 @if (app()->isLocale('ar')) flex-column flex-md-row-reverse @else flex-row @endif">
                     {{-- ###################### Dashboard : نظرة عامة ###################### --}}
                     {{-- @can('dashboard') --}}
-                    @if (!empty($module_settings['dashboard']))
+{{--                    @if (!empty($module_settings['dashboard']))--}}
                     <li class="scroll mx-2 mb-0 p-0" style="height: 40px;">
                         <a target="_blank"
                             class="item-list-a home-button click-item-route d-flex  align-items-center"
@@ -83,11 +83,11 @@
                             <span class="mx-2" style="font-weight: 600">{{ __('lang.dashboard') }}</span>
                         </a>
                     </li>
-                    @endif
+{{--                    @endif--}}
 {{--                    @if (!empty($module_settings['employee_module']))--}}
                         <li class="dropdown scroll mx-2 mb-0 p-0 " style="height: 40px;">
                             <a href="javaScript:void();"
-                               class="d-flex employees-menu align-items-center text-decoration-none @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif dropdown-toggle"
+                               class="d-flex employees-menu align-items-center text-decoration-none item-list-a dropdown-toggle"
                                style="height: 100%;" data-toggle="dropdown">
                                 {{-- <img src="{{ asset('images/topbar/employee.png') }}" class="img-fluid pl-1"
                                     alt="widgets"> --}}
@@ -156,32 +156,32 @@
                                 class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
                                                            href="{{ action('JobController@index') }}" target="_blank"
-                                                           class="jobs-button d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
+                                                           class="jobs-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.jobs')</a>
                                 </li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ action('CustomerController@create') }}" target="_blank"
-                                                           class="employees-button d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
+                                                           href="{{ action('EmployeeController@index') }}" target="_blank"
+                                                           class="employees-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.employees')</a></li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
                                                            href="{{ action('WagesAndCompensationController@create') }}" target="_blank"
-                                                           class="wages-button d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
+                                                           class="wages-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.wages')</a>
                                 </li>
                                 {{-- ########### Attendance : الحضور و الانصراف ########### --}}
                                 <li class="navbar_item"><a
                                         style="cursor: pointer;font-weight: 600;text-decoration: none;font-size: 12px"
                                         href="{{ action('AttendanceController@index') }}" target="_blank"
-                                        class="attendance-button d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
+                                        class="attendance-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.attend_and_leave')</a></li>
                             </ul>
                         </li>
 {{--                    @endif--}}
                     {{-- @endif --}}
-                    @if (!empty($module_settings['customer_module']))
+{{--                    @if (!empty($module_settings['customer_module']))--}}
                         <li class="dropdown scroll mx-2 mb-0 p-0 " style="height: 40px;">
                             <a href="javaScript:void();"
-                               class="d-flex customers-menu align-items-center text-decoration-none  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif dropdown-toggle"
+                               class="d-flex customers-menu align-items-center text-decoration-none  item-list-a dropdown-toggle"
                                style="height: 100%;font-weight: 600" data-toggle="dropdown">
                                 {{-- <img src="{{ asset('images/topbar/customer-feedback.png') }}" class="img-fluid pl-1"
                                     alt="layouts"> --}}
@@ -223,15 +223,15 @@
                                     class="dropdown-menu list-style-none @if (app()->isLocale('ar')) text-end @else text-start @endif">
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
                                                            href="{{ action('CustomerController@index') }}" target="_blank"
-                                                           class="customers-button d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
+                                                           class="customers-button d-flex item-list-a"><i
                                                 class="mdi mdi-circle"></i>{{ __('lang.customers') }}</a></li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
                                                            href="{{ action('CustomerTypeController@index') }}" target="_blank"
-                                                           class="customer-types-button d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
+                                                           class="customer-types-button d-flex item-list-a"><i
                                                 class="mdi mdi-circle"></i>{{ __('lang.customer_types') }}</a></li>
                             </ul>
                         </li>
-                    @endif
+{{--                    @endif--}}
 
                 </ul>
             </div>

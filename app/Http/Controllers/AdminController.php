@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\Admin;
 use App\Utils\Util;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -107,19 +107,19 @@ class AdminController extends Controller
 
     public function getProfile(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $admin = Admin::find(Auth::admin()->id);
 
-        return view('user.profile')->with(compact(
-            'user'
+        return view('admin.profile')->with(compact(
+            'admin'
         ));
     }
     public function updateProfile(Request $request)
     {
-        $user = User::find(Auth::user()->id);
+        $admin = Admin::find(Auth::admin()->id);
         if (!empty($request->current_password) || !empty($request->password) || !empty($request->password_confirmation)) {
             $this->validate($request, [
-                'current_password' => ['required', function ($attribute, $value, $fail) use ($user) {
-                    if (!\Hash::check($value, $user->password)) {
+                'current_password' => ['required', function ($attribute, $value, $fail) use ($admin) {
+                    if (!\Hash::check($value, $admin->password)) {
                         return $fail(__('The current password is incorrect.'));
                     }
                 }],
@@ -129,12 +129,12 @@ class AdminController extends Controller
 
         try {
 
-            $user->phone = $request->phone;
+            $admin->phone = $request->phone;
 
             if (!empty($request->password)) {
-                $user->password  = Hash::make($request->password);
+                $admin->password  = Hash::make($request->password);
             }
-            $user->save();
+            $admin->save();
 
             $output = [
                 'success' => true,
@@ -159,9 +159,8 @@ class AdminController extends Controller
      */
     public function checkPassword($id)
     {
-        $user = User::where('id', $id)->first();
-
-        if (Hash::check(request()->value, $user->password)) {
+        $admin = Admin::where('id', $id)->first();
+        if (Hash::check(request()->value['value'], $admin->password)) {
             return ['success' => true];
         }
 
@@ -175,14 +174,15 @@ class AdminController extends Controller
      */
     public function checkAdminPassword($id)
     {
-        $user = User::where('id', $id)->first();
-        if($user){
-            if (Hash::check(request()->value, $user->password)) {
+
+        $admin = Admin::where('id', $id)->first();
+        if($admin){
+            if (Hash::check(request()->value, $admin->password)) {
                 return ['success' => true];
             }
         }else{
-            $user = User::first();
-            if (Hash::check(request()->value, $user->password)) {
+            $admin = Admin::first();
+            if (Hash::check(request()->value, $admin->password)) {
                 return ['success' => true];
             }
         }
@@ -191,9 +191,9 @@ class AdminController extends Controller
     }
     public function getDropdown()
     {
-        $user = User::orderBy('name', 'asc')->pluck('name', 'id');
-        $user_dp = $this->commonUtil->createDropdownHtml($user, 'Please Select');
+        $admin = Admin::orderBy('name', 'asc')->pluck('name', 'id');
+        $admin_dp = $this->commonUtil->createDropdownHtml($admin, 'Please Select');
 
-        return $user_dp;
+        return $admin_dp;
     }
 }

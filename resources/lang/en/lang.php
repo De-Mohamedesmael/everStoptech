@@ -443,7 +443,6 @@
   'update_employee' => 'Update Employee',
   'employee_updated' => 'Employee Updated',
   'view_all_employee' => 'View All Employee',
-  'jobs' => 'Job',
   'jobs' => 'Jobs',
   'add_new_job' => 'Add new Job',
   'hr_management' => 'HR Management',
@@ -1314,4 +1313,5 @@
   'forgot' => 'Forgot',
   'E-Mail Address' => 'E-Mail Address',
   'forgot_password' => 'Forgot password',
+  'Cashier' => 'Cashier',
 );

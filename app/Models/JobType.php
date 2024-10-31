@@ -20,4 +20,10 @@ class JobType extends Model
     {
         return JobType::pluck('job_title', 'id')->toArray();
     }
+
+
+    public function createdBy()
+    {
+        return $this->belongsTo(Admin::class, 'created_by', 'id');
+    }
 }

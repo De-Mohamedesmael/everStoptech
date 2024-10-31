@@ -1069,7 +1069,7 @@ thead tr {
 }
 
 .dropdown-menu .dropdown-item.active::before {
-    content: url('/images/check.svg');
+    content: url('/assets/back-end/images/check.svg');
     position: absolute;
     top: 25%;
     left: 8%;

@@ -14,9 +14,9 @@
             <div class="modal-body">
                 <div
                     class=" d-flex mb-2 align-items-center form-group @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                    {!! Form::label('title', __('lang.job_title') . '*', ['class' => 'width-140']) !!}
-                    {!! Form::text('title', null, [
-                        'class' => 'form-control initial-balance-input my-0 app()->isLocale("ar")? text-end : text-start',
+                    {!! Form::label('job_title', __('lang.job_title') . '*', ['class' => 'width-140']) !!}
+                    {!! Form::text('job_title', null, [
+                        'class' => 'form-control initial-balance-input my-0 text-start',
                         'placeholder' => __('lang.job_title'),
                         'required',
                     ]) !!}

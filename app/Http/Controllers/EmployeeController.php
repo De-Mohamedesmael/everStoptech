@@ -288,7 +288,7 @@ class EmployeeController extends Controller
         }
 
         $currency_symbol=Currency::find(System::getProperty('currency'))->symbol;
-        return view('employee.index')->with(compact(
+        return view('back-end.Hr.employees.index')->with(compact(
             'employees',
             'currency_symbol'
         ));
@@ -314,7 +314,7 @@ class EmployeeController extends Controller
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
         $leave_types = LeaveType::get();
 
-        return view('employee.create')->with(compact(
+        return view('back-end.Hr.employees.create')->with(compact(
             'jobs',
             'stores',
             'week_days',
@@ -487,7 +487,7 @@ class EmployeeController extends Controller
             ->groupBy('leave_types.id')
             ->get();
 
-        return view('employee.show')->with(compact(
+        return view('back-end.Hr.employees.show')->with(compact(
             'jobs',
             'employee',
             'stores',
@@ -535,7 +535,7 @@ class EmployeeController extends Controller
             ->groupBy('leave_types.id')
             ->get();
 
-        return view('employee.edit')->with(compact(
+        return view('back-end.Hr.employees.edit')->with(compact(
             'jobs',
             'employee',
             'stores',
@@ -752,7 +752,7 @@ class EmployeeController extends Controller
             ->select('employee_id', 'leave_type_id', 'leave_types.name')
             ->get();
 
-        return view('employee.partial.balance_leave_details')->with(compact(
+        return view('back-end.Hr.employees.partial.balance_leave_details')->with(compact(
             'leaves_details'
         ));
     }
@@ -773,7 +773,7 @@ class EmployeeController extends Controller
 
 
 
-        return view('employee.partial.same_job_employee')->with(compact(
+        return view('back-end.Hr.employees.partial.same_job_employee')->with(compact(
             'employees'
         ));
     }
