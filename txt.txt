@@ -1,0 +1,125 @@
+
+
+.table-container {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.horizontal-scroll {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    height: 20px;
+    /* Adjust as needed */
+    scrollbar-width: thin;
+    /* Firefox */
+    scrollbar-color: #888 #e0e0e0;
+    /* Firefox */
+}
+
+.horizontal-scroll::-webkit-scrollbar {
+    height: 16px;
+}
+
+.horizontal-scroll::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+.horizontal-scroll::-webkit-scrollbar-track {
+    background-color: #e0e0e0;
+}
+
+.table-wrapper {
+    flex-grow: 1;
+    overflow: auto;
+    scrollbar-width: thin;
+    /* Firefox */
+    scrollbar-color: #888 #e0e0e0;
+    /* Firefox */
+}
+
+.table-wrapper::-webkit-scrollbar {
+    width: 16px;
+    height: 16px;
+}
+
+.table-wrapper::-webkit-scrollbar-thumb {
+    background-color: #888;
+}
+
+.table-wrapper::-webkit-scrollbar-track {
+    background-color: #e0e0e0;
+}
+
+.table-wrapper table {
+    width: 100%;
+    /* border-collapse: collapse; */
+}
+
+.inner-scroll {
+    min-width: 200%;
+    /* Set to the actual width of your table */
+    height: 1px;
+    /* This is just to make the div occupy space horizontally */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@push('javascripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const topScroll = document.querySelector('.top-scroll');
+            const bottomScroll = document.querySelector('.bottom-scroll');
+            const tableWrapper = document.querySelector('.table-wrapper');
+
+            // Sync the top scroll with the bottom scroll and the table
+            topScroll.addEventListener('scroll', function() {
+                bottomScroll.scrollLeft = topScroll.scrollLeft;
+                tableWrapper.scrollLeft = topScroll.scrollLeft;
+            });
+
+            // Sync the bottom scroll with the top scroll and the table
+            bottomScroll.addEventListener('scroll', function() {
+                topScroll.scrollLeft = bottomScroll.scrollLeft;
+                tableWrapper.scrollLeft = bottomScroll.scrollLeft;
+            });
+
+            // Sync the table scroll with the top and bottom scroll
+            tableWrapper.addEventListener('scroll', function() {
+                topScroll.scrollLeft = tableWrapper.scrollLeft;
+                bottomScroll.scrollLeft = tableWrapper.scrollLeft;
+            });
+        });
+    </script>
+@endpush
+
+
+
+
+
+
+
+
+
+
+
+
+
+ <div class="table-container">
+                    <div class="horizontal-scroll top-scroll">
+                        <div class="inner-scroll"></div>
+                    </div>
+                    <div class="table-wrapper">
