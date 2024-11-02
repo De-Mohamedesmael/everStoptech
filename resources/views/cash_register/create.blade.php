@@ -28,7 +28,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     {!! Form::label('source_id', __('lang.source'), []) !!}
-                                    {!! Form::select('source_id', $admins, false, ['class' => 'selectpicker form-control', 'data-live-search' => 'true', 'required', 'placeholder' => __('lang.please_select')]) !!}
+                                    {!! Form::select('source_id', $users, false, ['class' => 'selectpicker form-control', 'data-live-search' => 'true', 'required', 'placeholder' => __('lang.please_select')]) !!}
                                 </div>
                             </div>
                             <div class="col-md-4">

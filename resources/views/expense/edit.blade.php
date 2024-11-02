@@ -91,7 +91,7 @@
                                         {!! Form::label('source_of_payment', __('lang.source_of_payment'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::select('source_id', $admins, $expense->source_id, [
+                                        {!! Form::select('source_id', $users, $expense->source_id, [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'style' => 'width: 80%',

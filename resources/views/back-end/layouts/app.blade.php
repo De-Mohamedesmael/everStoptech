@@ -12,13 +12,56 @@
     <meta name="author" content="Themesbox17">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
     <title>{{ $site_title .' | '}}@yield('title')</title>
+
     <!-- Fevicon -->
     @include('back-end.layouts.partials.css')
     <link href="{{asset('assets/back-end/css/bootstrap5-3.min.css')}}" rel="stylesheet">
-    @stack('styles')
+
     <link rel="stylesheet" href="{{ url('assets/back-end/css/front-style.css') }}">
     <link rel="stylesheet" href="{{ url('assets/back-end/css/animation.css') }}">
     <!-- End css -->
+    <style>
+        button.btn.table-btns.buttons-collection.dropdown-toggle.buttons-colvis
+        ,.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn.dropdown-toggle-split:first-child, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
+            background: #26b3d3;
+        }
+        .dt-buttons.btn-group {
+            direction: ltr;
+        }
+        .dataTables_filter, .dataTables_length, .dt-buttons {
+            padding: 0 10px;
+        }
+        .dt-button-collection.dropdown-menu ,.dropdown-menu.show{
+            z-index: 10000;
+            background: #ffffff;
+        }
+
+    </style>
+    <style>
+        :root {
+            --primary-color: #e3f2fd;
+            /* Light Blue */
+            --secondary-color: #84ceed;
+            /* Bright Blue */
+            --tertiary-color: #1565c0;
+            /* Dark Blue */
+            --complementary-color-1: #5bb9b0;
+            /* Muted Blue-Green */
+            --complementary-color-2: #a5d6a7;
+            /* Light Muted Blue-Green */
+            --text-color: #333;
+            /* Dark Gray for Text */
+            --white: #fff;
+            /* Dark Gray for Text */
+            --accent-color: #e57373;
+            /* Soft Muted Red */
+        }
+        div#ui-datepicker-div{
+            width: revert;
+        }
+    </style>
+    @yield('styles')
+    @stack('style')
 </head>
 
 <body class="horizontal-layout relative">
@@ -220,7 +263,7 @@
                                 @section('breadcrumbs')
                                     <li
                                         class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
-                                        <a style="text-decoration: none;color: #596fd7" href="{{ url('/') }}">/
+                                        <a style="text-decoration: none;color: #1db3d4" href="{{ url('/') }}">/
                                             @lang('lang.dashboard')</a>
                                     </li>
                                 @show
@@ -266,6 +309,23 @@
             }
         </script>
     @endif
+
+<input type="hidden" id="__language" value="{{ session('language') }}">
+<input type="hidden" id="__decimal" value=".">
+<input type="hidden" id="__currency_precision"
+       value="{{ !empty(App\Models\System::getProperty('numbers_length_after_dot')) ? App\Models\System::getProperty('numbers_length_after_dot') : 5 }}">
+<input type="hidden" id="__currency_symbol" value="$">
+<input type="hidden" id="__currency_thousand_separator" value=",">
+<input type="hidden" id="__currency_symbol_placement" value="before">
+<input type="hidden" id="__precision"
+       value="{{ !empty(App\Models\System::getProperty('numbers_length_after_dot')) ? App\Models\System::getProperty('numbers_length_after_dot') : 5 }}">
+<input type="hidden" id="__quantity_precision"
+       value="{{ !empty(App\Models\System::getProperty('numbers_length_after_dot')) ? App\Models\System::getProperty('numbers_length_after_dot') : 5 }}">
+<script type="text/javascript">
+    base_path = "{{ url('/') }}";
+    current_url = "{{ url()->current() }}";
+</script>
+<div class="modal view_modal no-print" role="dialog" aria-hidden="true"></div>
 
 <!-- Start js -->
 @include('back-end.layouts.partials.javascript')

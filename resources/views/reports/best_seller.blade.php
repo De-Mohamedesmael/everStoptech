@@ -15,7 +15,7 @@
                             <span class="header-pill"></span>
                         </h5>
                     </div>
-
+                    @if (session('user.is_superadmin'))
                         <form action="">
                             <div class="card mb-2">
                                 <div class="card-body p-2">
@@ -46,6 +46,7 @@
                                 </div>
                             </div>
                         </form>
+                    @endif
                     <div class="card mb-2">
                         <div class="card-body p-2">
                             <div class="col-md-12">

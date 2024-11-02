@@ -74,7 +74,7 @@ class StorePosController extends Controller
         $quick_add = request()->quick_add ?? null;
 
         $stores = Store::getDropdown();
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('store_pos.create')->with(compact(
             'quick_add',
@@ -156,7 +156,7 @@ class StorePosController extends Controller
         $store_pos = StorePos::find($id);
 
         $stores = Store::getDropdown();
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('store_pos.edit')->with(compact(
             'store_pos',

@@ -101,7 +101,7 @@ select.form-control {
     width: 185px;
     justify-content: center;
     align-items: center;
-    background-color: #596fd7;
+    background-color: #1db3d4;
     color: white;
     box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
 }
@@ -129,16 +129,16 @@ select.form-control {
 }
 
 .btn-primary {
-    background-color: #596fd7;
-    border-color: #596fd7;
+    background-color: #1db3d4;
+    border-color: #1db3d4;
 }
 
 .bg-primary {
-    background-color: #596fd7;
+    background-color: #1db3d4;
 }
 
 .text-primary {
-    color: #596fd7;
+    color: #1db3d4;
 }
 
 .select2-search__field {

@@ -537,7 +537,7 @@
                                                 ]) !!}
                                                 <select name="source_id" id="source_id" class="selectpicker form-control"
                                                     data-live-search ="true" style="width: 80%" required>
-                                                    @foreach ($admins as $key => $val)
+                                                    @foreach ($users as $key => $val)
                                                         @if ($add_stock->source_id == $key)
                                                             <option value="{{ $key }}" selected>
                                                                 {{ $val }}
@@ -548,7 +548,7 @@
                                                         @endif
                                                     @endforeach
                                                 </select>
-                                                {{-- {!! Form::select('source_id', $admins, $add_stock->source_id, ['class' => 'selectpicker form-control', 'data-live-search' => 'true', 'required', 'style' => 'width: 80%', 'placeholder' => __('lang.please_select'), 'id' => 'source_id', 'required']) !!} --}}
+                                                {{-- {!! Form::select('source_id', $users, $add_stock->source_id, ['class' => 'selectpicker form-control', 'data-live-search' => 'true', 'required', 'style' => 'width: 80%', 'placeholder' => __('lang.please_select'), 'id' => 'source_id', 'required']) !!} --}}
                                             </div>
                                         </div>
                                         <div class="col-md-3">

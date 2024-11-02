@@ -23,7 +23,7 @@ use App\Models\Supplier;
 use App\Models\Tax;
 use App\Models\Transaction;
 use App\Models\Unit;
-use App\Models\User;
+use App\Models\Admin;
 use App\Utils\ProductUtil;
 use App\Utils\Util;
 use Carbon\Carbon;
@@ -90,7 +90,7 @@ class ManufacturingController extends Controller
         $discount_customer_types = Customer::getCustomerTreeArray();
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
         $stores = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         $stores = Store::getDropdown();
         $manufacturers = Manufacturer::getDropdown();
 
@@ -220,7 +220,7 @@ class ManufacturingController extends Controller
         $discount_customer_types = Customer::getCustomerTreeArray();
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
         $stores = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('manufacturings.receivedProductsPage')
             ->with(compact(

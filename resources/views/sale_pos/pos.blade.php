@@ -124,7 +124,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                             @php
                                             $employee = App\Models\Employee::where(
                                             'admin_id',
-                                            Auth::guard('admin')->user()->id,
+                                            Auth::user()->id,
                                             )->first();
                                             @endphp
                                             <li style="text-align: center">

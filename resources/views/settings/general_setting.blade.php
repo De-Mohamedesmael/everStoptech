@@ -350,7 +350,7 @@
                                 ]) !!}
                                 {!! Form::text('watsapp_numbers', !empty($settings['watsapp_numbers']) ? $settings['watsapp_numbers'] : null, [
                                     'class' => 'form-control  modal-input app()->isLocale("ar") ? text-end : text-start',
-                                     '' ,
+                                    Auth::user()->is_superadmin == 1 ? '' : 'disabled',
                                 ]) !!}
                             </div>
                             <div class="col-md-3 px-5">

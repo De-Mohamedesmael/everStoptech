@@ -27,7 +27,7 @@ use App\Models\SupplierProduct;
 use App\Models\Tax;
 use App\Models\Transaction;
 use App\Models\Unit;
-use App\Models\User;
+use App\Models\Admin;
 use App\Models\Variation;
 use App\Utils\ProductUtil;
 use App\Utils\TransactionUtil;
@@ -89,7 +89,7 @@ class ProductController extends Controller
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = Customer::getCustomerTreeArray();
         $stores  = Store::getDropdown();
-        $admins  = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins  = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         $suppliers = Supplier::pluck('name', 'id');
         $page = 'product_stock';
 
@@ -526,7 +526,7 @@ class ProductController extends Controller
         $suppliers = Supplier::pluck('name', 'id');
 
         $stores  = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('product.index')->with(compact(
             'product_classes',
@@ -805,7 +805,7 @@ class ProductController extends Controller
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = CustomerType::pluck('name', 'id');
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         $stores  = Store::all();
         $stores_select  = Store::getDropdown();
         $quick_add = request()->quick_add;

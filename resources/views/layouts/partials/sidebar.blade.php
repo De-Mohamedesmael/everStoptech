@@ -749,7 +749,7 @@
                                 @can('reports.user_report.view')
                                     <li class="@if (request()->segment(1) == 'report' && request()->segment(2) == 'get-user-report') active @endif">
                                         <a
-                                            href="{{ action('ReportController@getUserReport') }}">{{ __('lang.user_report') }}</a>
+                                            href="{{ action('ReportController@getAdminReport') }}">{{ __('lang.user_report') }}</a>
                                     </li>
                                 @endcan
                                 @can('reports.customer_report.view')
@@ -913,7 +913,7 @@
                                     class="dripicons-user-group"></i><span>{{ __('lang.hrm') }}</span><span></a>
                             <ul class="list-unstyled collapse @if (request()->segment(1) == 'hrm' &&
                                     in_array(request()->segment(2), [
-                                        'jobs',
+                                        'job',
                                         'employee',
                                         'official-leaves',
                                         'forfeit-leaves',
@@ -924,7 +924,7 @@
                                     ])) show @endif"
                                 id="hrm">
                                 @can('hr_management.jobs.view')
-                                    <li class="@if (request()->segment(2) == 'jobs') active @endif">
+                                    <li class="@if (request()->segment(2) == 'job') active @endif">
                                         <a href="{{ action('JobController@index') }}">@lang('lang.jobs')</a>
                                     </li>
                                 @endcan

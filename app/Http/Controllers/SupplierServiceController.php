@@ -21,7 +21,7 @@ use App\Models\System;
 use App\Models\Tax;
 use App\Models\Transaction;
 use App\Models\Unit;
-use App\Models\User;
+use App\Models\Admin;
 use App\Utils\ProductUtil;
 use App\Utils\TransactionUtil;
 use App\Utils\Util;
@@ -225,7 +225,7 @@ class SupplierServiceController extends Controller
                 ])
                 ->make(true);
         }
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         $suppliers = Supplier::orderBy('name', 'asc')->pluck('name', 'id');
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
         $stores = Store::getDropdown();
@@ -274,7 +274,7 @@ class SupplierServiceController extends Controller
         $supplier = Supplier::find($supplier_service->supplier_id);
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
         $taxes = Tax::pluck('name', 'id');
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('supplier_service.show')->with(compact(
             'supplier_service',
@@ -317,7 +317,7 @@ class SupplierServiceController extends Controller
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
 
         $stores  = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('supplier_service.edit')->with(compact(
             'add_stock',

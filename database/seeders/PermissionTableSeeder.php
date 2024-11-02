@@ -41,7 +41,7 @@ class PermissionTableSeeder extends Seeder
         $insert_data = [];
         $time_stamp = Carbon::now()->toDateTimeString();
         foreach ($data as $d) {
-            $d['guard_name'] = 'web';
+            $d['guard_name'] = 'admin';
             $d['created_at'] = $time_stamp;
             $insert_data[] = $d;
         }

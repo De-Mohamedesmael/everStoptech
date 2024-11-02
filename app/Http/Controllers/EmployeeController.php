@@ -181,7 +181,7 @@ class EmployeeController extends Controller
                                     class="fa fa-eye"></i>
                                 ' . __('lang.view') . '</a>
                         </li>';
-                            $html .= '<li class="divider"></li>';
+
                         }
                         if (auth()->user()->can('hr_management.employee.create_and_edit')) {
                             $html .= '<li>
@@ -190,7 +190,7 @@ class EmployeeController extends Controller
                                         class="fa fa-pencil-square-o"></i>
                                     ' . __('lang.edit') . '</a>
                             </li>';
-                            $html .= '<li class="divider"></li>';
+
                         }
                         if (auth()->user()->can('hr_management.employee.delete')) {
                             $html .= '<li>
@@ -201,7 +201,7 @@ class EmployeeController extends Controller
                                     ' . __('lang.delete') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
+
                         if (auth()->user()->can('hr_management.suspend.create_and_edit')) {
                             $html .= '<li>
                                 <a data-href="' . action('EmployeeController@toggleActive', $row->id) . '"
@@ -215,7 +215,7 @@ class EmployeeController extends Controller
                             $html .= '</a>
                                 </li>';
                         }
-                        $html .= '<li class="divider"></li>';
+
                         if (auth()->user()->can('hr_management.send_credentials.create_and_edit')) {
                             $html .= '<li>
                                 <a href="' . action('EmployeeController@sendLoginDetails', $row->id) . '"
@@ -224,7 +224,7 @@ class EmployeeController extends Controller
                                     ' . __('lang.send_credentials') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
+
                         if (auth()->user()->can('sms_module.sms.create_and_edit')) {
                             $html .= '<li>
                                 <a href="' . action('SmsController@create', ['employee_id' => $row->id]) . '"
@@ -233,7 +233,7 @@ class EmployeeController extends Controller
                                     ' . __('lang.send_sms') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
+
                         if (auth()->user()->can('email_module.email.create_and_edit')) {
                             $html .= '<li>
                                 <a href="' . action('EmailController@create', ['employee_id' => $row->id]) . '"
@@ -246,7 +246,7 @@ class EmployeeController extends Controller
                         $due = $this->transactionUtil->calculateEmployeeCommissionPayments($row->id)['total_due'];
 
 
-                        $html .= '<li class="divider"></li>';
+
                         if ($due > 0) {
                             $html .= '<li>
                             <a href="' . action('WagesAndCompensationController@create', ['employee_id' => $row->id, 'payment_type' => 'commission']) . '"
@@ -255,7 +255,7 @@ class EmployeeController extends Controller
                             ' . __('lang.pay') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
+
                         if (auth()->user()->can('hr_management.leaves.create_and_edit')) {
                             $html .= '<li>
                                 <a class="btn btn-modal"
@@ -265,10 +265,11 @@ class EmployeeController extends Controller
                                 </a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
+
                         if (auth()->user()->can('hr_management.forfeit_leaves.create_and_edit')) {
                             $html .= '<li>
                                 <a class="btn btn-modal"
+                                    data-toggle="modal"
                                     data-href="' . action('ForfeitLeaveController@create', ['employee_id' => $row->id]) . '"
                                     data-container=".view_modal">
                                     <i class="fa fa-ban"></i> ' . __('lang.forfeit_leave') . '
@@ -435,11 +436,13 @@ class EmployeeController extends Controller
 
             return redirect()->to('/hrm/employee')->with('status', $output);
         } catch (\Exception $e) {
+            DB::rollback();
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
                 'msg' => __('lang.something_went_wrong')
             ];
+            dd($e);
 
             return redirect()->back()->with('status', $output);
         }
@@ -835,6 +838,7 @@ class EmployeeController extends Controller
     }
     public  function printEmployeeBarcode($id,Request $request){
         $employee = Employee::find($id);
+
         $password=request()->value['value'];
         if (Hash::check(request()->value['value'], $employee->user->password)) {
             $invoice_lang = System::getProperty('invoice_lang');

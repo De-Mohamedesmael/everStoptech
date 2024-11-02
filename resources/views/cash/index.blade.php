@@ -95,7 +95,7 @@
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
 
                                     ]) !!}
-                                    {!! Form::select('admin_id', $admins, request()->admin_id, [
+                                    {!! Form::select('admin_id', $users, request()->admin_id, [
                                     'class' => 'form-control',
                                     'placeholder' => __('lang.all'),
                                     'data-live-search' => 'true',

@@ -128,7 +128,7 @@
                                                 @endcan
                                                 @can('hr_management.leaves.delete')
                                                     <a data-href="{{ action('LeaveController@destroy', $leave->id) }}"
-                                                        data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                        data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                         class="btn btn-danger text-white delete_item"><i
                                                             class="fa fa-trash"></i></a>
                                                 @endcan

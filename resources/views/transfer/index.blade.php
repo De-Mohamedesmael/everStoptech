@@ -194,7 +194,7 @@
                                                         @can('raw_material_module.transfer.delete')
                                                             <li>
                                                                 <a data-href="{{ action('TransferController@destroy', $transfer->id) }}"
-                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                                     class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                                     @lang('lang.delete')</a>
                                                             </li>
@@ -241,7 +241,7 @@
                                                         @can('stock.transfer.delete')
                                                             <li>
                                                                 <a data-href="{{ action('TransferController@destroy', $transfer->id) }}"
-                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                                     class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                                     @lang('lang.delete')</a>
                                                             </li>

@@ -184,7 +184,7 @@
                                 {!! Form::label('created_by', __('lang.created_by'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
-                                {!! Form::select('created_by', $admins, request()->created_by, [
+                                {!! Form::select('created_by', $users, request()->created_by, [
                                     'class' => 'form-control filter_product
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     selectpicker',
                                     'data-live-search' => 'true',

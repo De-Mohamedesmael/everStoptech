@@ -113,7 +113,7 @@
                                             @endcan
                                             @can('settings.terms_and_conditions.delete')
                                                 <a data-href="{{ action('TermsAndConditionsController@destroy', $terms_and_condition->id) }}"
-                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                     class="btn btn-danger text-white delete_item"><i
                                                         class="fa fa-trash"></i></a>
                                             @endcan

@@ -123,7 +123,7 @@ class CashController extends Controller
 
         $stores = Store::getDropdown();
         $store_pos = StorePos::orderBy('name', 'asc')->pluck('name', 'id');
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('cash.index')->with(compact(
             'cash_registers',
@@ -246,7 +246,7 @@ class CashController extends Controller
 
 
         $cash_register = CashRegister::where('id', $cash_register_id)->first();
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('cash.add_cash_in')->with(compact(
             'cash_register',
@@ -335,7 +335,7 @@ class CashController extends Controller
 
 
         $cash_register = CashRegister::where('id', $cash_register_id)->first();
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('cash.add_cash_out')->with(compact(
             'cash_register',
@@ -510,7 +510,7 @@ class CashController extends Controller
                 });
         })
         ->sum('amount');
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         return view('cash.add_closing_cash')->with(compact(
             'total_latest_payments',
             'cash_register',

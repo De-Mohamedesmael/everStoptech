@@ -67,7 +67,7 @@
                                         {!! Form::label('admin_id', __('lang.user'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::select('admin_id', $admins, request()->admin_id, [
+                                        {!! Form::select('admin_id', $users, request()->admin_id, [
                                             'class' => 'form-control',
                                             'placeholder' => __('lang.all'),
                                             'data-live-search' => 'true',
@@ -79,7 +79,7 @@
                                         {!! Form::label('receiver_id', __('lang.receiver'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::select('receiver_id', $admins, request()->receiver_id, [
+                                        {!! Form::select('receiver_id', $users, request()->receiver_id, [
                                             'class' => 'form-control',
                                             'placeholder' => __('lang.all'),
                                             'data-live-search' => 'true',
@@ -184,7 +184,7 @@
                                                         @can('cash.add_cash_out.delete')
                                                             <li>
                                                                 <a data-href="{{ action('CashOutController@destroy', $cash_register->id) }}"
-                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                                     class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                                     @lang('lang.delete')</a>
                                                             </li>

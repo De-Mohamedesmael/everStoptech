@@ -20,7 +20,7 @@ use App\Models\TermsAndCondition;
 use App\Models\Transaction;
 use App\Models\TransactionSellLine;
 use App\Models\Unit;
-use App\Models\User;
+use App\Models\Admin;
 use App\Utils\CashRegisterUtil;
 use App\Utils\NotificationUtil;
 use App\Utils\ProductUtil;
@@ -147,7 +147,7 @@ class QuotationController extends Controller
         $discount_customer_types = Customer::getCustomerTreeArray();
 
         $stores  = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('quotation.create')->with(compact(
             'walk_in_customer',
@@ -232,7 +232,7 @@ class QuotationController extends Controller
         $discount_customer_types = Customer::getCustomerTreeArray();
 
         $stores  = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('quotation.edit')->with(compact(
             'sale',

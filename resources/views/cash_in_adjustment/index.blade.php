@@ -64,7 +64,7 @@
                                                         @can('adjustment.cash_in_adjustment.delete')
                                                             <li>
                                                                 <a data-href="{{ action('CashInAdjustmentController@destroy', $adjustment->id) }}"
-                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                                     class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                                     @lang('lang.delete')</a>
                                                             </li>

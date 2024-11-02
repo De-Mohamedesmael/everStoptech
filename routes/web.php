@@ -369,7 +369,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('report/get-store-report', 'ReportController@getStoreReport');
     Route::get('report/get-store-stock-chart', 'ReportController@getStoreStockChart');
     Route::get('report/get-product-quantity-alert-report', 'ReportController@getProductQuantityAlertReport');
-    Route::get('report/get-user-report', 'ReportController@getUserReport');
+    Route::get('report/get-user-report', 'ReportController@getAdminReport');
     // +++++++++++ getCustomerReport +++++++++++
     Route::get('report/get-customer-report', 'ReportController@getCustomerReport');
     Route::post('report/get-customer-report', 'ReportController@getCustomerReport');
@@ -410,8 +410,8 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
 
     Route::get('notification/mark-as-read/{id}', 'NotificationController@markAsRead');
     Route::get('notification/notification-seen', 'NotificationController@notificationSeen');
-    Route::get('user-contact-us', 'ContactUsController@getUserContactUs');
-    Route::post('user-contact-us', 'ContactUsController@sendUserContactUs');
+    Route::get('user-contact-us', 'ContactUsController@getAdminContactUs');
+    Route::post('user-contact-us', 'ContactUsController@sendAdminContactUs');
 
 
     Route::get('guide/tutorials-categories', 'TutorialController@getTutorialsCategoryGuide');

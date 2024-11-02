@@ -1,26 +1,61 @@
-@extends('layouts.app')
-@section('title', __('lang.employees'))
-
-@push('css')
+@extends('back-end.layouts.app')
+@section('title', __('lang.employee'))
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
     <style>
-        .table-top-head {
-            top: 35px;
+        .dropdown-menu.edit-options li a, .dropdown-menu.edit-options li .btn-link {
+            color: var(--tertiary-color);
+            display: block;
+            text-align: left;
+            text-decoration: none;
+            width: 100%;
+            padding: 6px 10px !important;
+        }
+        table .dropdown-menu a {
+            font-weight: 700 !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            font-size: 13px !important;
+            align-items: center !important;
+        }
+        .dt-buttons .table-btns {
+
+            background-color: var(--complementary-color-1) !important;
+            color: white !important;
+            border-radius: 6px !important;
+            margin: 5px 0 !important;
+            transition: 0.6s;
+        }
+        .btn:not(:disabled):not(.disabled) {
+            cursor: pointer;
+        }
+        .btn.btn-default, .btn.btn-default:focus {
+            border: 1px solid;
+            background-color: #fff;
+            color: var(--secondary-color);
+        }
+        .text-red {
+            color: maroon !important;
+        }
+        .dropdown-menu.edit-options li {
+            border-bottom: 1px solid #eee;
+            padding: 0px !important;
+        }
+        sr-only {
+            border: 0;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+        .dropdown-toggle::after {
+            color: var(--complementary-color-1) !important;
         }
 
-        .wrapper1 {
-            margin-top: 35px;
-        }
-
-        @media(max-width:767px) {
-            .wrapper1 {
-                margin-top: 125px;
-            }
-        }
     </style>
-@endpush
-
-@section('page_title')
-    @lang('lang.employees')
 @endsection
 
 @section('breadcrumbs')
@@ -34,7 +69,6 @@
         <a class="btn btn-primary" href="{{ action('EmployeeController@create') }}">@lang('lang.add_employee')</a>
     </div>
 @endsection
-
 @section('content')
     <div class="animate-in-page">
 
@@ -42,7 +76,7 @@
             <div class="col-md-12  no-print">
                 <div class="card mt-1">
                     <div
-                        class="card-header d-flex align-items-center @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
+                            class="card-header d-flex align-items-center @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
                         <h6 class="print-title">
                             @lang('lang.employees')</h6>
                     </div>
@@ -54,185 +88,230 @@
                             <div class="div2 table-scroll-wrapper">
                                 <!-- content goes here -->
                                 <div style="min-width: 1300px;max-height: 90vh;overflow: auto">
-                                    <table id="datatable-buttons" class="table dataTable">
-                                        <thead>
-                                            <tr>
-                                                <th>@lang('lang.profile_photo')</th>
-                                                <th>@lang('lang.employee_name')</th>
-                                                <th>@lang('lang.email')</th>
-                                                <th>@lang('lang.phone_number')</th>
-                                                <th>@lang('lang.job_title')</th>
-                                                <th class="sum">@lang('lang.wage')</th>
-                                                {{--                                <th>@lang('lang.annual_leave_balance')</th> --}}
-                                                <th>@lang('lang.age')</th>
-                                                <th>@lang('lang.date_of_start_working')</th>
-                                                <th>@lang('lang.stores')</th>
-                                                {{--                                <th>@lang('lang.current_status')</th> --}}
-                                                <th>@lang('lang.pos')</th>
-                                                <th>@lang('lang.commission')</th>
-                                                <th>@lang('lang.total_paid')</th>
-                                                <th>@lang('lang.pending')</th>
-                                                <th class="notexport">@lang('lang.action')</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                    <table id="employee_table" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>@lang('lang.profile_photo')</th>
+                                            <th>@lang('lang.employee_name')</th>
+                                            <th>@lang('lang.email')</th>
+                                            <th>@lang('lang.mobile')</th>
+                                            <th>@lang('lang.job_title')</th>
+                                            <th class="sum">@lang('lang.wage')</th>
+                                            <th>@lang('lang.annual_leave_balance')</th>
+                                            <th>@lang('lang.age')</th>
+                                            <th>@lang('lang.start_working_date')</th>
+                                            <th>@lang('lang.current_status')</th>
+                                            <th>@lang('lang.store')</th>
+                                            <th>@lang('lang.pos')</th>
+                                            <th>@lang('lang.commission')</th>
+                                            <th>@lang('lang.total_paid')</th>
+                                            <th>@lang('lang.pending')</th>
+                                            <th class="notexport">@lang('lang.action')</th>
+                                        </tr>
+                                    </thead>
 
-                                            @foreach ($employees as $key => $employee)
-                                                <tr>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.profile_photo')">
-                                                            @if (!empty($employee->photo))
-                                                                <div style="width: 50px;height: 50px;">
-                                                                    <img src="{{ '/uploads/' . $employee->photo }}"
-                                                                        alt="photo" style="width: 100%;height: 100$;">
-                                                                </div>
-                                                            @else
-                                                                <div style="width: 50px;height: 50px;">
-                                                                    <img src="{{ '/uploads/' . session('logo') }}"
-                                                                        alt="photo" style="width: 100%;height: 100$;">
-                                                                </div>
-                                                            @endif
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.employee_name')">
-
-                                                            {{ !empty($employee->user) ? $employee->user->name : '' }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.email')">
-
-                                                            {{ !empty($employee->user) ? $employee->user->email : '' }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.phone_number')">
-
-                                                            {{ $employee->mobile }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.job_title')">
-
-                                                            {{ !empty($employee->job_type) ? $employee->job_type->title : '' }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.wage')">
-
-                                                            {{ $employee->fixed_wage_value }}
-                                                        </span>
-                                                    </td>
-                                                    {{--                                        <td></td> --}}
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.age')">
-
-                                                            {{ \Carbon\Carbon::parse($employee->date_of_birth)->diff(\Carbon\Carbon::now())->format('%y') }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-                                                        <span
-                                                            class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600"
-                                                            data-tooltip="@lang('lang.date_of_start_working')">
-
-                                                            {{ $employee->date_of_start_working }}
-                                                        </span>
-                                                    </td>
-                                                    <td>
-
-                                                        @foreach ($employee->stores()->get() as $store)
-                                                            <span
-                                                                class="custom-tooltip d-flex justify-content-center align-items-center"
-                                                                style="font-size: 12px;font-weight: 600"
-                                                                data-tooltip="@lang('lang.stores')">
-                                                                {{ $store->name }}
-                                                            </span>
-                                                        @endforeach
-                                                    </td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td>
-                                                        <button type="button"
-                                                            class="btn btn-default btn-sm dropdown-toggle d-flex justify-content-center align-items-center"
-                                                            style="font-size: 12px;font-weight: 600" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">
-                                                            @lang('lang.action')
-                                                            <span class="caret"></span>
-                                                        </button>
-                                                        <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                            user="menu">
-                                                            <li>
-                                                                <a href="{{ route('employees.show', $employee->id) }}"
-                                                                    class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"><i
-                                                                        class="fa fa-eye"></i>
-                                                                    @lang('lang.view') </a>
-                                                            </li>
-
-
-                                                            <li>
-                                                                <a href="{{ route('employees.edit', $employee->id) }}"
-                                                                    target="_blank"
-                                                                    class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif edit_employee"><i
-                                                                        class="fa fa-pencil-square-o"></i>
-                                                                    @lang('lang.edit')</a>
-                                                            </li>
-
-                                                            <li>
-                                                                <a data-href="{{ route('employees.destroy', $employee->id) }}"
-                                                                    {{--                                                       data-check_password="{{action('UserController@checkPassword', Auth::user()->id) }}" --}}
-                                                                    class="btn drop_down_item @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif delete_item text-red delete_item"><i
-                                                                        class="fa fa-trash"></i>
-                                                                    @lang('lang.delete')</a>
-                                                            </li>
-                                                            @if (!empty($employee->job_type) && $employee->job_type->title == 'Representative')
-                                                                <li>
-                                                                    <a href="{{ route('employees.add_points') }}"
-                                                                        class="btn add_point"><i class="fa fa-plus"></i>
-                                                                        @lang('lang.add_points')
-                                                                    </a>
-                                                                </li>
-                                                            @endif
-                                                        </ul>
-                                                    </td>
-
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-
-                                    </table>
+                                    <tbody>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="3"></td>
+                                            <td></td>
+                                            <td>{{ $currency_symbol }}</td>
+                                            <td></td>
+                                            <th style="text-align: center">@lang('lang.total')</th>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+
     </div>
+@endsection
 
+@section('javascript')
+    <script>
+        $(document).on('click', 'a.toggle-active', function(e) {
+            e.preventDefault();
 
+            $.ajax({
+                method: 'get',
+                url: $(this).data('href'),
+                data: {},
+                success: function(result) {
+                    if (result.success == true) {
+                        new PNotify({
+                            title: 'Success',
+                            text: result.msg,
+                            type: 'success'
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 500);
+                    } else {
+                        new PNotify({
+                            title: 'Error',
+                            text:result.msg,
+                            type: 'Error'
+                        });
+
+                    }
+                },
+            });
+        });
+        $(document).ready(function() {
+            employee_table = $("#employee_table").DataTable({
+                lengthChange: true,
+                paging: true,
+                info: false,
+                bAutoWidth: false,
+                // order: [],
+                language: {
+                    url: dt_lang_url,
+                },
+                lengthMenu: [
+                    [10, 25, 50, 75, 100, 200, 500, -1],
+                    [10, 25, 50, 75, 100, 200, 500, "All"],
+                ],
+                dom: "lBfrtip",
+                stateSave: true,
+                buttons: buttons,
+                processing: true,
+                serverSide: true,
+                aaSorting: [
+                    [0, "desc"]
+                ],
+                initComplete: function() {
+                    $(this.api().table().container()).find('input').parent().wrap('<form>').parent()
+                        .attr('autocomplete', 'off');
+                },
+                ajax: {
+                    url: "/hrm/employee",
+                    data: function(d) {
+                        d.employee_id = $("#employee_id").val();
+                        d.method = $("#method").val();
+                        d.start_date = $("#start_date").val();
+                        d.start_time = $("#start_time").val();
+                        d.end_date = $("#end_date").val();
+                        d.end_time = $("#end_time").val();
+                        d.created_by = $("#created_by").val();
+                        d.payment_status = $("#payment_status").val();
+                    },
+                },
+                columnDefs: [{
+                        targets: "date",
+                        type: "date-eu",
+                    },
+                    {
+                        targets: [7],
+                        orderable: false,
+                        searchable: false,
+                    },
+                ],
+                columns: [{
+                        data: "profile_photo",
+                        name: "profile_photo"
+                    },
+                    {
+                        data: "employee_name",
+                        name: "employee_name"
+                    },
+                    {
+                        data: "email",
+                        name: "email"
+                    },
+                    {
+                        data: "mobile",
+                        name: "mobile"
+                    },
+                    {
+                        data: "job_title",
+                        name: "job_types.job_title"
+                    },
+                    {
+                        data: "fixed_wage_value",
+                        name: "employees.fixed_wage_value"
+                    },
+                    {
+                        data: "annual_leave_balance",
+                        name: "annual_leave_balance",
+                        searchable: false
+                    },
+                    {
+                        data: "age",
+                        name: "age",
+
+                    },
+                    {
+                        data: "date_of_start_working",
+                        name: "date_of_start_working"
+                    },
+                    {
+                        data: "current_status",
+                        name: "current_status"
+                    },
+                    {
+                        data: "store",
+                        name: "store",
+                    },
+                    {
+                        data: "store_pos",
+                        name: "store_pos",
+                    },
+                    {
+                        data: "commission",
+                        name: "commission",
+                    },
+                    {
+                        data: "total_paid",
+                        name: "total_paid",
+                    },
+                    {
+                        data: "due",
+                        name: "due",
+                    },
+                    {
+                        data: "action",
+                        name: "action"
+                    },
+                ],
+                createdRow: function(row, data, dataIndex) {},
+                "footerCallback": function(row, data, start, end, display) {
+                    var api = this.api(),
+                        intVal = function(i) {
+                            return typeof i === 'string' ?
+                                i.replace(/[, Rs]|(\.\d{2})/g, "") * 1 :
+                                typeof i === 'number' ?
+                                i : 0;
+                        },
+                        total2 = api
+                        .column(5)
+                        .data()
+                        .reduce(function(a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0);
+                    totalRows = api.page.info().recordsDisplay;
+
+                    $(api.column(5).footer()).html(
+                        total2
+                    );
+                    $(api.column(0).footer()).html(
+                        "{{ __('lang.total_rows') }}: " + totalRows
+                    );
+                },
+            });
+            $(document).on('change', '.filter', function() {
+                employee_table.ajax.reload();
+            });
+        })
+    </script>
 @endsection

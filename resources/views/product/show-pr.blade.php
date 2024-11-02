@@ -159,7 +159,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             {!! Form::label('created_by', __('lang.created_by') . ':', []) !!}
-                            {!! Form::select('created_by', $admins, request()->created_by, [
+                            {!! Form::select('created_by', $users, request()->created_by, [
     'class' => 'form-control filter_product
                         selectpicker',
     'data-live-search' => 'true',
@@ -362,7 +362,7 @@
                 $(obj).val(i)
             });
             product_table = $('#product_table').DataTable({
-
+                
                 lengthChange: true,
                 paging: true,
                 info: false,
@@ -420,7 +420,7 @@
                         data: 'variation_name',
                         name: 'products.name'
                     },
-
+             
                     {
                         data: 'sub_sku',
                         name: 'variations.sub_sku'
