@@ -23,7 +23,7 @@
     <style>
         button.btn.table-btns.buttons-collection.dropdown-toggle.buttons-colvis
         ,.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn.dropdown-toggle-split:first-child, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
-            background: #26b3d3;
+            background: #1565c0;
         }
         .dt-buttons.btn-group {
             direction: ltr;
@@ -39,13 +39,13 @@
     </style>
     <style>
         :root {
-            --primary-color: #e3f2fd;
+            --primary-color: #adbff8;
             /* Light Blue */
-            --secondary-color: #84ceed;
+            --secondary-color: #2d5cfe;
             /* Bright Blue */
             --tertiary-color: #1565c0;
             /* Dark Blue */
-            --complementary-color-1: #5bb9b0;
+            --complementary-color-1: #576ec5;
             /* Muted Blue-Green */
             --complementary-color-2: #a5d6a7;
             /* Light Muted Blue-Green */
@@ -263,7 +263,7 @@
                                 @section('breadcrumbs')
                                     <li
                                         class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
-                                        <a style="text-decoration: none;color: #1db3d4" href="{{ url('/') }}">/
+                                        <a style="text-decoration: none;color: #1565c0" href="{{ url('/') }}">/
                                             @lang('lang.dashboard')</a>
                                     </li>
                                 @show
@@ -325,7 +325,15 @@
     base_path = "{{ url('/') }}";
     current_url = "{{ url()->current() }}";
 </script>
-<div class="modal view_modal no-print" role="dialog" aria-hidden="true"></div>
+<div class="modal view_modal no-print" role="dialog" aria-hidden="true">
+    <!-- Modal -->
+    <div class="modal modal-jobs animate__animated  view_modal" data-animate-in="animate__rollIn"
+         data-animate-out="animate__rollOut" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+
+        </div>
+    </div>
+</div>
 
 <!-- Start js -->
 @include('back-end.layouts.partials.javascript')

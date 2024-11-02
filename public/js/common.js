@@ -575,7 +575,9 @@ $(document).on("click", "table.ajax_view tbody tr", function (e) {
             url: $(this).data("href"),
             dataType: "html",
             success: function (result) {
-                $(".view_modal").html(result).modal("show");
+                console.log('sfsfsaf')
+                $(".view_modal").modal("show");
+                $(".view_modal .modal-dialog").html(result);
             },
         });
     }
