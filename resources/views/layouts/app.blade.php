@@ -10,13 +10,13 @@
     <meta name="robots" content="noindex, nofollow" />
 
     <title>@yield('title') - {{ config('app.name', 'POS') }}</title>
-    @yield('styles')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     @include('layouts.partials.css')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    @yield('style')
+
+    @yield('styles')
 
     <style>
         .mCSB_draggerRail {
@@ -328,7 +328,7 @@
         </div>
 
         @php
-            $cash_register = App\Models\CashRegister::where('admin_id', Auth::guard('admin')->user()->id)
+            $cash_register = App\Models\CashRegister::where('admin_id', Auth::user()->id)
                 ->where('status', 'open')
                 ->first();
         @endphp

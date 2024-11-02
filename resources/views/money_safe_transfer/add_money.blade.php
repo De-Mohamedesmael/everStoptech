@@ -51,13 +51,13 @@
                 </div>
                 <div class="col-md-6 px-5">
                     <div class="form-group">
-                        {!! Form::label('job_type_id', __('lang.jobs') . '*', [
+                        {!! Form::label('job_type_id', __('lang.job') . '*', [
                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                         ]) !!}
                         {!! Form::select('job_type_id', $job_types, false, [
                             'class' => 'form-control modal-input',
                             'style' => 'height:fit-content;!importnat',
-
+                        
                             'required',
                             'readonly',
                             'placeholder' => __('lang.please_select'),

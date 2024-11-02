@@ -9,7 +9,7 @@ use App\Models\MoneySafe;
 use App\Models\StorePos;
 use App\Models\Transaction;
 use App\Models\TransactionPayment;
-use App\Models\User;
+use App\Models\Admin;
 use App\Utils\CashRegisterUtil;
 use App\Utils\MoneySafeUtil;
 use App\Utils\TransactionUtil;
@@ -59,7 +59,7 @@ class TransactionPaymentController extends Controller
 
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
         $transaction = Transaction::find($transaction_id);
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         $balance = $this->transactionUtil->getCustomerBalanceExceptTransaction($transaction->customer_id,$transaction_id)['balance'];
         $finalTotal = $transaction->final_total;
         $transactionPaymentsSum = $transaction->transaction_payments->sum('amount');

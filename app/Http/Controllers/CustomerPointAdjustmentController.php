@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\CustomerPointAdjustment;
 use App\Models\Store;
-use App\Models\User;
+use App\Models\Admin;
 use App\Utils\TransactionUtil;
 use App\Utils\Util;
 use Carbon\Carbon;
@@ -56,7 +56,7 @@ class CustomerPointAdjustmentController extends Controller
     public function create()
     {
         $stores = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('customer_point_adjustment.create')->with(compact(
@@ -121,7 +121,7 @@ class CustomerPointAdjustmentController extends Controller
     public function edit($id)
     {
         $stores = Store::getDropdown();
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_point_adjustment = CustomerPointAdjustment::find($id);
 

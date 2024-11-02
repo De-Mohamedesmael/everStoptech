@@ -147,7 +147,7 @@ class PurchaseOrderController extends Controller
             $this->productUtil->createOrUpdatePurchaseOrderLines($request->purchase_order_lines, $transaction);
 
             if ($data['submit'] == 'sent_admin') {
-                $superadmins = User::get();
+                $superadmins = Admin::get();
                 $notification_data = [
                     'admin_id' => null,
                     'transaction_id' => $transaction->id,
@@ -267,7 +267,7 @@ class PurchaseOrderController extends Controller
             $this->productUtil->createOrUpdatePurchaseOrderLines($request->purchase_order_lines, $transaction);
 
             if ($data['submit'] == 'sent_admin') {
-                $superadmins = User::get();
+                $superadmins = Admin::get();
                 $notification_data = [
                     'admin_id' => null,
                     'transaction_id' => $transaction->id,

@@ -52,12 +52,9 @@ class ForfeitLeaveController extends Controller
     public function create()
     {
         $query = Employee::leftjoin('admins', 'employees.admin_id', 'admins.id');
-        if (!auth()->user()->can('superadmin') || auth()->user()->is_admin != 1) {
-            $query->where('admins.id', Auth::user()->id);
-        }
         $employees =  $query->pluck('admins.name', 'employees.id');
 
-        $this_employee = Employee::where('admin_id', Auth()->user()->id)->first();
+        $this_employee = Employee::where('admin_id', auth('admin')->user()->id)->first();
 
         $this_employee_id = null;
         if (!empty($this_employee)) {
@@ -72,7 +69,7 @@ class ForfeitLeaveController extends Controller
 
 
 
-        return view('forfeit_leave.create')->with(compact(
+        return view('back-end.Hr.forfeit_leave.create')->with(compact(
             'employees',
             'this_employee_id',
             'leave_types'

@@ -181,7 +181,7 @@
                                                     @can('sale.pos.delete')
                                                     <li>
                                                         <a data-href="{{action('SellController@destroy', $sale->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -273,7 +273,7 @@
                                                     @can('stock.add_stock.delete')
                                                     <li>
                                                         <a data-href="{{action('AddStockController@destroy', $add_stock->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i
                                                                 class="dripicons-trash"></i>
                                                             @lang('lang.delete')</a>
@@ -389,7 +389,7 @@
                                                     @can('squotation_for_customers.quotation.delete')
                                                     <li>
                                                         <a data-href="{{action('QuotationController@destroy', $quotation->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -507,7 +507,7 @@
                                                     @can('sale.pos.delete')
                                                     <li>
                                                         <a data-href="{{action('SellController@destroy', $return->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -566,7 +566,7 @@
                                             @endcan
                                             @can('account_management.expenses.delete')
                                             <a data-href="{{action('ExpenseController@destroy', $expense->id)}}"
-                                                data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                 class="btn btn-danger text-white delete_item"><i
                                                     class="fa fa-trash"></i></a>
                                             @endcan

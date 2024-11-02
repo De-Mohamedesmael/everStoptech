@@ -41,7 +41,7 @@
                     <div class="col-md-3">
                         <div class="form-group">
                             {!! Form::label('admin_id', __('lang.user'), []) !!}
-                            {!! Form::select('admin_id', $admins, request()->admin_id, ['class' =>
+                            {!! Form::select('admin_id', $users, request()->admin_id, ['class' =>
                             'form-control', 'placeholder' => __('lang.all'),'data-live-search'=>"true"]) !!}
                         </div>
                     </div>
@@ -49,7 +49,7 @@
                     <div class="col-md-3">
                         <br>
                         <button type="submit" class="btn btn-success mt-2">@lang('lang.filter')</button>
-                        <a href="{{action('ReportController@getUserReport')}}"
+                        <a href="{{action('ReportController@getAdminReport')}}"
                             class="btn btn-danger mt-2 ml-2">@lang('lang.clear_filter')</a>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                                                     @can('sale.pos.delete')
                                                     <li>
                                                         <a data-href="{{action('SellController@destroy', $sale->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -274,7 +274,7 @@
                                                     @can('stock.add_stock.delete')
                                                     <li>
                                                         <a data-href="{{action('AddStockController@destroy', $add_stock->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i
                                                                 class="dripicons-trash"></i>
                                                             @lang('lang.delete')</a>
@@ -390,7 +390,7 @@
                                                     @can('squotation_for_customers.quotation.delete')
                                                     <li>
                                                         <a data-href="{{action('QuotationController@destroy', $quotation->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -506,7 +506,7 @@
                                                     @can('sale.pos.delete')
                                                     <li>
                                                         <a data-href="{{action('SellController@destroy', $return->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -565,7 +565,7 @@
                                             @endcan
                                             @can('account_management.expenses.delete')
                                             <a data-href="{{action('ExpenseController@destroy', $expense->id)}}"
-                                                data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                 class="btn btn-danger text-white delete_item"><i
                                                     class="fa fa-trash"></i></a>
                                             @endcan

@@ -186,7 +186,7 @@
                                                     @can('stock.add_stock.delete')
                                                         <li>
                                                             <a data-href="{{ action('AddStockController@destroy', $add_stock->id) }}"
-                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                                 class="btn text-red delete_item"><i class="dripicons-trash"></i>
                                                                 @lang('lang.delete')</a>
                                                         </li>

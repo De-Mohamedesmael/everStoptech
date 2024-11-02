@@ -39,7 +39,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                     </li>
 
                     <li class="nav-item">
-                        {{-- <a target="_blank" href="{{action('ContactUsController@getUserContactUs')}}"
+                        {{-- <a target="_blank" href="{{action('ContactUsController@getAdminContactUs')}}"
                             id="contact_us_btn" data-toggle="tooltip" data-title="@lang('lang.contact_us')"
                             style="background-image: url('{{asset('images/handshake.jpg')}}');" class="btn no-print">
                         </a> --}}

@@ -236,7 +236,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             {!! Form::label('cash_given_to', __('lang.cash_given_to') . ':*') !!}
-                            {!! Form::select('cash_given_to', $admins, false, [
+                            {!! Form::select('cash_given_to', $users, false, [
                                 'class' => 'form-control selectpicker',
                                 'data-live-search' => 'true',
                                 'required',

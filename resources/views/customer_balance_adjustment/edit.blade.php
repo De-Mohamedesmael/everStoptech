@@ -42,7 +42,7 @@
                                         {!! Form::label('admin_id', __('lang.cashier'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::select('admin_id', $admins, $customer_balance_adjustment->admin_id, [
+                                        {!! Form::select('admin_id', $users, $customer_balance_adjustment->admin_id, [
                                             'class' => 'form-control
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 selectpicker',
                                             'id' => 'admin_id',

@@ -47,7 +47,7 @@ class Employee extends Model implements HasMedia
 
     public function user()
     {
-        return $this->belongsTo(Admin::class);
+        return $this->belongsTo(Admin::class,'admin_id','id');
     }
     public static function getWeekDays()
     {

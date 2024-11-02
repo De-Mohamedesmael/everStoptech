@@ -66,7 +66,7 @@
                                         <div class="form-group">
                                             <label
                                                 class="form-label d-block mb-1  @if (app()->isLocale('ar')) text-end @else text-start @endif"
-                                                for="">@lang('lang.jobs')</label>
+                                                for="">@lang('lang.job')</label>
                                             {!! Form::select('job_type_id', $jobs, null, ['class' => 'form-control', 'placeholder' => __('lang.all')]) !!}
                                         </div>
                                     </div>
@@ -222,7 +222,7 @@
                                                     @endcan
                                                     @can('hr_management.wages_and_compensation.delete')
                                                         <a data-href="{{ action('WagesAndCompensationController@destroy', $wages_and_compensation->id) }}"
-                                                            data-check_password="{{ action('AdminController@checkPassword', Auth::guard('admin')->user()->id) }}"
+                                                            data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
                                                             class="btn btn-danger text-white delete_item"><i
                                                                 class="fa fa-trash"></i></a>
                                                     @endcan

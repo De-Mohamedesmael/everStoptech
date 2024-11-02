@@ -17,7 +17,7 @@ use App\Models\Supplier;
 use App\Models\Tax;
 use App\Models\Transaction;
 use App\Models\Unit;
-use App\Models\User;
+use App\Models\Admin;
 use App\Models\Variation;
 use App\Utils\ProductUtil;
 use App\Utils\Util;
@@ -101,7 +101,7 @@ class SalesPromotionController extends Controller
         $discount_customer_types = Customer::getCustomerTreeArray();
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
 
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
         return view('sales_promotion.create')->with(compact(
             'stores',
             'customer_types',
@@ -259,7 +259,7 @@ class SalesPromotionController extends Controller
         $discount_customer_types = Customer::getCustomerTreeArray();
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
 
-        $admins = User::pluck('name', 'id');
+        $admins = Admin::pluck('name', 'id');
 
         return view('sales_promotion.edit')->with(compact(
             'sales_promotion',

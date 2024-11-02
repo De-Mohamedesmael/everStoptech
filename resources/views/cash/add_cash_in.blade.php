@@ -52,7 +52,7 @@
                             {!! Form::label('source_id', __('lang.source'), [
                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                             ]) !!}
-                            {!! Form::select('source_id', $admins, false, [
+                            {!! Form::select('source_id', $users, false, [
                                 'class' => 'selectpicker form-control',
                                 'data-live-search' => 'true',
                                 'placeholder' => __('lang.please_select'),

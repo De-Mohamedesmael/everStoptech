@@ -9,7 +9,7 @@
                     <div class="card-header d-flex align-items-center">
                         <h4>@lang('lang.contact_us')</h4>
                     </div>
-                    <form method="POST" action="{{ action('ContactUsController@sendUserContactUs') }}" enctype="multipart/form-data"
+                    <form method="POST" action="{{ action('ContactUsController@sendAdminContactUs') }}" enctype="multipart/form-data"
                         id="contact-us-form">
                         <div class="card-body">
                             @csrf

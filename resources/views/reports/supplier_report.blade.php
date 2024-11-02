@@ -47,7 +47,7 @@
                     <div class="col-md-3">
                         <br>
                         <button type="submit" class="btn btn-success mt-2">@lang('lang.filter')</button>
-                        <a href="{{action('ReportController@getUserReport')}}"
+                        <a href="{{action('ReportController@getAdminReport')}}"
                             class="btn btn-danger mt-2 ml-2">@lang('lang.clear_filter')</a>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                                                     @can('stock.add_stock.delete')
                                                     <li>
                                                         <a data-href="{{action('AddStockController@destroy', $add_stock->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i
                                                                 class="dripicons-trash"></i>
                                                             @lang('lang.delete')</a>
@@ -235,7 +235,7 @@
                                                     @can('stock.add_stock.delete')
                                                     <li>
                                                         <a data-href="{{action('AddStockController@destroy', $payment->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i
                                                                 class="dripicons-trash"></i>
                                                             @lang('lang.delete')</a>
@@ -339,7 +339,7 @@
                                                     @can('purchase_order.purchase_order.delete')
                                                     <li>
                                                         <a data-href="{{action('PurchaseOrderController@destroy', $purchase_order->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>
@@ -457,7 +457,7 @@
                                                     @can('sale.pos.delete')
                                                     <li>
                                                         <a data-href="{{action('SellController@destroy', $return->id)}}"
-                                                            data-check_password="{{action('AdminController@checkPassword', Auth::guard('admin')->user()->id)}}"
+                                                            data-check_password="{{action('AdminController@checkPassword', Auth::user()->id)}}"
                                                             class="btn text-red delete_item"><i class="fa fa-trash"></i>
                                                             @lang('lang.delete')</a>
                                                     </li>

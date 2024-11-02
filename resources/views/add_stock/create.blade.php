@@ -361,7 +361,7 @@
                                         ]) !!}
                                         {!! Form::select(
                                             'source_id',
-                                            $admins,
+                                            $users,
                                             !empty($recent_stock) && !empty($recent_stock->source_id) ? $recent_stock->source_id : null,
                                             [
                                                 'class' => 'selectpicker form-control',

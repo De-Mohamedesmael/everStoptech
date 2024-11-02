@@ -356,7 +356,7 @@ class ReportController extends Controller
 
         $stores = Store::getDropdown();
         $store_pos = StorePos::orderBy('name', 'asc')->pluck('name', 'id');
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('reports.daily_sales_summary')->with(compact(
             'stores',
@@ -2370,7 +2370,7 @@ class ReportController extends Controller
      *
      * @return view
      */
-    public function getUserReport(Request $request)
+    public function getAdminReport(Request $request)
     {
         $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
         $admin_id = $request->admin_id;
@@ -2508,7 +2508,7 @@ class ReportController extends Controller
         )->groupBy('transactions.id')->get();
 
 
-        $admins = User::orderBy('name', 'asc')->pluck('name', 'id');
+        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
 
         return view('reports.user_report')->with(compact(

@@ -29,7 +29,7 @@
             </a>
         </div>
 {{--        @php--}}
-{{--        $cash_register = App\Models\CashRegister::where('user_id', Auth::user()->id)--}}
+{{--        $cash_register = App\Models\CashRegister::where('admin_id', Auth::user()->id)--}}
 {{--        ->where('status', 'open')--}}
 {{--        ->first();--}}
 {{--        @endphp--}}

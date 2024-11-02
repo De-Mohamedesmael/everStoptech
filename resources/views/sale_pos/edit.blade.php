@@ -508,7 +508,7 @@
                                                     style="background-image:  url('{{asset('images/watsapp.jpg')}}');background-size: 40px;" class="btn no-print">
                                                 </a>
                                                 {{-- <a target="_blank"
-                                                    href="{{ action('ContactUsController@getUserContactUs') }}"
+                                                    href="{{ action('ContactUsController@getAdminContactUs') }}"
                                                     id="contact_us_btn" data-toggle="tooltip"
                                                     data-title="@lang('lang.contact_us')"
                                                     style="background-image: url('{{ asset('images/handshake.jpg') }}');"
@@ -556,13 +556,13 @@
                                                 <a rel="nofollow" data-target="#" href="#" data-toggle="dropdown"
                                                     aria-haspopup="true" aria-expanded="false"
                                                     class="nav-link dropdown-item"><i class="dripicons-user"></i>
-                                                    <span>{{ ucfirst(Auth::guard('admin')->user()->name) }}</span> <i
+                                                    <span>{{ ucfirst(Auth::user()->name) }}</span> <i
                                                         class="fa fa-angle-down"></i>
                                                 </a>
                                                 <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
                                                     user="menu">
                                                     @php
-                                                        $employee = App\Models\Employee::where('admin_id', Auth::guard('admin')->user()->id)->first();
+                                                        $employee = App\Models\Employee::where('admin_id', Auth::user()->id)->first();
                                                     @endphp
                                                     <li style="text-align: center">
                                                         <img src="@if (!empty($employee->getFirstMediaUrl('employee_photo'))) {{ $employee->getFirstMediaUrl('employee_photo') }}@else{{ asset('images/default.jpg') }} @endif"
@@ -584,7 +584,7 @@
                                                                 class="dripicons-swap"></i>
                                                             @lang('lang.my_transactions')</a>
                                                     </li>
-                                                    @if (Auth::guard('admin')->user()->role_id != 5)
+                                                    @if (Auth::user()->role_id != 5)
                                                         <li>
                                                             <a
                                                                 href="{{ url('my-holidays/' . date('Y') . '/' . date('m')) }}"><i

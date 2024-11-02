@@ -94,7 +94,7 @@ class ContactUsController extends Controller
      *
      * @return void
      */
-    public function getUserContactUs()
+    public function getAdminContactUs()
     {
         return view('contact_us.user_contact_us');
     }
@@ -104,7 +104,7 @@ class ContactUsController extends Controller
      *
      * @return void
      */
-    public function sendUserContactUs(Request $request)
+    public function sendAdminContactUs(Request $request)
     {
         try {
 
@@ -120,7 +120,7 @@ class ContactUsController extends Controller
 
             $data['files'] = $request->file('files', []);
 
-            $this->notificationUtil->sendUserContactUs($data);
+            $this->notificationUtil->sendAdminContactUs($data);
 
 
             $output = [
