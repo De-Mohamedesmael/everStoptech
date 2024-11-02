@@ -27,7 +27,7 @@ class AddQuantityDamageToAddStockLines extends Migration
     public function down()
     {
         Schema::table('add_stock_lines', function (Blueprint $table) {
-            $table->dropColumn('quantity_damage');
+            $table->dropColumn('quantity_damaged');
         });
     }
 }

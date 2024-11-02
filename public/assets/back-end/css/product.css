@@ -9,12 +9,12 @@
   .accordion-button {
       padding: 8px !important;
       /* width: fit-content !important; */
-      background-color: #1db3d4 !important;
+      background-color: #1565c0 !important;
       color: white !important;
       outline: none;
       border-radius: 6px !important;
       cursor: pointer;
-      border: 2px solid #1db3d4;
+      border: 2px solid #1565c0;
       justify-content: space-between;
       transition: 0.4s;
       box-shadow: 0 0 0 0 !important;

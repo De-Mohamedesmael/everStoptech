@@ -1,5 +1,5 @@
 <nav class="navbar no-print navbar-expand-lg bg-white mb-1 py-0"
-    style="z-index: 5;background-color: #1db3d405 !important">
+    style="z-index: 5;background-color: #1565c005 !important">
     <div class="container-fluid">
         <a style="width: 150px;" class="ml-2 d-lg-none" href="index.html">
             <img style="width: 100%" src="{{ asset('assets/back-end/images/logo1.png') }}" class="img-fluid" alt="logo">
