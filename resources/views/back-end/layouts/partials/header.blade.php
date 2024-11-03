@@ -164,7 +164,7 @@
                                                            class="employees-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.employees')</a></li>
                                 <li class="navbar_item"><a style="cursor: pointer;font-weight: 600;text-decoration: none"
-                                                           href="{{ action('WagesAndCompensationController@create') }}" target="_blank"
+                                                           href="{{ action('WagesAndCompensationController@index') }}" target="_blank"
                                                            class="wages-button d-flex item-list-a"><i
                                             class="mdi mdi-circle"></i>@lang('lang.wages')</a>
                                 </li>

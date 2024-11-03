@@ -59,6 +59,17 @@
         div#ui-datepicker-div{
             width: revert;
         }
+        .card {
+            border-radius: 5px;
+            border: none;
+            background-color: #ffffff;
+            box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
+        }
+        .btn.btn-main {
+            background-color: #1565c0;
+            border-color: #1565c0;
+            color: #fff;
+        }
     </style>
     @yield('styles')
     @stack('style')
@@ -277,6 +288,10 @@
             </div>
         </div>
         @yield('content')
+        <div class="modal modal-jobs animate__animated  view_modal" data-animate-in="animate__rollIn"
+             data-animate-out="animate__rollOut" tabindex="-1" role="dialog" aria-hidden="true">
+
+        </div>
     </div>
     <!-- End Rightbar -->
 
@@ -325,15 +340,9 @@
     base_path = "{{ url('/') }}";
     current_url = "{{ url()->current() }}";
 </script>
-<div class="modal view_modal no-print" role="dialog" aria-hidden="true">
-    <!-- Modal -->
-    <div class="modal modal-jobs animate__animated  view_modal" data-animate-in="animate__rollIn"
-         data-animate-out="animate__rollOut" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
 
-        </div>
-    </div>
-</div>
+
+
 
 <!-- Start js -->
 @include('back-end.layouts.partials.javascript')

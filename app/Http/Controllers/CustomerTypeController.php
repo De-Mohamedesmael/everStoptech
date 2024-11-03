@@ -51,7 +51,7 @@ class CustomerTypeController extends Controller
             )->groupBy('customer_types.id')->get();
         $stores = Store::getDropdown();
 
-        return view('customer_type.index')->with(compact(
+        return view('back-end.customer.customer_type.index')->with(compact(
             'customer_types',
             'stores',
         ));
@@ -70,7 +70,7 @@ class CustomerTypeController extends Controller
         $stores = Store::getDropdown();
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('customer_type.create')->with(compact(
+        return view('back-end.customer.customer_type.create')->with(compact(
             'quick_add',
             'customer_types',
             'stores',
@@ -179,7 +179,7 @@ class CustomerTypeController extends Controller
         $customers = $query->groupBy('customers.id')->get();
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
 
-        return view('customer_type.show')->with(compact(
+        return view('back-end.customer.customer_type.show')->with(compact(
             'discounts',
             'customers',
             'customer_type',
@@ -198,7 +198,7 @@ class CustomerTypeController extends Controller
         $stores = Store::getDropdown();
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('customer_type.edit')->with(compact(
+        return view('back-end.customer.customer_type.edit')->with(compact(
             'customer_type',
             'stores',
             'products',
@@ -293,7 +293,7 @@ class CustomerTypeController extends Controller
         $row_id = request()->row_id;
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('customer_type.partial.product_discount_row')->with(compact(
+        return view('back-end.customer.customer_type.partial.product_discount_row')->with(compact(
             'products',
             'row_id'
         ));
@@ -303,7 +303,7 @@ class CustomerTypeController extends Controller
         $row_id = request()->row_id;
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('customer_type.partial.product_point_row')->with(compact(
+        return view('back-end.customer.customer_type.partial.product_point_row')->with(compact(
             'products',
             'row_id'
         ));

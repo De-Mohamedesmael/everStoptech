@@ -28,7 +28,7 @@ class AttendanceController extends Controller
             )->orderBy('attendances.id', 'desc')
             ->get();
 
-        return view('attendance.index')->with(compact(
+        return view('back-end.Hr.attendance.index')->with(compact(
             'attendances'
         ));
     }
@@ -42,7 +42,7 @@ class AttendanceController extends Controller
     {
         $employees = Employee::leftjoin('admins', 'employees.admin_id', 'admins.id')->select('admins.name', 'employees.id')->pluck('name', 'id');
 
-        return view('attendance.create')->with(compact(
+        return view('back-end.Hr.attendance.create')->with(compact(
             'employees'
         ));
     }
@@ -142,7 +142,7 @@ class AttendanceController extends Controller
     {
         $employees = Employee::leftjoin('admins', 'employees.admin_id', 'admins.id')->select('admins.name', 'employees.id')->pluck('name', 'id');
 
-        return view('attendance.partials.attendance_row')->with(compact(
+        return view('back-end.Hr.attendance.partials.attendance_row')->with(compact(
             'employees',
             'row_index'
         ));

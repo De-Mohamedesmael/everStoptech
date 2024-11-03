@@ -39,7 +39,7 @@ class ForfeitLeaveController extends Controller
         'cb.name as created_by'
     )->groupBy('forfeit_leaves.id')->get();
 
-    return view('forfeit_leave.index')->with(compact(
+    return view('back-end.Hr.forfeit_leave.index')->with(compact(
         'forfeit_leaves',
     ));
     }

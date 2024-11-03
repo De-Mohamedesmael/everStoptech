@@ -1314,4 +1314,9 @@
   'E-Mail Address' => 'E-Mail Address',
   'forgot_password' => 'Forgot password',
   'Cashier' => 'Cashier',
+  'add_wages_and_compensations' => 'Add wages and compensations',
+  'show_wages_and_compensations' => 'Show wages and compensations',
+  'edit_wages_and_compensations' => 'Edit wages and compensations',
+  'add_attendance' => 'Add attendance',
+  'lang.customers' => 'Lang.customers',
 );
