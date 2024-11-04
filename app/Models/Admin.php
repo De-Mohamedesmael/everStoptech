@@ -84,7 +84,6 @@ class Admin extends Authenticatable
             'reports' => __('lang.reports'),
             'quotation_for_customers' => __('lang.quotation_for_customers'),
             'coupons_and_gift_cards' => __('lang.coupons_and_gift_cards'),
-            'loyalty_points' => __('lang.loyalty_points'),
             'sp_module' => __('lang.sp_module'),
             'safe_module' => __('lang.safe_module'),
             'sms_module' => __('lang.sms_module'),
@@ -129,7 +128,6 @@ class Admin extends Authenticatable
                 'customer' => __('lang.customer'),
                 'customer_type' => __('lang.customer_type'),
                 'add_payment' => __('lang.add_payment'),
-                'customer_sizes' => __('lang.customer_sizes')
             ],
             'supplier_module' => [
                 'supplier' => __('lang.supplier'),
@@ -193,10 +191,6 @@ class Admin extends Authenticatable
                 'coupon' => __('lang.coupon'),
                 'gift_card' => __('lang.gift_card'),
             ],
-            'loyalty_points' => [
-                'earning_of_points' => __('lang.earning_of_points'),
-                'redemption_of_points' => __('lang.redemption_of_points'),
-            ],
             'reports' => [
                 'profit_loss' => __('lang.profit_loss'),
                 'daily_sales_summary' => __('lang.daily_sales_summary'),
@@ -233,7 +227,6 @@ class Admin extends Authenticatable
                 'cash_in_adjustment' => __('lang.cash_in_adjustment'),
                 'cash_out_adjustment' => __('lang.cash_out_adjustment'),
                 'customer_balance_adjustment' => __('lang.customer_balance_adjustment'),
-                'customer_point_adjustment' => __('lang.customer_point_adjustment'),
                 'product_in_adjustment' => __('lang.product_in_adjustment'),
             ],
             'sp_module' => [

@@ -24,8 +24,10 @@ class Store extends Model
     public static function getDropdown()
     {
 
-        $employee = Employee::where('admin_id', auth()->user()->id)->first();
-        $stores = Store::whereIn('id', (array) $employee->store_id)->orderBy('name', 'asc')->pluck('name', 'id')->toArray();
+        $employee = Employee::where('admin_id', auth('admin')->user()->id)->first();
+        $stores = Store::whereIn('id', (array) $employee->store_id)
+            ->orderBy('name', 'asc')
+            ->pluck('name', 'id')->toArray();
 
         return $stores;
     }

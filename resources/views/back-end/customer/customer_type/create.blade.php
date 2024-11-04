@@ -1,20 +1,26 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.customer_type'))
-@section('style')
+@section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
+@endsection
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerController@index') }}">/
+            {{translate('customers')}}</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerTypeController@index') }}">/
+            {{translate('customer_types')}}</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        {{translate('add_customer_type')}}</li>
 @endsection
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
-                    <div
-                        class="  d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-
-                        <h5 class="mb-0 position-relative print-title" style="margin-right: 30px">@lang('lang.add_customer_type')
-                            <span class="header-pill"></span>
-                        </h5>
-                    </div>
                     <div class="card mb-2 d-flex flex-row justify-content-center align-items-center">
                         <p class="italic mb-0 py-1">
                             <small>@lang('lang.required_fields_info')</small>
@@ -77,25 +83,6 @@
 
 @section('javascript')
     <script type="text/javascript">
-        $(document).on('click', '.remove_row', function() {
-            $(this).closest('tr').remove();
-        })
-
-        $(document).on('click', '.add_row_point', function() {
-            var row_id = parseInt($('#row_id_point').val()) + 1;
-            $.ajax({
-                method: 'get',
-                url: '/customer-type/get-product-point-row?row_id=' + row_id,
-                data: {},
-                contentType: 'html',
-                success: function(result) {
-                    $('#product_point_table tbody').append(result);
-                    $('.row_' + row_id).find('.product_id_' + row_id).selectpicker('refresh');
-                    $('#row_id_point').val(row_id);
-                },
-            });
-        })
-
         $('#customer-type-form').submit(function() {
             $(this).validate();
             if ($(this).valid()) {

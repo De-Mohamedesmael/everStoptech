@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.customer'))
-@section('style')
+@section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
 @endsection
 @section('content')

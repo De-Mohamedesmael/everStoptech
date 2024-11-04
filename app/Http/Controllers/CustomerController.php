@@ -83,6 +83,9 @@ class CustomerController extends Controller
         if (!empty(request()->customer_type_id)) {
             $query->where('customer_types.id',request()->customer_type_id);
         }
+        if (!empty(request()->gender)) {
+            $query->where('customers.gender',request()->gender);
+        }
 
         $query->select(
             'customers.*',
@@ -136,7 +139,9 @@ class CustomerController extends Controller
         ->addColumn('address', function ($row) {
             return $row->address;
          })
-
+        ->addColumn('gender', function ($row) {
+            return $row->gender_name;
+        })
          ->addColumn('balance', function ($row){
             $balance = $this->transactionUtil->getCustomerBalance($row->id)['balance'];
 
@@ -159,9 +164,6 @@ class CustomerController extends Controller
          ->addColumn('discount', function ($row) {
             $discount=ceil($row->total_sp_discount + $row->total_product_discount + $row->total_coupon_discount* 100) / 100;
             return $discount;
-         })
-         ->addColumn('points', function ($row) {
-            return $row->total_rp;
          })
          ->addColumn('joining_date', function ($row) {
             return $row->created_at->format('Y-m-d');
@@ -187,7 +189,6 @@ class CustomerController extends Controller
                         <i class="dripicons-document"></i>
                             ' .__('lang.view') . '</a>
                             </li>';
-                    $html .= '<li class="divider"></li>';
                 }
 
                 if (auth()->user()->can('customer_module.customer.create_and_edit')) {
@@ -197,7 +198,6 @@ class CustomerController extends Controller
                         ><i class="dripicons-document-edit"></i>
                         ' .__('lang.edit') . '</a>
                         </li>';
-                    $html .= '<li class="divider"></li>';
                 }
                 $balance = $this->transactionUtil->getCustomerBalance($row->id)['balance'];
 
@@ -209,7 +209,6 @@ class CustomerController extends Controller
                     class="btn-modal" data-container=".view_modal"><i class="fa fa-money "></i>
                         ' .__('lang.pay_customer_due') . '</a>
                         </li>';
-                    $html .= '<li class="divider"></li>';
                     }
                 }
                 if (auth()->user()->can('customer_module.add_payment.create_and_edit')) {
@@ -220,7 +219,6 @@ class CustomerController extends Controller
                     class="btn-modal" data-container=".view_modal"><i class="fa fa-money"></i>
                         ' .__('lang.extract_customer_due') . '</a>
                         </li>';
-                    $html .= '<li class="divider"></li>';
                     }
                 }
                 if (auth()->user()->can('adjustment.customer_balance_adjustment.create_and_edit')) {
@@ -230,36 +228,6 @@ class CustomerController extends Controller
                         ><i class="fa fa-adjust"></i>
                         ' .__('lang.adjust_customer_balance') . '</a>
                         </li>';
-                    $html .= '<li class="divider"></li>';
-                }
-                if (auth()->user()->can('adjustment.customer_point_adjustment.create_and_edit')) {
-                    $html .=
-                    '<li>
-                    <a href="' . action('CustomerPointAdjustmentController@create', ['customer_id' => $row->id]). '"
-                        ><i class="fa fa-adjust"></i>
-                        ' .__('lang.adjust_customer_points') . '</a>
-                        </li>';
-                    $html .= '<li class="divider"></li>';
-                }
-                if (session('system_mode') == 'garments'){
-                    if (auth()->user()->can('customer_module.customer_sizes.create_and_edit')) {
-                        $html .=
-                        '<li>
-                        <a href="' .action('CustomerSizeController@add', $row->id). '"
-                            ><i class="fa fa-plus"></i>
-                            ' .__('lang.add_size') . '</a>
-                            </li>';
-                        $html .= '<li class="divider"></li>';
-                    }
-                    if (auth()->user()->can('customer_module.customer_sizes.view')) {
-                        $html .=
-                        '<li>
-                        <a href="' .action('CustomerController@show', $row->id). '"
-                            ><i class="fa fa-user-secret"></i>
-                            ' .__('lang.view_sizes') . '</a>
-                            </li>';
-                        $html .= '<li class="divider"></li>';
-                    }
                 }
                 if ($row->is_default == 0){
                     if (auth()->user()->can('customer_module.customer.delete')) {
@@ -270,7 +238,6 @@ class CustomerController extends Controller
                         class="btn text-red delete_customer"><i class="fa fa-trash"></i>
                             ' .__('lang.delete') . '</a>
                             </li>';
-                        $html .= '<li class="divider"></li>';
                     }
                 }
                 $html .="</ul>";
@@ -280,15 +247,16 @@ class CustomerController extends Controller
           ->rawColumns([
             'customer_type',
             'image',
+            'gender',
             'created_by',
             'mobile_number',
             'address',
-            'balance','purchases','discount','points','joining_date','action'
+            'balance','purchases','discount','joining_date','action'
         ])
         ->make(true);
         }
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
-        return view('customer.index')->with(compact('customer_types'));
+        return view('back-end.customer.index')->with(compact('customer_types'));
     }
 
     /**
@@ -302,22 +270,22 @@ class CustomerController extends Controller
         $customer_types = CustomerType::pluck('name', 'id');
 
         $quick_add = request()->quick_add ?? null;
-        $getAttributeListArray = CustomerSize::getAttributeListArray();
         $customers = Customer::getCustomerArrayWithMobile();
+        $genders = Customer::getDropdownGender();
 
         if ($quick_add) {
-            return view('customer.quick_add')->with(compact(
+            return view('back-end.customer.quick_add')->with(compact(
                 'customer_types',
                 'customers',
-                'getAttributeListArray',
+                'genders',
                 'quick_add'
             ));
         }
 
-        return view('customer.create')->with(compact(
+        return view('back-end.customer.create')->with(compact(
             'customer_types',
             'customers',
-            'getAttributeListArray',
+            'genders',
             'quick_add'
         ));
     }
@@ -336,47 +304,31 @@ class CustomerController extends Controller
             ['customer_type_id' => ['required', 'max:255']]
         );
 
-        // try {
-        $data = $request->except('_token', 'quick_add', 'size_data', 'reward_system', 'referred', 'referred_type', 'referred_by');
-        $data['created_by'] = Auth::user()->id;
+         try {
+            $data = $request->except('_token', 'quick_add', 'reward_system');
+            $data['created_by'] = auth('admin')->user()->id;
 
-        DB::beginTransaction();
-        $customer = Customer::create($data);
-
-        if ($request->has('image')) {
-            $customer->addMedia($request->image)->toMediaCollection('customer_photo');
-        }
-
-        $size_data = $request->size_data;
-
-        if (!empty($size_data)) {
-            $size_data['customer_id'] = $customer->id;
-            $size_data['created_by'] = Auth::user()->id;
-
-            $customer_size = CustomerSize::create($size_data);
-        }
-
-        $customer_id = $customer->id;
-
-        if (!empty($request->important_dates)) {
-            $this->transactionUtil->createOrUpdateCustomerImportantDate($customer_id, $request->important_dates);
-        }
-
-        $this->transactionUtil->createReferredRewardSystem($customer_id, $request);
-
-        DB::commit();
-        $output = [
-            'success' => true,
-            'customer_id' => $customer_id,
-            'msg' => __('lang.success')
-        ];
-        // } catch (\Exception $e) {
-        //     Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
-        //     $output = [
-        //         'success' => false,
-        //         'msg' => __('lang.something_went_wrong')
-        //     ];
-        // }
+            DB::beginTransaction();
+            $customer = Customer::create($data);
+            if ($request->has('image')) {
+                $customer->addMedia($request->image)->toMediaCollection('customer_photo');
+            }
+            $customer_id = $customer->id;
+            DB::commit();
+            $output = [
+                'success' => true,
+                'customer_id' => $customer_id,
+                'msg' => __('lang.success')
+            ];
+         } catch (\Exception $e) {
+             DB::rollBack();
+             dd($e);
+             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
+             $output = [
+                 'success' => false,
+                 'msg' => __('lang.something_went_wrong')
+             ];
+         }
 
 
         if ($request->quick_add) {
@@ -401,8 +353,6 @@ class CustomerController extends Controller
             $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
             $default_currency_id = System::getProperty('currency');
             $request = request();
-            $store_id = request()->store_id;
-            $pos_id = $this->transactionUtil->getFilterOptionValues($request)['pos_id'];
 
             $query = Transaction::leftjoin('transaction_payments', 'transactions.id', 'transaction_payments.transaction_id')
                 ->leftjoin('stores', 'transactions.store_id', 'stores.id')
@@ -612,7 +562,6 @@ class CustomerController extends Controller
                                     ' . __('lang.print_gift_invoice') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
                         if (auth()->user()->can('sale.pos.view')) {
                             $html .=
                                 '<li>
@@ -620,15 +569,13 @@ class CustomerController extends Controller
                                     class="btn btn-modal"><i class="fa fa-eye"></i> ' . __('lang.view') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
-                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
                             $html .=
                                 '<li>
                                 <a href="' . action('SellController@edit', $row->id) . '" class="btn"><i
                                         class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a>
                             </li>';
                         }
-                        $html .= '<li class="divider"></li>';
                         if (auth()->user()->can('return.sell_return.create_and_edit')) {
                             if (empty($row->return_parent)) {
                                 $html .=
@@ -638,7 +585,6 @@ class CustomerController extends Controller
                                     </li>';
                             }
                         }
-                        $html .= '<li class="divider"></li>';
                         if (auth()->user()->can('sale.pay.create_and_edit')) {
                             if ($row->status != 'draft' && $row->payment_status != 'paid' && $row->status != 'canceled') {
                                 $html .=
@@ -649,7 +595,6 @@ class CustomerController extends Controller
                                     </li>';
                             }
                         }
-                        $html .= '<li class="divider"></li>';
                         if (auth()->user()->can('sale.pay.view')) {
                             $html .=
                                 '<li>
@@ -658,8 +603,7 @@ class CustomerController extends Controller
                                     ' . __('lang.view_payments') . '</a>
                                 </li>';
                         }
-                        $html .= '<li class="divider"></li>';
-                        if (auth()->user()->can('superadmin') || auth()->user()->is_admin == 1) {
+                        if (auth()->user()->can('sale.pos.create_and_edit')) {
                             $html .=
                                 '<li>
                                 <a data-href="' . action('SellController@destroy', $row->id) . '"
@@ -692,7 +636,6 @@ class CustomerController extends Controller
         }
         $sale_return_query = Transaction::whereIn('transactions.type', ['sell_return'])
             ->whereIn('transactions.status', ['final']);
-        // ->whereNull('parent_return_id');
 
         if (!empty(request()->start_date)) {
             $sale_return_query->where('transaction_date', '>=', request()->start_date);
@@ -729,49 +672,19 @@ class CustomerController extends Controller
             'transactions.*'
         )->groupBy('transactions.id')->get();
 
-        $point_query = Transaction::whereIn('transactions.type', ['sell'])
-            ->whereIn('transactions.status', ['final'])
-            ->where(function ($q) {
-                $q->where('rp_earned', '>', 0);
-            });
 
-        if (!empty(request()->start_date)) {
-            $point_query->where('transaction_date', '>=', request()->start_date);
-        }
-        if (!empty(request()->end_date)) {
-            $point_query->where('transaction_date', '<=', request()->end_date);
-        }
-        if (!empty($customer_id)) {
-            $point_query->where('transactions.customer_id', $customer_id);
-        }
-        $points = $point_query->select(
-            'transactions.*'
-        )->groupBy('transactions.id')->get();
-
-        $customer_sizes = CustomerSize::where('customer_id', $customer_id)->get();
-
-        $customers = Customer::pluck('name', 'id');
-        $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
         $balance = $this->transactionUtil->getCustomerBalance($customer->id)['balance'];
-        $referred_by = $customer->referred_by_admins($customer->id);
-//        $transactions_ids = Transaction::
-//        where('transactions.type', 'sell')->whereIn('status', ['final', 'canceled'])
-//            ->where('customer_id', $id)->pluck('id');
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
 
         $payments=DebtPayment::with('created_by_user')->where('customer_id', $id)->get();
 
-        return view('customer.show')->with(compact(
+        return view('back-end.customer.show')->with(compact(
             'sale_returns',
-            'points',
             'discounts',
-            'customers',
             'customer',
             'payment_type_array',
             'payments',
-            'customer_sizes',
             'balance',
-            'referred_by',
         ));
     }
 
@@ -786,7 +699,7 @@ class CustomerController extends Controller
         $customer = Customer::find($id);
         $customer_types = CustomerType::pluck('name', 'id');
 
-        return view('customer.edit')->with(compact(
+        return view('back-end.customer.edit')->with(compact(
             'customer',
             'customer_types',
         ));
@@ -813,7 +726,6 @@ class CustomerController extends Controller
             DB::beginTransaction();
             $customer = Customer::find($id);
             $customer->update($data);
-
             if ($request->has('image')) {
                 if ($customer->getFirstMedia('customer_photo')) {
                     $customer->getFirstMedia('customer_photo')->delete();
@@ -964,7 +876,7 @@ class CustomerController extends Controller
             $customer_details = $query->first();
             $payment_type_array = $this->commonUtil->getPaymentTypeArray();
 
-            return view('customer.partial.pay_customer_due')
+            return view('back-end.customer.partial.pay_customer_due')
                 ->with(compact('customer_details', 'payment_type_array',));
         }
     }
@@ -1009,7 +921,7 @@ class CustomerController extends Controller
     {
         $payment = DebtPayment::find($id);
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
-        return view('customer.partial.edit_pay_customer_due')->with(compact(
+        return view('back-end.customer.partial.edit_pay_customer_due')->with(compact(
             'payment',
             'payment_type_array'
         ));
@@ -1159,7 +1071,7 @@ class CustomerController extends Controller
     {
         $index = request()->index ?? 0;
 
-        return view('customer.partial.important_date_row')->with(compact(
+        return view('back-end.customer.partial.important_date_row')->with(compact(
             'index'
         ));
     }
@@ -1195,7 +1107,7 @@ class CustomerController extends Controller
         $index = request()->index ?? 0;
         $customers = Customer::getCustomerArrayWithMobile();
 
-        return view('customer.partial.referral_row')->with(compact(
+        return view('back-end.customer.partial.referral_row')->with(compact(
             'index',
             'customers',
         ));
@@ -1223,7 +1135,7 @@ class CustomerController extends Controller
         $product_classes = ProductClass::get();
         $products = Product::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('customer.partial.referred_by_details')->with(compact(
+        return view('back-end.customer.partial.referred_by_details')->with(compact(
             'data',
             'index',
             'payment_type_array',

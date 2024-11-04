@@ -1,20 +1,32 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.customer_details'))
-@section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
+@section('styles')
+<style>
+    .nav-tabs .nav-item .nav-link.active {
+        border-bottom: 2px solid var(--secondary-color) !important;
+    }
+</style>
 @endsection
+
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerController@index') }}">/
+            {{translate('customers')}}</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerTypeController@index') }}">/
+            {{translate('customer_types')}}</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        {{translate('customer_details')}}</li>
+@endsection
+
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-12 px-1 no-print">
-                    <div
-                        class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <h5 class="mb-0 position-relative" style="margin-right: 30px">
-                            @lang('lang.customer_details')
-                            <span class="header-pill"></span>
-                        </h5>
-                    </div>
+                <div class="col-md-12 px-1 no-print  mt-2">
                     <form action="">
                         <div class="card mb-2">
                             <div class="card-body p-2">

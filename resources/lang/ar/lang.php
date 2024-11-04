@@ -1303,4 +1303,6 @@
   'products_filter' => 'فلاتر المنتجات',
   'products_other_filter' => 'فلاتر اخرى للمنتجات',
   'Cashier' => 'Cashier',
+  'Male' => 'Male',
+  'gender' => 'Gender',
 );

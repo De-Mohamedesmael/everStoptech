@@ -70,6 +70,15 @@
             border-color: #1565c0;
             color: #fff;
         }
+        div.ui-datepicker {
+            z-index: 1000 !important;
+        }
+
+        button.btn.table-btns {
+            margin-right: .25rem !important;
+            margin-left: .25rem !important;
+            border-radius: var(--bs-border-radius-lg) !important;
+        }
     </style>
     @yield('styles')
     @stack('style')

@@ -1,34 +1,83 @@
 @extends('back-end.layouts.app')
 @section('title', __('lang.customer'))
-@section('style')
-@endsection
+@section('styles')
+    <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
+    <style>
+        .dropdown-menu.edit-options li a, .dropdown-menu.edit-options li .btn-link {
+            color: var(--tertiary-color);
+            display: block;
+            text-align: left;
+            text-decoration: none;
+            width: 100%;
+            padding: 6px 10px !important;
+        }
+        table .dropdown-menu a {
+            font-weight: 700 !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            font-size: 13px !important;
+            align-items: center !important;
+        }
+        .dt-buttons .table-btns {
 
+            background-color: var(--complementary-color-1) !important;
+            color: white !important;
+            border-radius: 6px !important;
+            margin: 5px 0 !important;
+            transition: 0.6s;
+        }
+        .btn:not(:disabled):not(.disabled) {
+            cursor: pointer;
+        }
+        .btn.btn-default, .btn.btn-default:focus {
+            border: 1px solid;
+            background-color: #fff;
+            color: var(--secondary-color);
+        }
+        .text-red {
+            color: maroon !important;
+        }
+        .dropdown-menu.edit-options li {
+            border-bottom: 1px solid #eee;
+            padding: 0px !important;
+        }
+        sr-only {
+            border: 0;
+            clip: rect(0, 0, 0, 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+        .dropdown-toggle::after {
+            color: var(--complementary-color-1) !important;
+        }
+
+    </style>
+@endsection
+@section('breadcrumbs')
+    @parent
+
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        @lang('lang.customers')</li>
+@endsection
+@section('button')
+    <div class="widgetbar d-flex @if (app()->isLocale('ar')) justify-content-start @else justify-content-end @endif">
+        <a class="btn btn-primary" href="{{ action('CustomerController@create') }}">{{translate('add_customer')}}</a>
+    </div>
+@endsection
 @section('content')
     <section class="forms py-0">
 
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
-                    <div
-                        class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <h5 class="mb-0 print-title position-relative" style="margin-right: 30px">
-                            @lang('lang.all_customers')
-                            <span class="header-pill"></span>
-                        </h5>
-                    </div>
-                    <div class="card mb-2">
-                        <div class="card-body p-2 d-flex justify-content-center align-items-center">
-                            <a style="color: white" href="{{ action('CustomerController@create') }}"
-                                class="btn btn-main col-md-3"><i class="dripicons-plus"></i>
-                                @lang('lang.customer')</a>
-                        </div>
-                    </div>
-
-
-                    <div class="card mb-2">
+                    <div class="card mb-2 mt-2">
                         <div class="card-body p-2">
                             <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                <div class="col-md-3 px-5">
+                                <div class="col-md-2 px-5">
                                     <div class="form-group">
                                         {!! Form::label('start_date', __('lang.start_date'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -40,7 +89,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-3 px-5">
+                                <div class="col-md-2 px-5">
                                     <div class="form-group">
                                         {!! Form::label('end_date', __('lang.end_date'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -51,7 +100,8 @@
                                         ]) !!}
                                     </div>
                                 </div>
-                                <div class="col-md-3 px-5">
+
+                                <div class="col-md-2 px-5">
                                     <div class="form-group">
                                         {!! Form::label('customer_type_id', __('lang.customer_type'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -65,11 +115,22 @@
                                         ]) !!}
                                     </div>
                                 </div>
-                                <div class="col-md-3 px-5 d-flex justify-content-center align-items-center">
+                                <div class="col-md-2 mb-2">
+                                    {!! Form::label('gender', translate('gender') . '*', [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::select('gender', \App\Models\Customer::getDropdownGender(), null , [
+                                        'class' => 'selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'required',
+                                        'placeholder' => __('lang.all'),
+                                    ]) !!}
+                                </div>
+                                <div class="col-md-2 px-5 d-flex justify-content-center align-items-center">
                                     <button type="button"
                                         class="btn btn-main col-md-12 filter_product">@lang('lang.filter')</button>
                                 </div>
-                                <div class="col-md-3 px-5 d-flex justify-content-center align-items-center">
+                                <div class="col-md-2 px-5 d-flex justify-content-center align-items-center">
                                     <button class="btn btn-danger col-md-12 clear_filters">@lang('lang.clear_filters')</button>
 
                                 </div>
@@ -87,12 +148,12 @@
                                             <th>@lang('lang.photo')</th>
                                             <th>@lang('lang.name')</th>
                                             <th>@lang('lang.mobile_number')</th>
+                                            <th>@lang('lang.age')</th>
+                                            <th>@lang('lang.gender')</th>
                                             <th>@lang('lang.address')</th>
                                             <th class="sum">@lang('lang.balance')</th>
                                             <th class="sum_purchase">@lang('lang.purchases')</th>
                                             <th class="sum_discounts">@lang('lang.discount')</th>
-                                            <th class="sum_points">@lang('lang.points')</th>
-                                            {{-- <th>@lang('lang.added_balance')</th> --}}
                                             <th>@lang('lang.created_by')</th>
                                             <th>@lang('lang.joining_date')</th>
                                             <th class="notexport">@lang('lang.action')</th>
@@ -104,7 +165,6 @@
                                     <tfoot>
                                         <tr>
                                             {{-- <td></td> --}}
-                                            <td></td>
                                             <td></td>
                                             <td></td>
                                             <td></td>
@@ -195,6 +255,14 @@
                         name: 'customers.mobile_number'
                     },
                     {
+                        data: 'age',
+                        name: 'customers.age'
+                    },
+                    {
+                        data: 'gender',
+                        name: 'gender'
+                    },
+                    {
                         data: 'address',
                         name: 'customers.address'
                     },
@@ -226,18 +294,7 @@
                             }
                         }
                     },
-                    {
-                        data: 'points',
-                        name: 'points',
-                        render: function(data, type, row) {
-                            if (type === 'display' && row.id !== null) {
-                                var url = '{{ url('customer') }}/' + row.id + '?show=points';
-                                return '<a href="' + url + '">' + data + '</a>';
-                            } else {
-                                return data;
-                            }
-                        }
-                    },
+
                     // {
                     //     data: 'total_balance_adjustment',
                     //     name: 'total_balance_adjustment'

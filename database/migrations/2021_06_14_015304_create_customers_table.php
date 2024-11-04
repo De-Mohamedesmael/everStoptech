@@ -18,6 +18,8 @@ class CreateCustomersTable extends Migration
             $table->string('name')->nullable();
             $table->unsignedBigInteger('customer_type_id');
             $table->string('mobile_number', 16);
+            $table->integer('age');
+            $table->enum('gender', [1,2]);
             $table->string('address', 150)->nullable();
             $table->string('email')->nullable();
             $table->decimal('deposit_balance', 15, 4)->default(0);

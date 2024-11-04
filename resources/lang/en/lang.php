@@ -1319,4 +1319,6 @@
   'edit_wages_and_compensations' => 'Edit wages and compensations',
   'add_attendance' => 'Add attendance',
   'lang.customers' => 'Lang.customers',
+  'lang.customer_types' => 'Lang.customer types',
+  'Male' => 'Male',
 );

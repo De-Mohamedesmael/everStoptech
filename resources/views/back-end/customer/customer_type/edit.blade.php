@@ -1,19 +1,27 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.customer_type'))
-@section('style')
+@section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
+@endsection
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerController@index') }}">/
+            {{translate('customers')}}</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerTypeController@index') }}">/
+            {{translate('customer_types')}}</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        {{translate('edit')}}</li>
 @endsection
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
-                    <div
-                        class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <h5 class="mb-0 position-relative print-title" style="margin-right: 30px">@lang('lang.edit')
-                            <span class="header-pill"></span>
-                        </h5>
-                    </div>
+
                     <div class="card mb-2 d-flex flex-row justify-content-center align-items-center">
                         <p class="italic mb-0 py-1">
                             <small>@lang('lang.required_fields_info')</small>

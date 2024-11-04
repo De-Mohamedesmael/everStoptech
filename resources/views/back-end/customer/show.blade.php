@@ -1,8 +1,6 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.customer_details'))
-@section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
-@endsection
+
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
@@ -74,23 +72,6 @@
                                     <a class="nav-link @if (request()->show == 'view_payments') active @endif"
                                         href="#view-payments" role="tab" data-toggle="tab">@lang('lang.view_payments')</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if (request()->show == 'points') active @endif" href="#store-point"
-                                        role="tab" data-toggle="tab">@lang('lang.points')</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link @if (request()->show == 'rewards') active @endif"
-                                        href="#store-rewards" role="tab" data-toggle="tab">@lang('lang.rewards')</a>
-                                </li>
-                                @if (session('system_mode') == 'garments')
-                                    @can('customer_module.customer_sizes.view')
-                                        <li class="nav-item">
-                                            <a class="nav-link @if (request()->show == 'sizes') active @endif"
-                                                href="#store-sizes" role="tab" data-toggle="tab">@lang('lang.sizes')</a>
-                                        </li>
-                                    @endcan
-                                @endif
-
                             </ul>
 
                             <div class="tab-content">
@@ -136,13 +117,13 @@
                                                         class="balance @if ($balance < 0) text-red @endif">{{ $balance }}</span>
                                                 </div>
                                                 <div class="col-md-12">
-                                                    <b>@lang('lang.referred_by'):</b> {{ $referred_by }}
+                                                    <b>@lang('lang.created_by'):</b> {{ $customer->created_by_user?->name }}
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="thumbnail">
                                                     <img style="width: 200px; height: 200px;" class="img-fluid"
-                                                        src="@if (!empty($customer->getFirstMediaUrl('customer_photo'))) {{ $customer->getFirstMediaUrl('customer_photo') }} @endif"
+                                                        src="@if ($customer->getFirstMediaUrl('customer_photo')) {{ $customer->getFirstMediaUrl('customer_photo') }} @else {{asset('/uploads/' . session('logo'))}}@endif"
                                                         alt="Customer photo">
                                                 </div>
                                             </div>
@@ -193,7 +174,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div role="tabpanel"
                                     class="tab-pane fade @if (request()->show == 'sell_return') show active @endif"
                                     id="sell_return">
@@ -324,7 +304,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <div role="tabpanel"
                                     class="tab-pane fade @if (request()->show == 'discounts') show active @endif"
                                     id="store-discount">
@@ -538,243 +517,6 @@
                                         </table>
                                     </div>
                                 </div>
-
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (request()->show == 'points') show active @endif"
-                                    id="store-point">
-                                    <div class="table-responsive">
-                                        <table class="table dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <th>@lang('lang.date')</th>
-                                                    <th>@lang('lang.reference_no')</th>
-                                                    <th>@lang('lang.customer')</th>
-                                                    <th>@lang('lang.product')</th>
-                                                    <th class="sum">@lang('lang.grand_total')</th>
-                                                    <th>@lang('lang.status')</th>
-                                                    <th>@lang('lang.points_earned')</th>
-                                                    <th>@lang('lang.action')</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                @php
-                                                    $total_point_payments = 0;
-                                                    $total_point_due = 0;
-                                                @endphp
-                                                @foreach ($points as $point)
-                                                    <tr>
-                                                        <td>{{ @format_date($point->transaction_date) }}</td>
-                                                        <td>{{ $point->invoice_no }}</td>
-                                                        <td>
-                                                            @if (!empty($point->customer))
-                                                                {{ $point->customer->name }}
-                                                            @endif
-                                                        </td>
-                                                        <td>
-                                                            @foreach ($point->transaction_sell_lines as $line)
-                                                                ({{ @num_format($line->quantity) }})
-                                                                @if (!empty($line->product))
-                                                                    {{ $line->product->name }}
-                                                                @endif <br>
-                                                            @endforeach
-                                                        </td>
-                                                        <td>{{ @num_format($point->final_total) }}</td>
-                                                        </td>
-                                                        <td>
-                                                            @if ($point->status == 'final')
-                                                                <span class="badge badge-success">@lang('lang.completed')</span>
-                                                            @else
-                                                                {{ ucfirst($point->status) }}
-                                                            @endif
-                                                        </td>
-                                                        <td>{{ @num_format($point->rp_earned) }}</td>
-                                                        <td>
-                                                            <div class="btn-group">
-                                                                <button type="button"
-                                                                    class="btn btn-default btn-sm dropdown-toggle"
-                                                                    data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">@lang('lang.action')
-                                                                    <span class="caret"></span>
-                                                                    <span class="sr-only">Toggle Dropdown</span>
-                                                                </button>
-                                                                <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                                    user="menu">
-                                                                    @can('sale.pos.view')
-                                                                        <li>
-                                                                            <a data-href="{{ action('SellController@show', $point->id) }}"
-                                                                                data-container=".view_modal"
-                                                                                class="btn btn-modal"><i
-                                                                                    class="fa fa-eye"></i>
-                                                                                @lang('lang.view')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
-                                                                    @can('sale.pos.create_and_edit')
-                                                                        <li>
-                                                                            <a href="{{ action('SellController@edit', $point->id) }}"
-                                                                                class="btn"><i
-                                                                                    class="dripicons-document-edit"></i>
-                                                                                @lang('lang.edit')</a>
-                                                                        </li>
-                                                                        <li class="divider"></li>
-                                                                    @endcan
-
-                                                                    @can('sale.pos.delete')
-                                                                        <li>
-                                                                            <a data-href="{{ action('SellController@destroy', $point->id) }}"
-                                                                                data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
-                                                                                class="btn text-red delete_item"><i
-                                                                                    class="fa fa-trash"></i>
-                                                                                @lang('lang.delete')</a>
-                                                                        </li>
-                                                                    @endcan
-                                                                </ul>
-                                                            </div>
-                                                    </tr>
-                                                    @php
-                                                        $total_point_payments += $point->transaction_payments->sum(
-                                                            'amount',
-                                                        );
-                                                        $total_point_due +=
-                                                            $point->final_total -
-                                                            $point->transaction_payments->sum('amount');
-                                                    @endphp
-                                                @endforeach
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th></th>
-                                                    <th style="text-align: right">@lang('lang.total')</th>
-                                                    <th></th>
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div role="tabpanel"
-                                    class="tab-pane fade @if (request()->show == 'rewards') show active @endif"
-                                    id="store-rewards">
-                                    <div class="table-responsive">
-                                        <table class="table" id="rewards_table">
-                                            <thead>
-                                                <tr>
-                                                    <th>@lang('lang.date')</th>
-                                                    <th>@lang('lang.type')</th>
-                                                    <th>@lang('lang.amount')</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    {{-- <th></th>
-                                            <th></th>
-                                            <th></th>
-                                            <th style="text-align: right">@lang('lang.total')</th>
-                                            <th></th> --}}
-                                                </tr>
-                                            </tfoot>
-                                        </table>
-                                    </div>
-                                </div>
-                                @if (session('system_mode') == 'garments')
-                                    <div role="tabpanel"
-                                        class="tab-pane fade @if (request()->show == 'sizes') show active @endif"
-                                        id="store-sizes">
-                                        @can('customer_module.customer_sizes.create_and_edit')
-                                            <div class="col-md-12 mt-4 ml-2">
-                                                <a data-href="{{ action('CustomerSizeController@add', $customer->id) }}"
-                                                    class="btn-modal btn btn-primary" style="color: #fff;"
-                                                    data-container=".view_modal"><i
-                                                        class="fa fa-plus"></i>@lang('lang.add_size')</a>
-                                            </div>
-                                        @endcan
-                                        <div class="table-responsive">
-                                            <table class="table dataTable">
-                                                <thead>
-                                                    <tr>
-                                                        <th>@lang('lang.name')</th>
-                                                        <th>@lang('lang.created_by')</th>
-                                                        <th>@lang('lang.date_and_time')</th>
-                                                        <th class="notexport">@lang('lang.action')</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @foreach ($customer_sizes as $customer_size)
-                                                        <tr>
-                                                            <td>{{ $customer_size->name }}</td>
-                                                            <td>{{ $customer_size->created_by_user ? $customer_size->created_by_user->name : '' }}
-                                                            </td>
-                                                            <td>{{ @format_datetime($customer_size->created_at) }}</td>
-
-                                                            <td>
-                                                                <div class="btn-group">
-                                                                    <button type="button"
-                                                                        class="btn btn-default btn-sm dropdown-toggle"
-                                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">@lang('lang.action')
-                                                                        <span class="caret"></span>
-                                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                                    </button>
-                                                                    <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
-                                                                        user="menu">
-                                                                        @can('customer_module.customer_sizes.view')
-                                                                            <li>
-
-                                                                                <a data-href="{{ action('CustomerSizeController@print', $customer_size->id) }}"
-                                                                                    data-container=".view_modal"
-                                                                                    class="btn print-btn"><i
-                                                                                        class="dripicons-print"></i>
-                                                                                    @lang('lang.print')</a>
-                                                                            </li>
-                                                                            <li class="divider"></li>
-                                                                        @endcan
-                                                                        @can('customer_module.customer_sizes.view')
-                                                                            <li>
-
-                                                                                <a data-href="{{ action('CustomerSizeController@show', $customer_size->id) }}"
-                                                                                    data-container=".view_modal"
-                                                                                    class="btn btn-modal"><i
-                                                                                        class="fa fa-eye"></i>
-                                                                                    @lang('lang.view')</a>
-                                                                            </li>
-                                                                            <li class="divider"></li>
-                                                                        @endcan
-                                                                        @can('customer_module.customer_sizes.create_and_edit')
-                                                                            <li>
-
-                                                                                <a data-href="{{ action('CustomerSizeController@edit', $customer_size->id) }}"
-                                                                                    data-container=".view_modal"
-                                                                                    class="btn btn-modal"><i
-                                                                                        class="dripicons-document-edit"></i>
-                                                                                    @lang('lang.edit')</a>
-                                                                            </li>
-                                                                            <li class="divider"></li>
-                                                                        @endcan
-                                                                        @can('customer_module.customer_sizes.delete')
-                                                                            <li>
-                                                                                <a data-href="{{ action('CustomerSizeController@destroy', $customer_size->id) }}"
-                                                                                    data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"
-                                                                                    class="btn text-red delete_item"><i
-                                                                                        class="fa fa-trash"></i>
-                                                                                    @lang('lang.delete')</a>
-                                                                            </li>
-                                                                        @endcan
-                                                                    </ul>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    @endforeach
-                                                </tbody>
-                                                <tfoot>
-                                                </tfoot>
-                                            </table>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -967,84 +709,6 @@
         });
 
         $(document).ready(function() {
-            rewards_table = $("#rewards_table").DataTable({
-                lengthChange: true,
-                paging: true,
-                searching: true,
-                info: false,
-                bAutoWidth: false,
-                language: {
-                    url: dt_lang_url,
-                },
-                dom: "lBfrtip",
-                stateSave: true,
-                buttons: buttons,
-                processing: true,
-                serverSide: true,
-                ordering: true,
-                aaSorting: [
-                    // [0, "desc"]
-                ],
-                initComplete: function() {
-                    $(this.api().table().container()).find('input').parent().wrap('<form>').parent()
-                        .attr('autocomplete', 'off');
-                },
-                ajax: {
-                    url: "/reward-system/get-details-by-customer/{{ $customer->id }}",
-                    data: function(d) {
-                        d.start_date = $('#start_date').val();
-                        d.end_date = $('#end_date').val();
-                    },
-                },
-                columns: [{
-                        data: "created_at",
-                        name: "created_at"
-                    },
-                    {
-                        data: "type",
-                        name: "type"
-                    },
-                    {
-                        data: "value",
-                        name: "value"
-                    },
-                ],
-                createdRow: function(row, data, dataIndex) {},
-                footerCallback: function(row, data, start, end, display) {
-                    var intVal = function(i) {
-                        return typeof i === "string" ?
-                            i.replace(/[\$,]/g, "") * 1 :
-                            typeof i === "number" ?
-                            i :
-                            0;
-                    };
-                    this.api()
-                        .columns(".sum", {
-                            page: "current"
-                        })
-                        .every(function() {
-                            var column = this;
-                            if (column.data().count()) {
-                                var sum = column.data().reduce(function(a, b) {
-                                    a = intVal(a);
-                                    if (isNaN(a)) {
-                                        a = 0;
-                                    }
-
-                                    b = intVal(b);
-                                    if (isNaN(b)) {
-                                        b = 0;
-                                    }
-
-                                    return a + b;
-                                });
-                                $(column.footer()).html(
-                                    __currency_trans_from_en(sum, false)
-                                );
-                            }
-                        });
-                },
-            });
             $(document).on('click', '.clear_filter', function() {
                 $('.sale_filter').val('');
                 $('.sale_filter').selectpicker('refresh');

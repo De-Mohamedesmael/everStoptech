@@ -19,6 +19,10 @@ class Customer extends Model implements HasMedia
      */
     protected $guarded = ['id'];
 
+    public function getGenderNameAttribute($key)
+    {
+       return $this->getDropdownGender()[$this->gender];
+    }
 
     public function customer_important_dates()
     {
@@ -85,5 +89,13 @@ class Customer extends Model implements HasMedia
         }
 
         return implode(', ', $referred_by_admins);
+    }
+
+    public static function getDropdownGender()
+    {
+        return[
+            '1' => translate('Male'),
+            '2' => translate('Male'),
+        ];
     }
 }
