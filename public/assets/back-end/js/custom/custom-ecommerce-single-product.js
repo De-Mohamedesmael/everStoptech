@@ -5,21 +5,21 @@
 */
 "use strict";
 $(document).ready(function() {
-    $('.product-box-for').slick({
+    $('.products-box-for').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
         arrows: false,
         fade: true,
         centerMode: true,
         draggable: false,
-        asNavFor: '.product-box-nav',
+        asNavFor: '.products-box-nav',
         focusOnChange: true,
         autoplay: false,
     });
-    $('.product-box-nav').slick({
+    $('.products-box-nav').slick({
         slidesToShow: 4,
         slidesToScroll: 1,
-        asNavFor: '.product-box-for',
+        asNavFor: '.products-box-for',
         dots: false,
         arrows: false,
         centerMode: true,

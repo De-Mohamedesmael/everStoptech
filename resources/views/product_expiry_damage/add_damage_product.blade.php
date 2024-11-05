@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('lang.product'))
+@section('title', __('lang.products'))
 
 @section('content')
     <div class="table-responsive">
@@ -40,7 +40,7 @@
             var currentUrl = window.location.href;
             let productId = currentUrl.match(/product_id=(\d+)/)[1];
             $("#cancel_btn").on("click",function(){
-                $("#cancel_btn").attr("href","/product/remove_damage/"+productId+"");
+                $("#cancel_btn").attr("href","/products/remove_damage/"+productId+"");
             });
             product_table = $('#product_table').DataTable({
                     lengthChange: true,
@@ -64,7 +64,7 @@
                         [2, 'asc']
                     ],
                     "ajax": {
-                        "url": "/product/create/product_id="+productId+"/getDamageProduct",
+                        "url": "/products/create/product_id="+productId+"/getDamageProduct",
                         "data": function(d) {
                             d.product_id = productId;
                             d.store_id = $('#store_id').val();

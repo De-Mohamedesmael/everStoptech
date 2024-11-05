@@ -21,7 +21,7 @@ class CreateNotificationsTable extends Migration
             $table->unsignedBigInteger('transaction_id')->nullable();
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->unsignedBigInteger('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products_')->onDelete('cascade');
             $table->decimal('qty_available', 15, 4)->default(0);
             $table->decimal('alert_quantity', 15, 4)->default(0);
             $table->integer('days')->default(0);

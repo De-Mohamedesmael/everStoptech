@@ -18,7 +18,7 @@ class CreateVariationsTable extends Migration
             $table->string('name')->default('Default');
             $table->string('sub_sku');
             $table->unsignedBigInteger('product_id')->nullable();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products_')->onDelete('cascade');
             $table->unsignedBigInteger('color_id')->nullable();
             $table->foreign('color_id')->references('id')->on('colors');
             $table->unsignedBigInteger('size_id')->nullable();

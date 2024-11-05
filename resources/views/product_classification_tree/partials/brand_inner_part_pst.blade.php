@@ -41,7 +41,7 @@
                 @foreach ($products as
                 $product)
 
-                @include('product_classification_tree.partials.product_inner_part_pst', ['product' => $product])
+                @include('product_classification_tree.partials.product_inner_part_pst', ['products' => $product])
 
                 @php
                 $i++;

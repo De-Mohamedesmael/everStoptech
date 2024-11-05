@@ -270,9 +270,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @include('internal_stock_request.partials.product_table', ['products'
+                                        {{-- @include('internal_stock_request.partials.product_table', ['products_'
                                             =>
-                                            $products]) --}}
+                                            $products_]) --}}
                                     </tbody>
 
                                 </table>

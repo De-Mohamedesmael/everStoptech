@@ -350,7 +350,7 @@
                                                 <th>@lang('lang.canceled_by')</th>
                                             @endif
                                             <th>@lang('lang.commission')</th>
-                                            <th>@lang('lang.products')</th>
+                                            <th>@lang('lang.products_')</th>
                                             <th>@lang('lang.sku')</th>
                                             <th>@lang('lang.sub_sku')</th>
                                             <th>@lang('lang.sale_note')</th>
@@ -553,7 +553,7 @@
                         searchable: false,
                     },
                     {
-                        data: "products",
+                        data: "products_",
                         name: "products.name"
                     },
                     {

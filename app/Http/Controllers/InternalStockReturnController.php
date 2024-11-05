@@ -446,7 +446,7 @@ class InternalStockReturnController extends Controller
                     return $html;
                 })
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {

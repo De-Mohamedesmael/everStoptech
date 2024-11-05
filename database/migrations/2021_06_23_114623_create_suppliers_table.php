@@ -26,7 +26,7 @@ class CreateSuppliersTable extends Migration
             $table->string('state', 30)->nullable();
             $table->string('country', 30)->nullable();
             $table->string('postal_code', 30)->nullable();
-            $table->text('products')->nullable();
+            $table->text('products_')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
         });

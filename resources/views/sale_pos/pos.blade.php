@@ -616,7 +616,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                             <tr style="width: 100%">
                                                 <th class="text-center text-black"
                                                     style="width: @if (session('system_mode') != 'restaurant') 17% @else 20% @endif; font-size: 11px !important; font-weight: 700;">
-                                                    @lang('lang.product')</th>
+                                                    @lang('lang.products')</th>
                                                 <th class="text-center text-black"
                                                     style="width: @if (session('system_mode') != 'restaurant') 12% @else 20% @endif; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.quantity')</th>
@@ -1116,7 +1116,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
 
                 {!! Form::close() !!}
 
-                <!-- product list -->
+                <!-- products list -->
                 <div
                     class="@if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket') col-md-2 @else col-md-3 @endif">
 

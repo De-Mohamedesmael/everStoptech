@@ -214,7 +214,7 @@
                                             <tr>
                                                 <th>#</th>
                                                 <th style="width: 7%">@lang('lang.image')</th>
-                                                <th style="width: 10%">@lang('lang.products')</th>
+                                                <th style="width: 10%">@lang('lang.products_')</th>
                                                 <th style="width: 10%">@lang('lang.sku')</th>
                                                 <th style="width: 10%">@lang('lang.quantity')</th>
                                                 <th style="width: 10%">@lang('lang.unit')</th>
@@ -564,15 +564,15 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
                     url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");;

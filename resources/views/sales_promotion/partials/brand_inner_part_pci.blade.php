@@ -36,7 +36,7 @@
                     @endphp
                     @foreach ($products as $product)
                         @include('sales_promotion.partials.product_inner_part_pci', [
-                            'product' => $product,
+                            'products' => $product,
                         ])
                         @php
                             $i++;

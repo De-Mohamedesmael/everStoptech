@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('lang.product'))
+@section('title', __('lang.products'))
 @section('style')
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
 @endsection
@@ -11,7 +11,7 @@
                 <div class="row justify-content-center">
 
                     @if (empty($page))
-                    @can('product_module.product.create_and_edit')
+                    @can('product_module.products.create_and_edit')
                     <div class="col-md-3">
                         <a style="color: white" href="{{ action('ProductController@create') }}"
                             class="btn btn-primary w-100 py-1"><i class="dripicons-plus"></i>
@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        @if (request()->segment(1) == 'product')
+        @if (request()->segment(1) == 'products')
         <div
             class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
             <h5 class="mb-0 position-relative" style="margin-right: 30px">
@@ -43,7 +43,7 @@
             </h5>
         </div>
         @endif
-        @if (request()->segment(1) == 'product-stocks')
+        @if (request()->segment(1) == 'products-stocks')
         <div
             class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
             <h5 class="mb-0 position-relative" style="margin-right: 30px">

@@ -114,7 +114,7 @@
                                     @endif
                                     <div class="col-md-3 px-5">
                                         <div class="form-group">
-                                            {!! Form::label('product_id', __('lang.product'), [
+                                            {!! Form::label('product_id', __('lang.products'), [
                                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                             ]) !!}
                                             {!! Form::select('product_id', $products, request()->product_id, [

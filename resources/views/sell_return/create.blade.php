@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', __('lang.sell_return'))
 @section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/product.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('front/css/products.css') }}">
 @endsection
 @section('content')
 
@@ -52,7 +52,7 @@
                                         <table id="product_table" style="width: 100% " class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 30%">{{ __('lang.product') }}</th>
+                                                    <th style="width: 30%">{{ __('lang.products') }}</th>
                                                     <th style="width: 20%">{{ __('lang.product_code') }}</th>
                                                     <th style="width: 15%">{{ __('lang.quantity') }}</th>
                                                     <th style="width: 15%">{{ __('lang.returned_quantity') }}</th>
@@ -64,7 +64,7 @@
                                             </thead>
                                             <tbody>
                                                 @include('sell_return.partials.product_row', [
-                                                    'products' => $sale->transaction_sell_lines,
+                                                    'products_' => $sale->transaction_sell_lines,
                                                 ])
                                             </tbody>
                                             <tfoot>

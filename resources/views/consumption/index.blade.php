@@ -106,7 +106,7 @@
                         </div>
                         <div class="col-md-3 px-5">
                             <div class="form-group">
-                                {!! Form::label('variation_id', __('lang.product'), [
+                                {!! Form::label('variation_id', __('lang.products'), [
                                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
                                 {!! Form::select('variation_id', $products, request()->variation_id, [
@@ -159,7 +159,7 @@
                                     <th>@lang('lang.raw_material')</th>
                                     <th>@lang('lang.current_stock')</th>
                                     <th>@lang('lang.value_of_current_stock')</th>
-                                    <th>@lang('lang.products')</th>
+                                    <th>@lang('lang.products_')</th>
                                     <th>@lang('lang.chef')</th>
                                     <th>@lang('lang.remaining_qty_sufficient_for')</th>
 
@@ -238,7 +238,7 @@
                         searchable: false
                     },
                     {
-                        data: 'products',
+                        data: 'products_',
                         name: 'products.name'
                     },
                     {

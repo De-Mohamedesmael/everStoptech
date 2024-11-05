@@ -17,7 +17,7 @@
                             <p class="italic"><small>@lang('lang.required_fields_info')</small></p>
                             {!! Form::open([
                                 'url' => action('ManufacturingController@updates'),
-                                'id' => 'product-edit-form',
+                                'id' => 'products-edit-form',
                                 'method' => 'POST',
                                 'class' => '',
                                 'enctype' => 'multipart/form-data',
@@ -65,7 +65,7 @@
                                             <tr>
 
                                                 <th style="width: 7%" class="col-sm-8">@lang('lang.image')</th>
-                                                <th style="width: 10%" class="col-sm-8">@lang('lang.products')</th>
+                                                <th style="width: 10%" class="col-sm-8">@lang('lang.products_')</th>
                                                 <th style="width: 10%" class="col-sm-8">@lang('lang.status')</th>
                                                 <th style="width: 5%" class="col-sm-4">@lang('lang.quantity')</th>
                                                 <th style="width: 10%" class="col-sm-4">@lang('lang.unit')</th>
@@ -77,7 +77,7 @@
                                                 @foreach ($underManufacturings as $material)
                                                     <tr>
                                                         <td>
-                                                            <img src="@if (!empty($material->product->getFirstMediaUrl('product'))) {{ $material->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                            <img src="@if (!empty($material->product->getFirstMediaUrl('products'))) {{ $material->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                                 alt="photo" width="50" height="50">
                                                         </td>
                                                         </td>
@@ -118,7 +118,7 @@
                                                 @foreach ($manufactureds as $material)
                                                     <tr>
                                                         <td>
-                                                            <img src="@if (!empty($material->product->getFirstMediaUrl('product'))) {{ $material->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                            <img src="@if (!empty($material->product->getFirstMediaUrl('products'))) {{ $material->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                                 alt="photo" width="50" height="50">
                                                         </td>
                                                         </td>
@@ -231,7 +231,7 @@
                     if (row_v_id == variation_id && !is_added) {
                         add_via_ajax = false;
                         is_added = true;
-                        //Increment product quantity
+                        //Increment products quantity
                         qty_element = $(this).find(".quantity");
                         var qty = __read_number(qty_element);
                         __write_number(qty_element, qty + 1);
@@ -337,15 +337,15 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
                     url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");
@@ -452,8 +452,8 @@
                 if ($('#product_table tbody tr').length > 0) {
                     $.ajax({
                         type: "POST",
-                        url: $("#product-edit-form").attr("action"),
-                        data: $("#product-edit-form").serialize(),
+                        url: $("#products-edit-form").attr("action"),
+                        data: $("#products-edit-form").serialize(),
                         success: function(response) {
                             if (response.success) {
                                 swal("Success", response.msg, "success")

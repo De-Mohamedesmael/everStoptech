@@ -25,7 +25,7 @@ class AddChangeColumnsToTransactionPaymentsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('products_', function (Blueprint $table) {
             //
         });
     }

@@ -357,7 +357,7 @@ class TransferController extends Controller
     }
 
     /**
-     * Returns the html for product row
+     * Returns the html for products row
      *
      * @return \Illuminate\Http\Response
      */

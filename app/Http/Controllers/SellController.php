@@ -97,7 +97,7 @@ class SellController extends Controller
                 ->leftjoin('customers', 'transactions.customer_id', 'customers.id')
                 ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
                 ->leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
-                ->leftjoin('products', 'transaction_sell_lines.product_id', 'products.id')
+                ->leftjoin('products_', 'transaction_sell_lines.product_id', 'products.id')
                 ->leftjoin('variations', 'transaction_sell_lines.variation_id', 'variations.id')
                 ->leftjoin('admins', 'transactions.created_by', 'admins.id')
                 ->leftjoin('currencies as received_currency', 'transactions.received_currency_id', 'received_currency.id')
@@ -336,7 +336,7 @@ class SellController extends Controller
                         return '<span class="badge badge-success">' . ucfirst($row->status) . '</span>';
                     }
                 })
-                ->addColumn('products', function ($row) {
+                ->addColumn('products_', function ($row) {
                     $string = '';
                     foreach ($row->sell_variations as $sell_variation) {
                         if (!empty($sell_variation)) {
@@ -488,7 +488,7 @@ class SellController extends Controller
                     'due',
                     'status',
                     'store_name',
-                    'products',
+                    'products_',
                     'sku',
                     'sub_sku',
                     'files',
@@ -1057,7 +1057,7 @@ class SellController extends Controller
                 ->leftjoin('customers', 'transactions.customer_id', 'customers.id')
                 ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
                 ->leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
-                ->leftjoin('products', 'transaction_sell_lines.product_id', 'products.id')
+                ->leftjoin('products_', 'transaction_sell_lines.product_id', 'products.id')
                 ->leftjoin('variations', 'transaction_sell_lines.variation_id', 'variations.id')
                 ->leftjoin('admins', 'transactions.created_by', 'admins.id')
                 ->leftjoin('currencies as received_currency', 'transactions.received_currency_id', 'received_currency.id')

@@ -22,10 +22,10 @@ $(document).ready(function() {
     Chart.defaults.global.tooltips.yPadding = 10;
     Chart.defaults.global.tooltips.titleMarginBottom = 10;
     Chart.defaults.global.tooltips.bodySpacing = 8;
-    Chart.defaults.global.tooltips.cornerRadius = 5;    
+    Chart.defaults.global.tooltips.cornerRadius = 5;
     Chart.defaults.global.legend.labels.boxWidth = 15;
     Chart.defaults.global.legend.labels.fontSize = 15;
-    Chart.defaults.global.legend.labels.padding = 16;   
+    Chart.defaults.global.legend.labels.padding = 16;
     /* --- Chartjs - Order Chart --- */
     var chartOrderID = document.getElementById("chartjs-order-chart").getContext('2d');
     var gradient1 = chartOrderID.createLinearGradient(0, 0, 0, 90);
@@ -70,12 +70,12 @@ $(document).ready(function() {
 	            display: false
 	        },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                 	display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -138,12 +138,12 @@ $(document).ready(function() {
 	            display: false
 	        },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                 	display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -163,7 +163,7 @@ $(document).ready(function() {
         }
     });
     /* --- Chartjs - Product Chart --- */
-    var productID = document.getElementById("chartjs-product-chart").getContext('2d');
+    var productID = document.getElementById("chartjs-products-chart").getContext('2d');
     var gradient3 = productID.createLinearGradient(0, 0, 0, 90);
     gradient3.addColorStop(0, 'rgba(95, 194, 126,0.5)');
     gradient3.addColorStop(0.75, 'rgba(255,255,255,0.05)');
@@ -206,12 +206,12 @@ $(document).ready(function() {
 	            display: false
 	        },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                 	display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -274,12 +274,12 @@ $(document).ready(function() {
 	            display: false
 	        },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                 	display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -300,12 +300,12 @@ $(document).ready(function() {
     });
     /* --- Latest Order --- */
     $('#latestorder').DataTable( {
-         "ordering": false,	
+         "ordering": false,
          "searching": false
-    } );    
+    } );
     /* --- Top Products --- */
     $('#topproducts').DataTable( {
-         "ordering": false,	
+         "ordering": false,
          "searching": false
     } );
     /* --- C3 - Stacked Area Chart --- */

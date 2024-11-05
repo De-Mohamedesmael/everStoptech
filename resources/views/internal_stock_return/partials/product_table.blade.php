@@ -8,7 +8,7 @@
     <td>
         {!! Form::checkbox('product_selected[]', $loop->index, false, ['class' => 'product_checkbox']) !!}
     </td>
-    <td><img src="@if(!empty($product->getFirstMediaUrl('product'))){{$product->getFirstMediaUrl('product')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
+    <td><img src="@if(!empty($product->getFirstMediaUrl('products'))){{$product->getFirstMediaUrl('products')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
             alt="photo" width="50" height="50"></td>
     <td>{{$product->name}}</td>
     <td>@if(!empty($product->variations))

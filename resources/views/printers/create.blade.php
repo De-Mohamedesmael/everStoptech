@@ -23,7 +23,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-group">
-                                            <label for="products">{{trans('lang.products')}}</label>
+                                            <label for="products">{{trans('lang.products_')}}</label>
                                             <div class="input-group my-group">
                                                 <select id="products" data-live-search="true" class="selectpicker form-control" name="products[]" multiple>
                                                     @foreach($products as $product)

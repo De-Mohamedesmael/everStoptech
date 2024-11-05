@@ -88,7 +88,7 @@
                                 ) !!}
                             </div>
                             <div class="col-md-6">
-                                {!! Form::label('commissioned_products', __('lang.products'), [
+                                {!! Form::label('commissioned_products', __('lang.products_'), [
                                     'class' => 'text-muted form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                 ]) !!}
                                 {!! Form::select(

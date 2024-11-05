@@ -384,7 +384,7 @@ class PurchaseOrderController extends Controller
                 $products_array[$product->product_id]['name'] = $product->name;
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
-                $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('product')) ? $product->getFirstMediaUrl('product') : asset('/uploads/' . session('logo'));
+                $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('products')) ? $product->getFirstMediaUrl('products') : asset('/uploads/' . session('logo'));
                 $products_array[$product->product_id]['variations'][]
                     = [
                         'variation_id' => $product->variation_id,
@@ -433,7 +433,7 @@ class PurchaseOrderController extends Controller
 
 
     /**
-     * Returns the html for product row
+     * Returns the html for products row
      *
      * @return \Illuminate\Http\Response
      */
@@ -500,7 +500,7 @@ class PurchaseOrderController extends Controller
         ));
     }
     /**
-     *  quick add purchase order as draft invoked from pos page if product stock is low
+     *  quick add purchase order as draft invoked from pos page if products stock is low
      *
      * @return \Illuminate\Http\Response
      */

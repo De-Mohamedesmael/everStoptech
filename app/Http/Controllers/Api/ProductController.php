@@ -95,7 +95,7 @@ class ProductController extends BaseController
             $product = Product::create($product_data);
 
             if (!empty($input['image'])) {
-                $product->addMediaFromUrl($input['image'])->toMediaCollection('product');
+                $product->addMediaFromUrl($input['image'])->toMediaCollection('products');
             }
 
             $v = $input['variations'];
@@ -188,7 +188,7 @@ class ProductController extends BaseController
             $product->update($product_data);
 
             if (!empty($input['image'])) {
-                $product->addMediaFromUrl($input['image'])->toMediaCollection('product');
+                $product->addMediaFromUrl($input['image'])->toMediaCollection('products');
             }
 
             $v = $input['variations'];

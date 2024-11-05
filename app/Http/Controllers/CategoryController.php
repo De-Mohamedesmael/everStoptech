@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         $categories = Category::whereNull('parent_id')->withCount('products')->get();
 
-        return view('category.index')->with(compact(
+        return view('back-end.products.categories.index')->with(compact(
             'categories'
         ));
     }
@@ -52,7 +52,7 @@ class CategoryController extends Controller
     {
         $categories = Category::whereNotNull('parent_id')->get();
 
-        return view('category.sub_categories')->with(compact(
+        return view('back-end.products.categories.sub_categories')->with(compact(
             'categories'
         ));
     }
@@ -65,14 +65,10 @@ class CategoryController extends Controller
     public function create(Request $request)
     {
         $quick_add = $request->quick_add ?? null;
-        $type = $request->type ?? null;
         $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
-        $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
-        return view('category.create')->with(compact(
-            'type',
+        return view('back-end.products.categories.create')->with(compact(
             'quick_add',
-            'categories',
-            'product_classes'
+            'categories'
         ));
     }
 
@@ -175,7 +171,7 @@ class CategoryController extends Controller
         $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
         $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('category.edit')->with(compact(
+        return view('back-end.products.categories.edit')->with(compact(
             'category',
             'type',
             'categories',
@@ -282,7 +278,7 @@ class CategoryController extends Controller
         $categories=[];
         if (!empty(request()->product_class_id)&& request()->type=="category") {
             $categories = Category::where('product_class_id', request()->product_class_id)->orderBy('name', 'asc')->pluck('name', 'id');
-        } 
+        }
         if(request()->type=="sub_category") {
             $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
         }
@@ -302,29 +298,6 @@ class CategoryController extends Controller
 
         return $categories_dp;
     }
-    public function getBase64Image($Image)
-    {
 
-        $image_path = str_replace(env("APP_URL") . "/", "", $Image);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $image_path);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $image_content = curl_exec($ch);
-        curl_close($ch);
-//    $image_content = file_get_contents($image_path);
-        $base64_image = base64_encode($image_content);
-        $b64image = "data:image/jpeg;base64," . $base64_image;
-        return  $b64image;
-    }
-    public function getCroppedImages($cropImages){
-        $dataNewImages = [];
-        foreach ($cropImages as $img) {
-            if (strlen($img) < 200){
-                $dataNewImages[] = $this->getBase64Image($img);
-            }else{
-                $dataNewImages[] = $img;
-            }
-        }
-        return $dataNewImages;
-    }
+
 }

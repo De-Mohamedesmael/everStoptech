@@ -52,7 +52,7 @@ return [
     'help' => 'मदद',
 
     'required_fields_info' => '* से चिह्नित फ़ील्ड लेबल आवश्यक इनपुट फ़ील्ड हैं।',
-    'product' => 'उत्पाद',
+    'products' => 'उत्पाद',
     'add_new_product' => 'नया उत्पाद जोड़ें',
     'class' => 'कक्षा',
     'submit' => 'प्रस्तुत करना',
@@ -182,7 +182,7 @@ return [
     'product_classification_tree' => 'उत्पाद वर्गीकरण वृक्ष',
     'print_barcode' => 'बारकोड प्रिंट करें',
     'enter_product_name_to_print_labels' => 'बारकोड प्रिंट करने के लिए उत्पाद का नाम दर्ज करें',
-    'products' => 'उत्पादों',
+    'products_' => 'उत्पादों',
     'no_of_labels' => 'लेबल की संख्या',
     'product_name' => 'उत्पाद का नाम',
     'paper_size' => 'काग़ज़ का आकार',

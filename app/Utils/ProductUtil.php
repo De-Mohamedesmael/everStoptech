@@ -30,7 +30,7 @@ class ProductUtil extends Util
 {
 
     /**
-     * Generates product sku
+     * Generates products sku
      *
      * @param string $string
      *
@@ -191,7 +191,7 @@ class ProductUtil extends Util
         return $string;
     }
 
-    //create or update product stores data
+    //create or update products stores data
     public function createOrUpdateProductStore($product, $variation, $request, $variant_stores = [])
     {
         $stores = Store::all();
@@ -235,7 +235,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * create or update product variation data
+     * create or update products variation data
      *
      * @param object $product
      * @param object $request
@@ -347,7 +347,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * create or update product consumption data
+     * create or update products consumption data
      *
      * @param int $variation_id
      * @param array $consumption_details
@@ -381,14 +381,14 @@ class ProductUtil extends Util
         }
 
         if (!empty($keep_consumption_product)) {
-            //delete the consumption product removed by user
+            //delete the consumption products removed by user
             ConsumptionProduct::where('variation_id', $variation_id)->whereNotIn('id', $keep_consumption_product)->delete();
         }
 
         return true;
     }
     /**
-     * create or update product consumption data
+     * create or update products consumption data
      *
      * @param object $raw_material
      * @param array $consumption_details
@@ -422,7 +422,7 @@ class ProductUtil extends Util
         }
 
         if (!empty($keep_consumption_product)) {
-            //delete the consumption product removed by user
+            //delete the consumption products removed by user
             ConsumptionProduct::where('raw_material_id', $raw_material->id)->whereNotIn('id', $keep_consumption_product)->delete();
         }
 
@@ -511,7 +511,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * Gives list of products based on products id and variation id
+     * Gives list of products_ based on products_ id and variation id
      *
      * @param int $product_id
      * @param int $variation_id = null
@@ -577,7 +577,7 @@ class ProductUtil extends Util
                 DB::raw("'{$p_selected['qty']}' as qty")
             )
             ->first();
-            // $product = $product->addSelect();
+            // $products = $products->addSelect();
             $products[]=$product;
         }
 
@@ -585,7 +585,7 @@ class ProductUtil extends Util
         return $products;
     }
     /**
-     * Gives list of products based on products id and variation id
+     * Gives list of products_ based on products_ id and variation id
      *
      * @param int $sender_store_id
      * @param int $product_id
@@ -625,7 +625,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * Gives list of products based on products id and variation id
+     * Gives list of products_ based on products_ id and variation id
      *
      * @param int $product_id
      * @param int $variation_id = null
@@ -676,7 +676,7 @@ class ProductUtil extends Util
 }
 
     /**
-     * get the product discount details for product if exist
+     * get the products discount details for products if exist
      *
      * @param int $product_id
      * @param int $customer_id
@@ -732,7 +732,7 @@ class ProductUtil extends Util
 
     public function getProductAllDiscountCategories($product_id)
     {
-            // $product = Product::where('id', $product_id)
+            // $products = Product::where('id', $product_id)
             //     ->where('discount', '>',0)
             //     ->select(
             //         'products.discount_type',
@@ -741,7 +741,7 @@ class ProductUtil extends Util
             //         'products.discount_end_date',
             //     )
             //     ->first();
-            // if(!$product){
+            // if(!$products){
                 $product = ProductDiscount::where('product_id', $product_id)
                 ->where(function($query){
                     $query->where('discount_start_date','<=',date('Y-m-d'));
@@ -759,10 +759,10 @@ class ProductUtil extends Util
             // }
 
             if (!empty($product)) {
-                // if (!empty($product->discount_start_date) && !empty($product->discount_end_date)) {
+                // if (!empty($products->discount_start_date) && !empty($products->discount_end_date)) {
                     //if end date set then check for expiry
-                    // if (($product->discount_start_date <= date('Y-m-d') && $product->discount_end_date >= date('Y-m-d')) ) {
-                        // return $product;
+                    // if (($products->discount_start_date <= date('Y-m-d') && $products->discount_end_date >= date('Y-m-d')) ) {
+                        // return $products;
                     // } else {
                         // return false;
                     // }
@@ -773,7 +773,7 @@ class ProductUtil extends Util
         return null;
     }
     /**
-     * get the sales promotion details for product if exist
+     * get the sales promotion details for products if exist
      *
      * @param int $product_id
      * @param int $store_id
@@ -811,7 +811,7 @@ class ProductUtil extends Util
         }
     }
     /**
-     * get the sales promotion details for product if valid for this sale
+     * get the sales promotion details for products if valid for this sale
      *
      * @param int $product_id
      * @param int $store_id
@@ -891,7 +891,7 @@ class ProductUtil extends Util
         return $data;
     }
     /**
-     * compare package promotion data with add product data
+     * compare package promotion data with add products data
      *
      * @param array $package_promotion_qty
      * @param array $qty_array
@@ -926,7 +926,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * Get all details for a product from its variation id
+     * Get all details for a products from its variation id
      *
      * @param int $variation_id
      * @param int $store_id
@@ -936,7 +936,7 @@ class ProductUtil extends Util
      */
     public function getDetailsFromVariation($variation_id,  $store_id = null, $check_qty = true)
     {
-        $query = Variation::join('products AS p', 'variations.product_id', '=', 'p.id')
+        $query = Variation::join('products_ AS p', 'variations.product_id', '=', 'p.id')
             ->leftjoin('product_stores AS ps', 'variations.id', '=', 'ps.variation_id')
             ->leftjoin('units', 'variations.unit_id', '=', 'units.id')
             ->leftjoin('grades', 'variations.grade_id', '=', 'grades.id')
@@ -1191,7 +1191,7 @@ class ProductUtil extends Util
                 }
             }
                 if(isset($line['bounce_purchase_price'])){
-                    $product = Product::where('id',$line['product_id'])->update(['purchase_price' =>$line['bounce_purchase_price'] ,'purchase_price_depends' => $line['bounce_purchase_price']]);
+                    $products = Product::where('id',$line['product_id'])->update(['purchase_price' =>$line['bounce_purchase_price'] ,'purchase_price_depends' => $line['bounce_purchase_price']]);
                 }
                 $keep_lines_ids[] = $add_stock->id;
                 $batch_numbers[]=$add_stock->batch_number;
@@ -1588,7 +1588,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * Checks if products has manage stock enabled then Updates quantity for product and its
+     * Checks if products_ has manage stock enabled then Updates quantity for products and its
      * variations
      *
      * @param $product_id
@@ -1626,7 +1626,7 @@ class ProductUtil extends Util
 
 
     /**
-     * Checks if products has manage stock enabled then Decrease quantity for product and its variations
+     * Checks if products_ has manage stock enabled then Decrease quantity for products and its variations
      *
      * @param $product_id
      * @param $variation_id
@@ -1687,7 +1687,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * extract products using product tree selection
+     * extract products_ using products tree selection
      *
      * @param array $data_selected
      * @return array
@@ -1722,7 +1722,7 @@ class ProductUtil extends Util
         return (array)$product_ids;
     }
     /**
-     * extract products using product tree selection
+     * extract products_ using products tree selection
      *
      * @param array $data_selected
      * @return array
@@ -2050,7 +2050,7 @@ class ProductUtil extends Util
         return $current_stock_value_material ;
     }
     /**
-     * get product list for product tree
+     * get products list for products tree
      *
      * @return void
      */
@@ -2149,7 +2149,7 @@ class ProductUtil extends Util
     }
 
     /**
-     * Filters product as per the given inputs and return the details.
+     * Filters products as per the given inputs and return the details.
      *
      * @param string $search_type (like or exact)
      *

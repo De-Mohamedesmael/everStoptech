@@ -13,7 +13,7 @@ class AddHaveWeightToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('products_', function (Blueprint $table) {
             $table->boolean('have_weight')->default(0);
         });
     }
@@ -25,7 +25,7 @@ class AddHaveWeightToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::table('products_', function (Blueprint $table) {
             //
         });
     }

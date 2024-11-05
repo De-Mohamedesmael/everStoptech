@@ -17,7 +17,7 @@ class CreateProductExpiryDamagesTable extends Migration
             $table->id();
             $table->enum('status',["damage","expiry"]);
             $table->unsignedBigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products_')->onDelete('cascade');
             $table->float("quantity_of_expired_stock_removed");
             $table->float("value_of_removed_stocks");
             $table->timestamp("date_of_removal");

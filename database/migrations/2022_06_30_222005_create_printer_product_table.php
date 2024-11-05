@@ -18,7 +18,7 @@ class CreatePrinterProductTable extends Migration
             $table->unsignedBigInteger('printer_id')->unsigned();
             $table->foreign('printer_id')->references('id')->on('printers')->onDelete('cascade');
             $table->unsignedBigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products_')->onDelete('cascade');
             $table->timestamps();
         });
     }

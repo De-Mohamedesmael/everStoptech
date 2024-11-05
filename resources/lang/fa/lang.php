@@ -52,7 +52,7 @@ return [
     'help' => 'کمک',
 
     'required_fields_info' => 'برچسب های فیلد با علامت * فیلدهای ورودی مورد نیاز هستند.',
-    'product' => 'تولید - محصول',
+    'products' => 'تولید - محصول',
     'add_new_product' => 'افزودن محصول جدید',
     'class' => 'کلاس',
     'submit' => 'ارسال',
@@ -182,7 +182,7 @@ return [
     'product_classification_tree' => 'درخت طبقه بندی محصول',
     'print_barcode' => 'بارکد چاپ کنید',
     'enter_product_name_to_print_labels' => 'نام محصول را برای چاپ بارکد وارد کنید',
-    'products' => 'محصولات',
+    'products_' => 'محصولات',
     'no_of_labels' => 'تعداد برچسب ها',
     'product_name' => 'نام محصول',
     'paper_size' => 'اندازه کاغذ',

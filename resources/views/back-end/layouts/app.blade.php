@@ -79,6 +79,10 @@
             margin-left: .25rem !important;
             border-radius: var(--bs-border-radius-lg) !important;
         }
+        input#show_zero_stocks {
+            appearance: auto !important;
+            -webkit-appearance: auto !important;
+        }
     </style>
     @yield('styles')
     @stack('style')
@@ -297,9 +301,13 @@
             </div>
         </div>
         @yield('content')
-        <div class="modal modal-jobs animate__animated  view_modal" data-animate-in="animate__rollIn"
-             data-animate-out="animate__rollOut" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal modal-jobs-edit animate__animated" data-animate-in="animate__rollIn" data-animate-out="animate__rollOut"
+             id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel" style="display: none;"
+             aria-hidden="true">
+                <div class="view_modal no-print">
 
+
+                </div>
         </div>
     </div>
     <!-- End Rightbar -->
@@ -311,6 +319,31 @@
     </button>
 
 </div>
+<script>
+    $(document).ready(function() {
+        var modelEl = $('.modal-jobs-edit');
+
+        modelEl.addClass(modelEl.attr('data-animate-in'));
+
+        modelEl.on('hide.bs.modal', function(event) {
+            console.log('ddd');
+            if (!$(this).attr('is-from-animation-end')) {
+                event.preventDefault();
+                $(this).addClass($(this).attr('data-animate-out'))
+                $(this).removeClass($(this).attr('data-animate-in'))
+            }
+            $(this).removeAttr('is-from-animation-end')
+        })
+            .on('animationend', function() {
+                if ($(this).hasClass($(this).attr('data-animate-out'))) {
+                    $(this).attr('is-from-animation-end', true);
+                    $(this).modal('hide')
+                    $(this).removeClass($(this).attr('data-animate-out'))
+                    $(this).addClass($(this).attr('data-animate-in'))
+                }
+            })
+    })
+</script>
 <!-- End Containerbar -->
     @if (app()->isLocale('ar'))
         <script>

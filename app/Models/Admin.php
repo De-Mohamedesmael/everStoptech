@@ -99,7 +99,7 @@ class Admin extends Authenticatable
                 // 'details' => __('lang.details'),
             ],
             'product_module' => [
-                'product' => __('lang.product'),
+                'products' => __('lang.products'),
                 'product_class' => session('system_mode') == 'restaurant' ? __('lang.category') : __('lang.product_class'),
                 'category' => __('lang.category'),
                 'sub_category' => __('lang.sub_category'),

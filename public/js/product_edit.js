@@ -114,7 +114,7 @@ $(document).on("click", ".variant_different_prices_for_stores", function () {
 //     paramName: "images",
 //     clickable: true,
 //     method: "POST",
-//     url: $("#product-edit-form").attr("action"),
+//     url: $("#products-edit-form").attr("action"),
 //     headers: {
 //         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
 //     },
@@ -128,15 +128,15 @@ $(document).on("click", ".variant_different_prices_for_stores", function () {
 //         var myDropzone = this;
 //         $("#submit-btn").on("click", function (e) {
 //             e.preventDefault();
-//             if ($("#product-edit-form").valid()) {
+//             if ($("#products-edit-form").valid()) {
 //                 tinyMCE.triggerSave();
 //                 if (myDropzone.getAcceptedFiles().length) {
 //                     myDropzone.processQueue();
 //                 } else {
 //                     $.ajax({
 //                         type: "POST",
-//                         url: $("#product-edit-form").attr("action"),
-//                         data: $("#product-edit-form").serialize(),
+//                         url: $("#products-edit-form").attr("action"),
+//                         data: $("#products-edit-form").serialize(),
 //                         success: function (response) {
 //                             if (response.success) {
 //                                 swal("Success", response.msg, "success");
@@ -158,7 +158,7 @@ $(document).on("click", ".variant_different_prices_for_stores", function () {
 //         this.on("sending", function (file, xhr, formData) {
 //             document.getElementById("loader").style.display = "block";
 //             document.getElementById("content").style.display = "none";
-//             var data = $("#product-edit-form").serializeArray();
+//             var data = $("#products-edit-form").serializeArray();
 //             $.each(data, function (key, el) {
 //                 formData.append(el.name, el.value);
 //             });

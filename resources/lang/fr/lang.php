@@ -52,7 +52,7 @@ return [
     'help' => 'Aider',
 
     'required_fields_info' => 'Les libellés de champ marqués d\'un * sont des champs de saisie obligatoires.',
-    'product' => 'Produit',
+    'products' => 'Produit',
     'add_new_product' => 'Ajouter un nouveau produit',
     'class' => 'Classer',
     'submit' => 'Soumettre',
@@ -182,7 +182,7 @@ return [
     'product_classification_tree' => 'Arbre de classification des produits',
     'print_barcode' => 'Imprimer le code-barres',
     'enter_product_name_to_print_labels' => 'Entrez le nom du produit pour imprimer le code-barres',
-    'products' => 'Des produits',
+    'products_' => 'Des produits',
     'no_of_labels' => 'Nombre d\'étiquettes',
     'product_name' => 'Nom du produit',
     'paper_size' => 'Taille de papier',

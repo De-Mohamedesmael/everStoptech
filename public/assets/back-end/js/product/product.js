@@ -136,7 +136,7 @@ $(document).on("click", ".remove_row", function () {
 $(document).on("change", ".unit_select", function () {
     let key = $(this).data('key');
     console.log(key)
-    var selectBox1 = $('#products\\[' + key + '\\]\\[variation_id\\]');
+    var selectBox1 = $('#products_\\[' + key + '\\]\\[variation_id\\]');
     selectBox1.empty();
     let selectBoxValues = {};
     $(".unit_select[data-key='" + key + "']").each(function () {

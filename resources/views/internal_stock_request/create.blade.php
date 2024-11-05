@@ -267,7 +267,7 @@
                             <tbody>
                                 {{-- @include(
                                                     'internal_stock_request.partials.product_table',
-                                                    ['products' => $products]
+                                                    ['products_' => $products_]
                                                 ) --}}
                             </tbody>
 

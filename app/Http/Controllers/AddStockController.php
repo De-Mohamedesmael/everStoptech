@@ -406,7 +406,7 @@ class AddStockController extends Controller
             Transaction::find($transaction->purchase_order_id)->update(['status' => 'received']);
         }
 
-        //update product status to active if not //added quick product from purchase order
+        //update products status to active if not //added quick products from purchase order
         foreach ($transaction->add_stock_lines as $line) {
             Product::where('id', $line->product_id)->update(['active' => 1]);
         }

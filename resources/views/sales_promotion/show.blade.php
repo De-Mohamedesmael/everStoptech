@@ -48,7 +48,7 @@
                     <div class="col-md-12 d-flex justify-content-center mb-2">
                         <h4
                             class="count_wrapper col-md-8 d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                            <span class="count_title col-md-6">{!! Form::label('product_ids', __('lang.product'), [
+                            <span class="count_title col-md-6">{!! Form::label('product_ids', __('lang.products'), [
                                 'class' => 'form-label d-flex justify-content-center mb-1 app()->isLocale("ar") ? text-end : text-start',
                             ]) !!}</span>
                             <span class="count_value_style col-md-6 d-flex justify-content-start">

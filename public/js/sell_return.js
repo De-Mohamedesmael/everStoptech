@@ -75,7 +75,7 @@ $(document).on("click", ".filter-by", function () {
             },
             contentType: "html",
             success: function (result) {
-                $("#filter-product-table > tbody").empty().append(result);
+                $("#filter-products-table > tbody").empty().append(result);
             },
         });
     }

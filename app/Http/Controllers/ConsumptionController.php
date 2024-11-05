@@ -187,7 +187,7 @@ class ConsumptionController extends Controller
 
                 ->setRowAttr([
                     'data-href' => function ($row) {
-                        if (auth()->user()->can("product.view")) {
+                        if (auth()->user()->can("products.view")) {
                             return  action('ConsumptionController@show', [$row->id]);
                         } else {
                             return '';

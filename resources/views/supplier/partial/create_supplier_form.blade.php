@@ -56,14 +56,14 @@
         </div>
 
         <div class="col-md-3 px-5">
-            {!! Form::label('products', __('lang.products'), [
+            {!! Form::label('products_', __('lang.products_'), [
                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
             ]) !!}
-            {!! Form::select('products[]', $products, old('products'), [
+            {!! Form::select('products_[]', $products, old('products_'), [
                 'class' => 'selectpicker form-control',
                 'data-live-search' => 'true',
                 'data-actions-box' => 'true',
-                'id' => 'products',
+                'id' => 'products_',
                 'multiple',
             ]) !!}
 

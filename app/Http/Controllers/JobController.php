@@ -90,8 +90,12 @@ class JobController extends Controller
     public function edit($id)
     {
         $job = JobType::find($id);
-
+        $modulePermissionArray = Admin::modulePermissionArray();
+        // "sub_modules of Admin" in "permissions table"
+        $subModulePermissionArray = Admin::subModulePermissionArray();
         return view('back-end.Hr.jobs.edit')->with(compact(
+            'modulePermissionArray',
+            'subModulePermissionArray',
             'job'
         ));
     }

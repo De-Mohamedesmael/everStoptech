@@ -346,16 +346,16 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             console.log('click');
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
-                    url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    url: "/products",
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");;

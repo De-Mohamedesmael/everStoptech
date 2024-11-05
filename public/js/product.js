@@ -138,7 +138,7 @@ $(document).on("click", ".variant_different_prices_for_stores", function () {
 //     paramName: "images",
 //     clickable: true,
 //     method: "POST",
-//     url: $("form#product-form").attr("action"),
+//     url: $("form#products-form").attr("action"),
 //     headers: {
 //         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
 //     },
@@ -154,7 +154,7 @@ $("#submit-btn").on("click", function (e) {
     e.preventDefault();
     let system_mode = $("#system_mode").val();
     let sku = $('#sku').val();
-  
+
     if (sku.trim() !== "") {
       $.ajax({
         method: "get",
@@ -194,16 +194,16 @@ $("#submit-btn").on("click", function (e) {
       submitForm();
     }
   });
-  
+
     function submitForm() {
-        if ($("#product-form").valid()) {
+        if ($("#products-form").valid()) {
             tinyMCE.triggerSave();
             document.getElementById("loader").style.display = "block";
             document.getElementById("content").style.display = "none";
             $.ajax({
                 type: "POST",
-                url: $("form#product-form").attr("action"),
-                data: $("#product-form").serialize(),
+                url: $("form#products-form").attr("action"),
+                data: $("#products-form").serialize(),
                 success: function (response) {
                     myFunction();
                     if (response.success) {
@@ -232,12 +232,12 @@ $("#submit-btn").on("click", function (e) {
             });
         }
     }
-  
+
 //
 //         this.on("sending", function (file, xhr, formData) {
 //             document.getElementById("loader").style.display = "block";
 //             document.getElementById("content").style.display = "none";
-//             var data = $("#product-form").serializeArray();
+//             var data = $("#products-form").serializeArray();
 //             $.each(data, function (key, el) {
 //                 formData.append(el.name, el.value);
 //             });
@@ -435,7 +435,7 @@ $(document).on("change", "#product_class_id", function () {
         data: {},
         contentType: "html",
         success: function (result) {
-            
+
             $("#category_id").empty().append(result).change();
             $("#category_id").selectpicker("refresh");
 
@@ -626,7 +626,7 @@ $(document).on("submit", "form#quick_add_unit_form", function (e) {
                         $("select.unit_id").empty().append(data_html);
                         $("select.unit_id").selectpicker("refresh");
                         $("select#multiple_units").change();
-                        
+
                     },
                 });
             } else {

@@ -15,13 +15,13 @@
     $new_notifications = App\Models\Notification::where('admin_id', Auth::user()->id)
         ->whereDate('created_at', date('Y-m-d'))
         ->orderBy('created_at', 'desc')
-        ->with(['created_by_user', 'product', 'transaction'])
+        ->with(['created_by_user', 'products', 'transaction'])
         ->get();
     $new_count = $new_notifications->where('is_seen', 0)->count();
     $earlier_notifications = App\Models\Notification::where('admin_id', Auth::user()->id)
         ->whereDate('created_at', '<', date('Y-m-d'))
         ->orderBy('created_at', 'desc')
-        ->with(['created_by_user', 'product', 'transaction'])
+        ->with(['created_by_user', 'products', 'transaction'])
         ->limit(10)
         ->get();
 @endphp

@@ -1,7 +1,4 @@
 <!-- Modal -->
-<div class="modal modal-jobs-edit animate__animated" data-animate-in="animate__rollIn" data-animate-out="animate__rollOut"
-    id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel" style="display: none;"
-    aria-hidden="true">
     <div class="modal-dialog  modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header d-flex justify-content-between py-2 flex-row ">
@@ -21,23 +18,27 @@
                         value="{{ $job->job_title }}" name="job_title" id="job_title" required>
 
                 </div>
-                @if (!in_array($job->job_title, ['Cashier', 'Representative', 'Preparer']))
-                    <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        <div class="col-md-12 pt-2">
-                            <h5 class="@if (app()->isLocale('ar')) text-end @else text-start @endif">
-                                @lang('lang.permissions')
-                            </h5>
-                        </div>
-                    </div>
-                    <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                        <div class="col-md-12 text-center">
-                            {{-- <h3>@lang('lang.user_rights')</h3>  --}}
-                        </div>
-                        <div class="col-md-12">
-                            @include('jobs.partials.permission')
-                        </div>
-                    </div>
-                @endif
+
+
+{{--                @if (!in_array($job->job_title, ['Cashier', 'Representative', 'Preparer']))--}}
+{{--                    <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">--}}
+{{--                        <div class="col-md-12 pt-2">--}}
+{{--                            <h5 class="@if (app()->isLocale('ar')) text-end @else text-start @endif">--}}
+{{--                                @lang('lang.permissions')--}}
+{{--                            </h5>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">--}}
+{{--                        <div class="col-md-12 text-center">--}}
+{{--                            --}}{{-- <h3>@lang('lang.user_rights')</h3>  --}}
+{{--                        </div>--}}
+{{--                        <div class="col-md-12">--}}
+{{--                            @include('back-end.Hr.jobs.partials.permission')--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                @endif--}}
+
+
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-primary">@lang('lang.save')</button>
@@ -46,8 +47,6 @@
             {!! Form::close() !!}
         </div>
     </div>
-</div>
-
 {{-- ++++++++++++++++++ script ++++++++++++++++++ --}}
 <script>
     $(document).ready(function() {
@@ -142,27 +141,4 @@
         })
     });
 </script>
-<script>
-    $(document).ready(function() {
-        var modelEl = $('.modal-jobs-edit');
 
-        modelEl.addClass(modelEl.attr('data-animate-in'));
-
-        modelEl.on('hide.bs.modal', function(event) {
-                if (!$(this).attr('is-from-animation-end')) {
-                    event.preventDefault();
-                    $(this).addClass($(this).attr('data-animate-out'))
-                    $(this).removeClass($(this).attr('data-animate-in'))
-                }
-                $(this).removeAttr('is-from-animation-end')
-            })
-            .on('animationend', function() {
-                if ($(this).hasClass($(this).attr('data-animate-out'))) {
-                    $(this).attr('is-from-animation-end', true);
-                    $(this).modal('hide')
-                    $(this).removeClass($(this).attr('data-animate-out'))
-                    $(this).addClass($(this).attr('data-animate-in'))
-                }
-            })
-    })
-</script>

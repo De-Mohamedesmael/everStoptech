@@ -507,8 +507,8 @@ class ManufacturingController extends Controller
             // return $manufacturing->materials;
             // if (isset($manufacturing->materials) && count($manufacturing->materials) > 0) {
             //     foreach ($manufacturing->materials as $deleted_product) {
-            //         $product = Product::find($deleted_product->product_id);
-            //         $product->product_stores->first()->increment("qty_available", $deleted_product->quantity);
+            //         $products = Product::find($deleted_product->product_id);
+            //         $products->product_stores->first()->increment("qty_available", $deleted_product->quantity);
             //         $deleted_product->delete();
             //     }
             // }

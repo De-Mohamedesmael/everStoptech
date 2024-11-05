@@ -221,15 +221,15 @@ function getFilterProductRightSide(
         },
         dataType: "html",
         success: function (result) {
-            $("#filter-product-table > tbody").hide();
-            $("#filter-product-table > tbody").empty().append(result);
-            $("#filter-product-table > tbody").show(500);
+            $("#filter-products-table > tbody").hide();
+            $("#filter-products-table > tbody").empty().append(result);
+            $("#filter-products-table > tbody").show(500);
         },
     });
 }
 
 $(document).ready(function () {
-    //Add products
+    //Add products_
 
     if ($("#search_product").length > 0) {
         $("#search_product")
@@ -356,7 +356,7 @@ function get_label_product_row(
                     add_via_ajax = false;
                     is_added = true;
                     is_batch=true;
-                    //Increment product quantity
+                    //Increment products quantity
                     qty_element = $(this).find(".quantity");
                     var qty = __read_number(qty_element);
                     var max = $('#quantity').attr('max');
@@ -383,7 +383,7 @@ function get_label_product_row(
                     add_via_ajax = false;
                     is_added = true;
                     is_batch=false;
-                    //Increment product quantity
+                    //Increment products quantity
                     qty_element = $(this).find(".quantity");
                     var qty = __read_number(qty_element);
                     var max = $('#quantity').attr('max');
@@ -543,7 +543,7 @@ function check_for_sale_promotion() {
                             );
                             if (product_ids.includes(product_id)) {
                                 $(tr).find(".sell_price").attr("readonly", true);
-                                //neglect all other discount for this product if any
+                                //neglect all other discount for this products if any
                                 $(tr).find(".promotion_discount_value").val(0);
                                 $(tr).find(".product_discount_value").val(0);
                             }
@@ -1453,7 +1453,7 @@ $(document).on("click", "#print_and_draft", function (e) {
     $("#status").val("draft");
     $("#print_and_draft_hidden").val("print_and_draft");
     $("#sale_note_modal").modal("hide");
-    //Check if product is present or not.
+    //Check if products is present or not.
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -1464,7 +1464,7 @@ $(document).on("click", "#print_and_draft", function (e) {
 $(document).on("click", "#draft-btn", function (e) {
     $("#status").val("draft");
     $("#sale_note_modal").modal("hide");
-    //Check if product is present or not.
+    //Check if products is present or not.
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -1473,7 +1473,7 @@ $(document).on("click", "#draft-btn", function (e) {
     pos_form_obj.submit();
 });
 $(document).on("click", "#pay-later-btn", function (e) {
-    //Check if product is present or not.
+    //Check if products is present or not.
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -1495,7 +1495,7 @@ $(document).on("click", "#pay-later-btn", function (e) {
 
 });
 $(document).on("click", "#quick-pay-btn", function (e) {
-    //Check if product is present or not.
+    //Check if products is present or not.
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -1504,7 +1504,7 @@ $(document).on("click", "#quick-pay-btn", function (e) {
     pos_form_obj.submit();
 });
 $("button#submit-btn").click(function () {
-    //Check if product is present or not.
+    //Check if products is present or not.
     if ($("table#product_table tbody").find(".product_row").length <= 0) {
         toastr.warning("No Product Added");
         return false;
@@ -2956,15 +2956,15 @@ function show_value(row, name) {
 $(document).on("click", ".add_size_btn", function () {
     $(".add_size_div").removeClass("hide");
 });
-$(document).on("click", "#submit-btn-add-product", function (e) {
+$(document).on("click", "#submit-btn-add-products", function (e) {
     e.preventDefault();
     var sku = $("#sku").val();
-    if ($("#product-form-quick-add").valid()) {
+    if ($("#products-form-quick-add").valid()) {
         tinyMCE.triggerSave();
         $.ajax({
             type: "POST",
             url: "/product",
-            data: $("#product-form-quick-add").serialize(),
+            data: $("#products-form-quick-add").serialize(),
             success: function (response) {
                 if (response.success) {
                     swal("Success", response.msg, "success");

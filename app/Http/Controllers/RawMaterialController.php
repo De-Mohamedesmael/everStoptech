@@ -119,7 +119,7 @@ class RawMaterialController extends Controller
 
             return DataTables::of($products)
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
@@ -334,7 +334,7 @@ class RawMaterialController extends Controller
 
             if ($request->images) {
                 foreach ($request->images as $image) {
-                    $raw_material->addMedia($image)->toMediaCollection('product');
+                    $raw_material->addMedia($image)->toMediaCollection('products');
                 }
             }
             if (!empty($request->supplier_id)) {
@@ -475,9 +475,9 @@ class RawMaterialController extends Controller
 
 
             if ($request->images) {
-                $raw_material->clearMediaCollection('product');
+                $raw_material->clearMediaCollection('products');
                 foreach ($request->images as $image) {
-                    $raw_material->addMedia($image)->toMediaCollection('product');
+                    $raw_material->addMedia($image)->toMediaCollection('products');
                 }
             }
 

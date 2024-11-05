@@ -113,7 +113,7 @@ class Product extends Model implements HasMedia
 
     public static function getProductVariationDropDown($is_raw_material = false)
     {
-        $variations = Variation::join('products', 'products.id', 'variations.product_id')->select('variations.*')->groupBY('variations.id')->get();
+        $variations = Variation::join('products_', 'products.id', 'variations.product_id')->select('variations.*')->groupBY('variations.id')->get();
         $variation_dropdown = [];
 
         foreach ($variations as $variation) {

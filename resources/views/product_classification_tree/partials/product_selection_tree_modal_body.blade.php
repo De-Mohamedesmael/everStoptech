@@ -100,7 +100,7 @@ $product_selected = !empty($pct_data['product_selected']) ? $pct_data['product_s
                                             @endphp
                                             @foreach ($products as $product)
                                             @include('product_classification_tree.partials.product_inner_part_pst', [
-                                                'product' => $product,
+                                                'products' => $product,
                                             ])
                                             @endforeach
                                             @endif

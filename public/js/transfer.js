@@ -7,7 +7,7 @@ $(document).ready(function () {
             return false;
         }
     });
-    //Add products
+    //Add products_
     if ($("#search_product").length > 0) {
         $("#search_product")
             .autocomplete({
@@ -68,7 +68,7 @@ function get_label_product_row(product_id, variation_id) {
                 add_via_ajax = false;
                 is_added = true;
 
-                //Increment product quantity
+                //Increment products quantity
                 qty_element = $(this).find(".quantity");
                 var qty = __read_number(qty_element);
                 __write_number(qty_element, qty + 1);

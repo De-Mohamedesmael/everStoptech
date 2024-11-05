@@ -8,7 +8,7 @@ $(document).ready(function () {
         }
     });
 
-    //Add products
+    //Add products_
     if ($("#search_product").length > 0) {
         $("#search_product")
             .autocomplete({
@@ -28,7 +28,7 @@ $(document).ready(function () {
                             .data("ui-autocomplete")
                             ._trigger("select", "autocompleteselect", ui);
                         $(this).autocomplete("close");
-                    } 
+                    }
                     // else if (ui.content.length == 0) {
                     //     swal("Product not found");
                     // }
@@ -106,7 +106,7 @@ $(document).on("click", "#addBatch", function () {
         success: function (result) {
             // console.log(result);
             $('.bounce_details_td_'+index).after(result);
-            
+
             if($('.stockId'+index).prop('checked')){
                 $('.stockId'+index).prop('checked', false);
             }
@@ -116,19 +116,19 @@ $(document).on("click", "#addBatch", function () {
 });
 // $(document).on("click", "#addBatch", function () {
 //     $('#addNewBatch').modal('show');
-    
+
 //     var store_id = $("#store_id").val();
 //     let currency_id = $('#paying_currency_id').val()
-//     $product=$(this).data("product");
+//     $products=$(this).data("products");
 
 //     $.ajax({
 //         method: "GET",
-//         url: "/add-stock/add-product-different-batch-row",
+//         url: "/add-stock/add-products-different-batch-row",
 //         dataType: "html",
 //         async: false,
 //         data: {
-//             product_id: $product.id,
-//             variation_id: $product.variation_id,
+//             product_id: $products.id,
+//             variation_id: $products.variation_id,
 //             currency_id: currency_id,
 //             store_id:store_id
 //         },
@@ -251,8 +251,8 @@ function get_label_product_row(product_id, variation_id,is_batch=false) {
                 if (row_v_id == variation_id && !is_added) {
                     add_via_ajax = false;
                     is_added = true;
-                    //Increment product quantity
-                    //get product qty
+                    //Increment products quantity
+                    //get products qty
                     var index=$(this).find(".row_count").val()
                     qty_element = $(this).find(".quantity");
                     qty = __read_number(qty_element);
@@ -331,7 +331,7 @@ function calculate_sub_totals() {
     var other_payments = __read_number($("#other_payments"));
 
     total = total + other_expenses - discount_amount + other_payments;
-    
+
     // Update grand total and final total
     __write_number($("#grand_total"), total);
     __write_number($("#final_total"), total);
@@ -542,7 +542,7 @@ $(document).on('click', '#submit-edit-save', function(e) {
     let data=checkAddStock();
     console.log(data)
     if (data[0]=="1" && data[3]!="3") {
-        
+
         let title = '';
         let check = '';
         if(data[4] != ''){
@@ -588,7 +588,7 @@ $(document).on('click', '#submit-edit-save', function(e) {
             } else if (data[1] != '' && data[2] == '') {
                 title = LANG.purchase_price_equal_to_zero;
             }
-    
+
             // swal({
             //         title: title,
             //         text: LANG.continue,
@@ -609,7 +609,7 @@ $(document).on('click', '#submit-edit-save', function(e) {
             //     });
             swal("warning", title, "warning");
         }
-   
+
     } else if(data[0]=="2") {
         console.log('test');
         $('form#edit_stock_form').valid();
@@ -621,7 +621,7 @@ $(document).on('click', '#submit-save', function(e) {
     let data=checkAddStock();
     console.log(data)
     if (data[0]=="1" && data[3]!="3") {
-        
+
         let title = '';
         let check = '';
         if(data[4] != ''){
@@ -647,7 +647,7 @@ $(document).on('click', '#submit-save', function(e) {
                         title = LANG.purchase_price_equal_to_zero;
                         check = 'no'
                     }
-            
+
                     // swal({
                     //         title: title,
                     //         text: LANG.continue,
@@ -662,7 +662,7 @@ $(document).on('click', '#submit-save', function(e) {
                     //             $('form#add_stock_form').valid();
                     //             $('form#add_stock_form').submit();
                     //         } else {
-                              
+
                     //         }
                     //     });
                     if(check != ''){
@@ -685,7 +685,7 @@ $(document).on('click', '#submit-save', function(e) {
             } else if (data[1] != '' && data[2] == '') {
                 title = LANG.purchase_price_equal_to_zero;
             }
-    
+
             // swal({
             //         title: title,
             //         text: LANG.continue,
@@ -706,7 +706,7 @@ $(document).on('click', '#submit-save', function(e) {
             //     });
             swal("warning", title, "warning");
         }
-   
+
     } else if(data[0]=="2") {
         if ($('form#add_stock_form').length) {
             $('form#add_stock_form').valid();

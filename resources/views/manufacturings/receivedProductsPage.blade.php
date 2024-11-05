@@ -13,7 +13,7 @@
                         </div>
                         <div class="card-body">
                             <p class="italic"><small>@lang('lang.required_fields_info')</small></p>
-                            {!! Form::open(['url' =>action('ManufacturingController@postReceivedProductsPage'), 'id' =>'product-edit-form', 'method'=>'POST', 'class' => '', 'enctype' => 'multipart/form-data']) !!}
+                            {!! Form::open(['url' =>action('ManufacturingController@postReceivedProductsPage'), 'id' =>'products-edit-form', 'method'=>'POST', 'class' => '', 'enctype' => 'multipart/form-data']) !!}
                             <input type="hidden" name="store_id" value="{{ $store->id }}">
                             <input type="hidden" name="manufacturer_id" value="{{ $manufacturer->id }}">
                             <input type="hidden" name="manufacturing_id" value="{{ $manufacturing->id }}">
@@ -64,7 +64,7 @@
                                         <tr>
 
                                             <th style="width: 7%" class="col-sm-8">@lang( 'lang.image' )</th>
-                                            <th style="width: 10%" class="col-sm-8">@lang( 'lang.products' )</th>
+                                            <th style="width: 10%" class="col-sm-8">@lang( 'lang.products_' )</th>
                                             <th style="width: 5%" class="col-sm-4">@lang( 'lang.quantity' )</th>
                                             <th style="width: 10%" class="col-sm-4">@lang( 'lang.unit' )</th>
                                             <th style="width: 10%" class="col-sm-4">@lang( 'lang.action' )</th>
@@ -206,7 +206,7 @@
                     if (row_v_id == variation_id && !is_added) {
                         add_via_ajax = false;
                         is_added = true;
-                        //Increment product quantity
+                        //Increment products quantity
                         qty_element = $(this).find(".quantity");
                         var qty = __read_number(qty_element);
                         __write_number(qty_element, qty + 1);
@@ -325,15 +325,15 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
                     url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");
@@ -440,8 +440,8 @@
                 if($('#product_table tbody tr').length > 0){
                     $.ajax({
                         type: "POST",
-                        url: $("#product-edit-form").attr("action"),
-                        data:  $("#product-edit-form").serialize(),
+                        url: $("#products-edit-form").attr("action"),
+                        data:  $("#products-edit-form").serialize(),
                         success: function (response) {
                             if (response.success) {
                                 swal("Success", response.msg, "success")
@@ -489,10 +489,10 @@
 {{--        $(document).ready(function () {--}}
 {{--            $("#submit-btn").on("click", function (e) {--}}
 {{--                e.preventDefault();--}}
-{{--                if ($("#product-edit-form").valid()) {--}}
+{{--                if ($("#products-edit-form").valid()) {--}}
 {{--                    $.ajax({--}}
 {{--                        type: "POST",--}}
-{{--                        url: $("#product-edit-form").attr("action"),--}}
+{{--                        url: $("#products-edit-form").attr("action"),--}}
 {{--                        data: {--}}
 {{--                            "store_id" :$("#store_id").val(),--}}
 {{--                            "manufacturer_id" :$("#manufacturer_id").val(),--}}
@@ -527,8 +527,8 @@
 {{--                        }--}}
 {{--                    })--}}
 {{--                    // select added new value--}}
-{{--                    $("#product-modal tbody").empty()--}}
-{{--                    $("#product-modal tbody").append(`--}}
+{{--                    $("#products-modal tbody").empty()--}}
+{{--                    $("#products-modal tbody").append(`--}}
 {{--                <tr>--}}
 {{--                        <td>--}}
 {{--                            ${data.length == 0 ? $('#product_'+$(this).val()[0]).attr('name'): $('#product_'+product_current).attr('name')}--}}

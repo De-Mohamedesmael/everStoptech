@@ -37,7 +37,7 @@
                                     <table class="table table-bordered table-striped table-condensed" id="product_table">
                                         <thead>
                                             <tr>
-                                                <th style="width: 25%" class="col-sm-8">@lang('lang.products')</th>
+                                                <th style="width: 25%" class="col-sm-8">@lang('lang.products_')</th>
                                                 <th style="width: 25%" class="col-sm-4">@lang('lang.sku')</th>
                                                 <th style="width: 25%" class="col-sm-4">@lang('lang.removed_quantity')</th>
                                                 <th style="width: 12%" class="col-sm-4">@lang('lang.purchase_price')</th>

@@ -126,7 +126,7 @@ $product_selected = !empty($pci_data['product_selected']) ? $pci_data['product_s
                                                             @foreach ($products as $product)
                                                                 @include('sales_promotion.partials.product_inner_part_pci',
                                                                     [
-                                                                        'product' => $product,
+                                                                        'products' => $product,
                                                                     ])
                                                             @endforeach
                                                         @endif
@@ -234,7 +234,7 @@ $product_selected = !empty($pci_data['product_selected']) ? $pci_data['product_s
                                     pci_product_checkbox">
                                             </div>
                                             <div class="col-md-5">
-                                                <img src="@if (!empty($product->getFirstMediaUrl('product'))) {{ $product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                <img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                     alt="photo" width="50" height="50">
                                                 <a href="">{{ $product->name }}</a>
                                             </div>
@@ -281,7 +281,7 @@ $product_selected = !empty($pci_data['product_selected']) ? $pci_data['product_s
         {{--                                                                        <div class="col-md-12">--}}
         {{--                                                                            <label--}}
         {{--                                                                                style="color: #222;">@lang('lang.price'):--}}
-        {{--                                                                                {{ @num_format($product->sell_price) }}</label>--}}
+        {{--                                                                                {{ @num_format($products->sell_price) }}</label>--}}
         {{--                                                                        </div>--}}
                                                     </div>
                                                 </div>

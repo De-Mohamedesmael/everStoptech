@@ -18,7 +18,7 @@ class CreateAddStockLinesTable extends Migration
             $table->unsignedBigInteger('transaction_id');
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
-            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products_')->onDelete('cascade');
             $table->unsignedBigInteger('variation_id');
             $table->foreign('variation_id')->references('id')->on('variations')->onDelete('cascade');
             $table->decimal('quantity', 15, 4);

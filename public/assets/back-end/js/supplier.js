@@ -11,7 +11,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
     paramName: "cover",
     clickable: true,
     method: "POST",
-    url: $("form#product-form").attr("action"),
+    url: $("form#products-form").attr("action"),
     headers: {
         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
     },
@@ -25,7 +25,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
         var myDropzone = this;
         $("#submit-btn").on("click", function (e) {
             e.preventDefault();
-            if ($("#product-form").valid()) {
+            if ($("#products-form").valid()) {
                 // tinyMCE.triggerSave();
                 if (myDropzone.getAcceptedFiles().length) {
                     myDropzone.processQueue();
@@ -34,8 +34,8 @@ myDropzone = new Dropzone("div#my-dropzone", {
                     // document.getElementById("content").style.display = "none";
                     $.ajax({
                         type: "POST",
-                        url: $("form#product-form").attr("action"),
-                        data: $("#product-form").serialize(),
+                        url: $("form#products-form").attr("action"),
+                        data: $("#products-form").serialize(),
                         success: function (response) {
                             // Swal.fire(response.status);
                             // Swal.fire("Success", response.status, "success");
@@ -70,7 +70,7 @@ myDropzone = new Dropzone("div#my-dropzone", {
         this.on("sending", function (file, xhr, formData) {
             // document.getElementById("loader").style.display = "block";
             // document.getElementById("content").style.display = "none";
-            var data = $("#product-form").serializeArray();
+            var data = $("#products-form").serializeArray();
             $.each(data, function (key, el) {
                 formData.append(el.name, el.value);
             });

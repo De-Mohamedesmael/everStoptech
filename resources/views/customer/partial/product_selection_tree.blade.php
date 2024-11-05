@@ -40,7 +40,7 @@ $product_selected = !empty($pct_data['product_selected']) ? $pct_data['product_s
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="pctModalLabel">@lang('lang.products')</h5>
+                <h5 class="modal-title" id="pctModalLabel">@lang('lang.products_')</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -55,7 +55,7 @@ $product_selected = !empty($pct_data['product_selected']) ? $pct_data['product_s
 
                                 </div>
                                 {{-- <div class="col-md-6">
-                                    {!! Form::select('search_product[]', $products, '', ['class' => 'form-control selectpicker', 'data-live-search' => 'true', 'placeholder' => __('lang.search_product'), 'id' => 'search_pct', 'data-actions-box' => 'true', 'multiple']) !!}
+                                    {!! Form::select('search_product[]', $products_, '', ['class' => 'form-control selectpicker', 'data-live-search' => 'true', 'placeholder' => __('lang.search_product'), 'id' => 'search_pct', 'data-actions-box' => 'true', 'multiple']) !!}
 
                                 </div> --}}
                             </div>
@@ -247,7 +247,7 @@ $product_selected = !empty($pct_data['product_selected']) ? $pct_data['product_s
                                                                     class="my-new-checkbox product_checkbox">
                                                             </div>
                                                             <div class="col-md-5">
-                                                                <img src="@if (!empty($product->getFirstMediaUrl('product'))) {{ $product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                                <img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                                     alt="photo" width="50" height="50">
                                                                 <a href="">{{ $product->name }}</a>
                                                             </div>

@@ -93,7 +93,7 @@ class ProductController extends Controller
         $suppliers = Supplier::pluck('name', 'id');
         $page = 'product_stock';
 
-        return view('product.index')->with(compact(
+        return view('back-end.products.index')->with(compact(
             'admins',
             'product_classes',
             'categories',
@@ -238,7 +238,7 @@ class ProductController extends Controller
             )->with(['supplier'])
                 ->groupBy('variations.id');
 
-            //  return $products;
+            //  return $products_;
             return DataTables::of($products)
                 ->addColumn('show_at_the_main_pos_page', function ($row) {
                     $checked='ff';
@@ -251,7 +251,7 @@ class ProductController extends Controller
                     '. $checked .' value="1" class="show_at_the_main_pos_page">';
                 })
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
@@ -423,26 +423,26 @@ class ProductController extends Controller
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
 
-                        if (auth()->user()->can('product_module.product.view')) {
+                        if (auth()->user()->can('product_module.products.view')) {
                             $html .=
                                 '<li><a data-href="' . action('ProductController@show', $row->id) . '"
                                 data-container=".view_modal" class="btn btn-modal"><i class="fa fa-eye"></i>
                                 ' . __('lang.view') . '</a></li>';
                         }
-//                        if (auth()->user()->can('product_module.product.remove_expiry')) {
+//                        if (auth()->user()->can('product_module.products.remove_expiry')) {
                             $html .=
                                 '<li><a target="_blank" href="' . action('ProductController@get_remove_expiry', $row->id) . '"
                                  class="btn"><i class="fa fa-hourglass-half"></i>
                                 ' . __('lang.remove_expiry') . '</a></li>';
 //                        }
-//                        if (auth()->user()->can('product_module.product.remove_damage')) {
+//                        if (auth()->user()->can('product_module.products.remove_damage')) {
                             $html .=
                                 '<li><a target="_blank" href="' . action('ProductController@get_remove_damage', $row->id) . '"
                                  class="btn"><i class="fa fa-filter"></i>
                                 ' . __('lang.remove_damage') . '</a></li>';
 //                        }
                         $html .= '<li class="divider"></li>';
-                        if (auth()->user()->can('product_module.product.create_and_edit')) {
+                        if (auth()->user()->can('product_module.products.create_and_edit')) {
                             $html .=
                                 '<li><a href="' . action('ProductController@edit', $row->id) . '" class="btn"
                             target="_blank"><i class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a></li>';
@@ -454,7 +454,7 @@ class ProductController extends Controller
                             target="_blank"><i class="fa fa-plus"></i> ' . __('lang.add_new_stock') . '</a></li>';
                         }
                         $html .= '<li class="divider"></li>';
-                        if (auth()->user()->can('product_module.product.delete')) {
+                        if (auth()->user()->can('product_module.products.delete')) {
 
                             $html .=
                                 '<li>
@@ -473,7 +473,7 @@ class ProductController extends Controller
 
                 ->setRowAttr([
                     'data-href' => function ($row) {
-                        if (auth()->user()->can("product.view")) {
+                        if (auth()->user()->can("products.view")) {
                             return  action('ProductController@show', [$row->id]);
                         } else {
                             return '';
@@ -528,7 +528,7 @@ class ProductController extends Controller
         $stores  = Store::getDropdown();
         $admins = Admin::pluck('name', 'id');
 
-        return view('product.index')->with(compact(
+        return view('back-end.products.index')->with(compact(
             'product_classes',
             'categories',
             'sub_categories',
@@ -550,12 +550,12 @@ class ProductController extends Controller
     public function get_remove_damage(Request $request,$id){
         $product_damages = ProductExpiryDamage::where("product_id",$id)->where("status","damage")->get();
         $status = "damage";
-        return view('product_expiry_damage.product_damage_index')->with(compact( 'product_damages', 'status' ,'id' ));
+        return view('back-end.product_expiry_damage.product_damage_index')->with(compact( 'product_damages', 'status' ,'id' ));
     }
     public function get_remove_expiry(Request $request,$id){
         $product_expires = ProductExpiryDamage::where("product_id",$id)->where("status","expiry")->get();
         $status = "expiry";
-        return view('product_expiry_damage.product_expiry_index')->with(compact('product_expires','status','id'));
+        return view('back-end.product_expiry_damage.product_expiry_index')->with(compact('product_expires','status','id'));
     }
     public function getDamageProduct(Request $request,$id){
         if (request()->ajax()) {
@@ -568,7 +568,7 @@ class ProductController extends Controller
             $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
             $store_query = '';
             if (!empty($store_id)) {
-                // $products->where('product_stores.store_id', $store_id);
+                // $products_->where('product_stores.store_id', $store_id);
                 $store_query = 'AND store_id=' . $store_id;
             }
             $addStockLines = $addStockLines->select(
@@ -586,7 +586,7 @@ class ProductController extends Controller
 
             return DataTables::of($addStockLines)
                 ->addColumn('image', function ($row) {
-                    $image = $row->product->getFirstMediaUrl('product');
+                    $image = $row->product->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
@@ -641,10 +641,10 @@ class ProductController extends Controller
                         'created_by' => 1
                     ]);
                 }
-                $expenses_beneficiary = ExpenseBeneficiary::where('name','expiry products')->first();
+                $expenses_beneficiary = ExpenseBeneficiary::where('name','expiry products_')->first();
                 if(!$expenses_beneficiary){
                     $expenses_beneficiary = ExpenseBeneficiary::create([
-                        'name' => 'damage products',
+                        'name' => 'damage products_',
                         'expense_category_id' => $expenses_category->id,
                         'created_by' => 1,
                     ]);
@@ -681,7 +681,7 @@ class ProductController extends Controller
             $store_id = $this->transactionUtil->getFilterOptionValues($request)['store_id'];
             $store_query = '';
             if (!empty($store_id)) {
-                // $products->where('product_stores.store_id', $store_id);
+                // $products_->where('product_stores.store_id', $store_id);
                 $store_query = 'AND store_id=' . $store_id;
             }
             $addStockLines = $addStockLines->select(
@@ -699,7 +699,7 @@ class ProductController extends Controller
 
             return DataTables::of($addStockLines)
                 ->addColumn('image', function ($row) {
-                    $image = $row->product->getFirstMediaUrl('product');
+                    $image = $row->product->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
@@ -753,10 +753,10 @@ class ProductController extends Controller
                         'created_by' => 1
                     ]);
                 }
-                $expenses_beneficiary = ExpenseBeneficiary::where('name','expiry products')->first();
+                $expenses_beneficiary = ExpenseBeneficiary::where('name','expiry products_')->first();
                 if(!$expenses_beneficiary){
                     $expenses_beneficiary = ExpenseBeneficiary::create([
-                        'name' => 'expiry products',
+                        'name' => 'expiry products_',
                         'expense_category_id' => $expenses_category->id,
                         'created_by' => 1,
                     ]);
@@ -789,7 +789,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        if (!auth()->user()->can('product_module.product.create_and_edit')) {
+        if (!auth()->user()->can('product_module.products.create_and_edit')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -815,7 +815,7 @@ class ProductController extends Controller
         $printers = Printer::get(['id','name']);
 
         if ($quick_add) {
-            return view('product.create_quick_add')->with(compact(
+            return view('back-end.products.create_quick_add')->with(compact(
                 'quick_add',
                 'suppliers',
                 'raw_materials',
@@ -838,7 +838,7 @@ class ProductController extends Controller
             ));
         }
 
-        return view('product.create')->with(compact(
+        return view('back-end.products.create')->with(compact(
             'suppliers',
             'raw_materials',
             'raw_material_units',
@@ -869,7 +869,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
-        if (!auth()->user()->can('product_module.product.create_and_edit')) {
+        if (!auth()->user()->can('product_module.products.create_and_edit')) {
             abort(403, 'Unauthorized action.');
         }
         $this->validate(
@@ -981,7 +981,7 @@ class ProductController extends Controller
                     $image = rand(1,1500)."_image.".$extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath,base64_decode(explode(",",$imageData)[1]));
-                    $product->addMedia($filePath)->toMediaCollection('product');
+                    $product->addMedia($filePath)->toMediaCollection('products');
                 }
             }
 
@@ -1031,7 +1031,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        if (!auth()->user()->can('product_module.product.view')) {
+        if (!auth()->user()->can('product_module.products.view')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -1050,7 +1050,7 @@ class ProductController extends Controller
             )->groupBy('add_stock_lines.id')
             ->get();
 
-        return view('product.show')->with(compact(
+        return view('back-end.products.show')->with(compact(
             'product',
             'stock_detials',
             'add_stocks',
@@ -1065,7 +1065,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        if (!auth()->user()->can('product_module.product.create_and_edit')) {
+        if (!auth()->user()->can('product_module.products.create_and_edit')) {
             abort(403, 'Unauthorized action.');
         }
         $product = Product::with('variations')->findOrFail($id);
@@ -1088,7 +1088,7 @@ class ProductController extends Controller
         $raw_material_units  = Unit::orderBy('name', 'asc')->pluck('name', 'id');
         $suppliers = Supplier::pluck('name', 'id');
         $units_js=$units->pluck('base_unit_multiplier', 'id');
-        return view('product.edit')->with(compact(
+        return view('back-end.products.edit')->with(compact(
             'raw_materials',
             'raw_material_units',
             'product',
@@ -1120,7 +1120,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
-        if (!auth()->user()->can('product_module.product.create_and_edit')) {
+        if (!auth()->user()->can('product_module.products.create_and_edit')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -1188,16 +1188,16 @@ class ProductController extends Controller
             //         $index_discounts=array_keys($request->discount_type);
             //         if($request->discount_ids != null ){
             //             $index_discounts_olds=array_keys($request->discount_ids);
-            //             ProductDiscount::where('product_id',$product->id)->whereNotIn('id',$request->discount_ids)->delete();
+            //             ProductDiscount::where('product_id',$products->id)->whereNotIn('id',$request->discount_ids)->delete();
             //         }else{
-            //             ProductDiscount::where('product_id',$product->id)->delete();
+            //             ProductDiscount::where('product_id',$products->id)->delete();
             //         }
             //     }
 
             //     foreach ($index_discounts as $index_discount){
             //         $discount_customers = $this->getDiscountCustomerFromType($request->get('discount_customer_types_'.$index_discount));
             //         $data_des=[
-            //             'product_id' => $product->id,
+            //             'product_id' => $products->id,
             //             'discount_type' => $request->discount_type[$index_discount],
             //             'discount_category' => $request->discount_category[$index_discount],
             //             'is_discount_permenant'=>!empty($request->is_discount_permenant[$index_discount])? 1 : 0,
@@ -1221,7 +1221,7 @@ class ProductController extends Controller
 
 
             // }else{
-            //     ProductDiscount::where('product_id',$product->id)->delete();
+            //     ProductDiscount::where('product_id',$products->id)->delete();
             // }
 
 
@@ -1265,19 +1265,19 @@ class ProductController extends Controller
             //////////////////////////
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
                 // Clear the media collection only once, before the loop
-                $product->clearMediaCollection('product');
+                $product->clearMediaCollection('products');
 
                 foreach ($this->getCroppedImages($request->cropImages) as $imageData) {
                     $extention = explode(";", explode("/", $imageData)[1])[0];
                     $image = rand(1, 1500) . "_image." . $extention;
                     $filePath = public_path('uploads/' . $image);
                     $fp = file_put_contents($filePath, base64_decode(explode(",", $imageData)[1]));
-                    $product->addMedia($filePath)->toMediaCollection('product');
+                    $product->addMedia($filePath)->toMediaCollection('products');
                 }
             }
 
             if (!isset($request->cropImages) || count($request->cropImages) == 0) {
-                $product->clearMediaCollection('product');
+                $product->clearMediaCollection('products');
             }
             //////////////////////////////////////
             //////////////////////////////////////
@@ -1319,7 +1319,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        if (!auth()->user()->can('product_module.product.delete')) {
+        if (!auth()->user()->can('product_module.products.delete')) {
             abort(403, 'Unauthorized action.');
         }
         try {
@@ -1341,7 +1341,7 @@ class ProductController extends Controller
                 $product = Product::where('id', $variation->product_id)->first();
                 $product->deleted_by= request()->user()->id;
                 $product->save();
-                $product->clearMediaCollection('product');
+                $product->clearMediaCollection('products');
                 $product->delete();
                 $variation->deleted_by= request()->user()->id;
                 $variation->save();
@@ -1380,7 +1380,7 @@ class ProductController extends Controller
         $sell_price = request()->sell_price;
         $is_service = request()->is_service;
 
-        return view('product.partial.variation_row')->with(compact(
+        return view('back-end.products.partial.variation_row')->with(compact(
             'units',
             'colors',
             'sizes',
@@ -1497,7 +1497,7 @@ class ProductController extends Controller
             ->select('transactions.*')
             ->get();
 
-        return view('product.partial.purchase_history')->with(compact(
+        return view('back-end.products.partial.purchase_history')->with(compact(
             'product',
             'add_stocks',
         ));
@@ -1510,7 +1510,7 @@ class ProductController extends Controller
     public function getImport()
     {
 
-        return view('product.import');
+        return view('back-end.products.import');
     }
 
     /**
@@ -1614,7 +1614,7 @@ class ProductController extends Controller
     {
         try {
             $product = Product::find($id);
-            $product->clearMediaCollection('product');
+            $product->clearMediaCollection('products');
 
             $output = [
                 'success' => true,
@@ -1642,7 +1642,7 @@ class ProductController extends Controller
         $raw_materials  = Product::where('is_raw_material', 1)->orderBy('name', 'asc')->pluck('name', 'id');
         $raw_material_units  = Unit::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('product.partial.raw_material_row')->with(compact(
+        return view('back-end.products.partial.raw_material_row')->with(compact(
             'row_id',
             'raw_materials',
             'raw_material_units',
@@ -1658,7 +1658,7 @@ class ProductController extends Controller
         $row_id = request()->row_id ?? 0;
         $discount_customer_types = CustomerType::pluck('name', 'id');
 
-        return view('product.partial.raw_discount')->with(compact(
+        return view('back-end.products.partial.raw_discount')->with(compact(
             'row_id',
             'discount_customer_types',
         ));
@@ -1676,28 +1676,8 @@ class ProductController extends Controller
 
         return ['raw_material' => $raw_material];
     }
-    public function getBase64Image($Image)
-    {
 
-        $image_path = str_replace(env("APP_URL") . "/", "", $Image);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $image_path);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $image_content = curl_exec($ch);
-        curl_close($ch);
-//    $image_content = file_get_contents($image_path);
-        $base64_image = base64_encode($image_content);
-        $b64image = "data:image/jpeg;base64," . $base64_image;
-        return  $b64image;
-    }
-    public function getCroppedImages($cropImages){
-        $dataNewImages = [];
 
-        foreach ($cropImages as $img) {
-            $dataNewImages[] = $img;
-        }
-        return $dataNewImages;
-    }
     public function updateColumnVisibility(Request $request)
     {
         $columnVisibility = $request->input('columnVisibility');
@@ -1732,7 +1712,7 @@ class ProductController extends Controller
         }
     }
     public function multiDeleteRow(Request $request){
-        if (!auth()->user()->can('product_module.product.delete')) {
+        if (!auth()->user()->can('product_module.products.delete')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -1751,7 +1731,7 @@ class ProductController extends Controller
                 } else {
                     ProductStore::where('product_id', $variation->product_id)->delete();
                     $product = Product::where('id', $variation->product_id)->first();
-                    $product->clearMediaCollection('product');
+                    $product->clearMediaCollection('products');
                     $product->delete();
                     $variation->delete();
                 }

@@ -44,7 +44,7 @@
                     <table class="table table-bordered table-striped table-condensed" id="product_table">
                         <thead class="bg-success" style="color: white">
                             <tr>
-                                <th>@lang('lang.products')</th>
+                                <th>@lang('lang.products_')</th>
                                 <th>@lang('lang.sku')</th>
                                 <th>@lang('lang.class')</th>
                                 <th>@lang('lang.category')</th>

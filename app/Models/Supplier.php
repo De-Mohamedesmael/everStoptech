@@ -24,7 +24,7 @@ class Supplier extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'products' => 'array'
+        'products_' => 'array'
     ];
 
 

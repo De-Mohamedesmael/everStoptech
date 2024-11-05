@@ -26,7 +26,7 @@
                     </div>
                     {!! Form::open([
                         'url' => action('ManufacturingController@store'),
-                        'id' => 'product-edit-form',
+                        'id' => 'products-edit-form',
                         'method' => 'POST',
                         'class' => '',
                         'enctype' => 'multipart/form-data',
@@ -72,7 +72,7 @@
                                         {{--                                                class='select_product_ids selectpicker select2 form-control' --}}
                                         {{--                                                data-live-search='true' style='width: 30%;' --}}
                                         {{--                                                placeholder="{{__('lang.please_select')}}"> --}}
-                                        {{--                                            @foreach ($products as $item) --}}
+                                        {{--                                            @foreach ($products_ as $item) --}}
                                         {{--                                                @if ($item->current_stock > 0) --}}
                                         {{--                                                    <option stock="{{ $item->current_stock }}" name="{{$item->name}}" --}}
                                         {{--                                                            id="product_{{$item->id}}" value="{{$item->id}}"> --}}
@@ -95,7 +95,7 @@
                                             <tr>
 
                                                 <th style="width: 7%" class="col-sm-8">@lang('lang.image')</th>
-                                                <th style="width: 10%" class="col-sm-8">@lang('lang.products')</th>
+                                                <th style="width: 10%" class="col-sm-8">@lang('lang.products_')</th>
                                                 <th style="width: 10%" class="col-sm-4">@lang('lang.current_stock')</th>
                                                 <th style="width: 5%" class="col-sm-4">@lang('lang.quantity')</th>
                                                 <th style="width: 10%" class="col-sm-4">@lang('lang.unit')</th>
@@ -150,7 +150,7 @@
     {{--                    </button> --}}
     {{--                </div> --}}
     {{--                <div class="modal-body"> --}}
-    {{--                    <table id="product-modal" class="table table-striped table-bordered"> --}}
+    {{--                    <table id="products-modal" class="table table-striped table-bordered"> --}}
     {{--                        <thead> --}}
     {{--                            <th>@lang('lang.name')</th> --}}
     {{--                            <th>@lang('lang.stock')</th> --}}
@@ -188,7 +188,7 @@
                     if (row_v_id == variation_id && !is_added) {
                         add_via_ajax = false;
                         is_added = true;
-                        //Increment product quantity
+                        //Increment products quantity
                         qty_element = $(this).find(".quantity");
                         var qty = __read_number(qty_element);
                         __write_number(qty_element, qty + 1);
@@ -310,15 +310,15 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
                     url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");
@@ -422,11 +422,11 @@
         $(document).ready(function() {
             $("#submit-btn").on("click", function(e) {
                 e.preventDefault();
-                if ($("#product-edit-form").valid()) {
+                if ($("#products-edit-form").valid()) {
                     $.ajax({
                         type: "POST",
-                        url: $("#product-edit-form").attr("action"),
-                        data: $("#product-edit-form").serialize(),
+                        url: $("#products-edit-form").attr("action"),
+                        data: $("#products-edit-form").serialize(),
                         success: function(response) {
                             if (response.success) {
                                 swal("Success", response.msg, "success")
@@ -467,10 +467,10 @@
     {{--        $(document).ready(function () { --}}
     {{--            $("#submit-btn").on("click", function (e) { --}}
     {{--                e.preventDefault(); --}}
-    {{--                if ($("#product-edit-form").valid()) { --}}
+    {{--                if ($("#products-edit-form").valid()) { --}}
     {{--                    $.ajax({ --}}
     {{--                        type: "POST", --}}
-    {{--                        url: $("#product-edit-form").attr("action"), --}}
+    {{--                        url: $("#products-edit-form").attr("action"), --}}
     {{--                        data: { --}}
     {{--                            "store_id" :$("#store_id").val(), --}}
     {{--                            "manufacturer_id" :$("#manufacturer_id").val(), --}}
@@ -505,8 +505,8 @@
     {{--                        } --}}
     {{--                    }) --}}
     {{--                    // select added new value --}}
-    {{--                    $("#product-modal tbody").empty() --}}
-    {{--                    $("#product-modal tbody").append(` --}}
+    {{--                    $("#products-modal tbody").empty() --}}
+    {{--                    $("#products-modal tbody").append(` --}}
     {{--                <tr> --}}
     {{--                        <td> --}}
     {{--                            ${data.length == 0 ? $('#product_'+$(this).val()[0]).attr('name'): $('#product_'+product_current).attr('name')} --}}
