@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Imports\ProductImport;
 use App\Models\AddStockLine;
 use App\Models\Brand;
-use App\Models\Employee;
 use App\Models\Printer;
 use App\Models\Category;
 use App\Models\Color;
@@ -13,10 +12,7 @@ use App\Models\Customer;
 use App\Models\CustomerType;
 use App\Models\ExpenseBeneficiary;
 use App\Models\ExpenseCategory;
-use App\Models\Grade;
-use App\Models\manufacturingProduct;
 use App\Models\Product;
-use App\Models\ProductClass;
 use App\Models\ProductDiscount;
 use App\Models\ProductExpiryDamage;
 use App\Models\ProductStore;
@@ -26,14 +22,11 @@ use App\Models\Supplier;
 use App\Models\SupplierProduct;
 use App\Models\Tax;
 use App\Models\Transaction;
-use App\Models\Unit;
 use App\Models\Admin;
-use App\Models\Variation;
 use App\Utils\ProductUtil;
 use App\Utils\TransactionUtil;
 use App\Utils\Util;
 use Carbon\Carbon;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -76,14 +69,11 @@ class ProductController extends Controller
      */
     public function getProductStocks(Request $request)
     {
-        $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
         $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
         $sub_categories = Category::whereNotNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
-        $units = Unit::where('is_raw_material_unit', 0)->orderBy('name', 'asc')->pluck('name', 'id','base_unit_multiplier');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
         $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
-        $grades = Grade::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
@@ -95,14 +85,11 @@ class ProductController extends Controller
 
         return view('back-end.products.index')->with(compact(
             'admins',
-            'product_classes',
             'categories',
             'sub_categories',
             'brands',
-            'units',
             'colors',
             'sizes',
-            'grades',
             'taxes',
             'customers',
             'customer_types',
@@ -511,15 +498,12 @@ class ProductController extends Controller
                 ])
                 ->make(true);
         }
-        $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
-        $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
-        $sub_categories = Category::whereNotNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
-        $units = Unit::orderBy('name', 'asc')->pluck('name', 'id','base_unit_multiplier');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
         $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
-        $grades = Grade::orderBy('name', 'asc')->pluck('name', 'id');
-        $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
+        $taxes = Tax::where('type', 'product_tax')
+            ->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = Customer::getCustomerTreeArray();
@@ -529,14 +513,10 @@ class ProductController extends Controller
         $admins = Admin::pluck('name', 'id');
 
         return view('back-end.products.index')->with(compact(
-            'product_classes',
             'categories',
-            'sub_categories',
             'brands',
-            'units',
             'colors',
             'sizes',
-            'grades',
             'taxes',
             'customers',
             'customer_types',
@@ -793,70 +773,48 @@ class ProductController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
-        $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
-        $sub_categories = Category::whereNotNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
-        $units = Unit::where('is_raw_material_unit', 0)->orderBy('name', 'asc')->pluck('name', 'id','base_unit_multiplier');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
         $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
-        $grades = Grade::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = CustomerType::pluck('name', 'id');
-        $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
         $stores  = Store::all();
         $stores_select  = Store::getDropdown();
         $quick_add = request()->quick_add;
-        $raw_materials  = Product::where('is_raw_material', 1)->orderBy('name', 'asc')->pluck('name', 'id');
-        $raw_material_units  = Unit::orderBy('name', 'asc')->pluck('name', 'id');
         $suppliers = Supplier::pluck('name', 'id');
-        $printers = Printer::get(['id','name']);
 
         if ($quick_add) {
             return view('back-end.products.create_quick_add')->with(compact(
                 'quick_add',
                 'suppliers',
-                'raw_materials',
-                'raw_material_units',
-                'product_classes',
                 'categories',
-                'sub_categories',
                 'brands',
-                'units',
                 'colors',
                 'sizes',
-                'grades',
                 'stores_select',
                 'taxes',
                 'customers',
                 'customer_types',
                 'discount_customer_types',
-                'stores',
-                'printers'
+                'stores'
             ));
         }
 
         return view('back-end.products.create')->with(compact(
             'suppliers',
-            'raw_materials',
-            'raw_material_units',
-            'product_classes',
             'categories',
-            'sub_categories',
             'brands',
-            'units',
             'colors',
             'sizes',
-            'grades',
             'taxes',
             'stores_select',
             'customers',
             'customer_types',
             'discount_customer_types',
-            'stores',
-            'printers'
+            'stores'
         ));
     }
 
@@ -876,8 +834,6 @@ class ProductController extends Controller
             $request,
             ['name' => ['required', 'max:255']],
             ['store_ids' => ['required']],
-//            ['purchase_price' => ['required', 'max:25', 'decimal']],
-//            ['sell_price' => ['required', 'max:25', 'decimal']],
         );
 //        try {
 
@@ -886,12 +842,8 @@ class ProductController extends Controller
             $product_data = [
                 'name' => $request->name,
                 'translations' => !empty($request->translations) ? $request->translations : [],
-                'product_class_id' => $request->product_class_id,
-                'category_id' => $request->category_id,
-                'sub_category_id' => $request->sub_category_id,
                 'brand_id' => $request->brand_id,
                 'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
-                'multiple_units' => $request->multiple_units,
                 'multiple_colors' => $request->multiple_colors,
                 'multiple_sizes' => $request->multiple_sizes,
                 'multiple_grades' => $request->multiple_grades,
@@ -1559,8 +1511,7 @@ class ProductController extends Controller
      */
     public function checkSku($sku)
     {
-        $product_sku = Product::leftjoin('variations', 'products.id', 'variations.product_id')
-            ->where('sub_sku', $sku)->whereNull('variations.deleted_at')->first();
+        $product_sku = Product::where('sku', $sku)->first();
 
         if (!empty($product_sku)) {
             $output = [
@@ -1631,23 +1582,7 @@ class ProductController extends Controller
         return $output;
     }
 
-    /**
-     * get raw material row
-     *
-     * @return void
-     */
-    public function getRawMaterialRow()
-    {
-        $row_id = request()->row_id ?? 0;
-        $raw_materials  = Product::where('is_raw_material', 1)->orderBy('name', 'asc')->pluck('name', 'id');
-        $raw_material_units  = Unit::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('back-end.products.partial.raw_material_row')->with(compact(
-            'row_id',
-            'raw_materials',
-            'raw_material_units',
-        ));
-    }
  /**
      * get raw material row
      *
@@ -1664,18 +1599,6 @@ class ProductController extends Controller
         ));
     }
 
-    /**
-     * get raw material details
-     *
-     * @param int $raw_material_id
-     * @return void
-     */
-    public function getRawMaterialDetail($raw_material_id)
-    {
-        $raw_material = Product::find($raw_material_id);
-
-        return ['raw_material' => $raw_material];
-    }
 
 
     public function updateColumnVisibility(Request $request)

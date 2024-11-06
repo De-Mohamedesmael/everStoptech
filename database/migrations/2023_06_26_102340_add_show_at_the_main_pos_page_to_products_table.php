@@ -13,7 +13,7 @@ class AddShowAtTheMainPosPageToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->string('show_at_the_main_pos_page')->nullable()->default('no');
         });
     }
@@ -25,7 +25,7 @@ class AddShowAtTheMainPosPageToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('show_at_the_main_pos_page');
         });
     }

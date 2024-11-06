@@ -17,7 +17,7 @@ class CreateProductDiscountsTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('product_id')->unsigned();
-            $table->foreign('product_id')->references('id')->on('products_')->onDelete('cascade');
+            $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('discount_type')->nullable();
             $table->string('discount')->nullable();
             $table->string('discount_start_date')->nullable();

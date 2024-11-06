@@ -13,7 +13,7 @@ class AlterTableProducts extends Migration
      */
     public function up()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->softDeletes();
             $table->string('deleted_by')->nullable()->default(null);
         });
@@ -26,7 +26,7 @@ class AlterTableProducts extends Migration
      */
     public function down()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->dropSoftDeletes();
             $table->dropColumn('deleted_by');
         });

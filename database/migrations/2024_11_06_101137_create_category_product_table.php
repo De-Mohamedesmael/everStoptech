@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTransferLinesTable extends Migration
+class CreateCategoryProductTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class CreateTransferLinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('transfer_lines', function (Blueprint $table) {
+        Schema::create('category_product', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('transaction_id');
-            $table->unsignedBigInteger('product_id');
-            $table->decimal('quantity', 15, 4);
-            $table->decimal('purchase_price', 15, 4);
-            $table->decimal('sub_total', 15, 4);
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class CreateTransferLinesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transfer_lines');
+        Schema::dropIfExists('category_product');
     }
 }

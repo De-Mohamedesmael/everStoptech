@@ -16,7 +16,6 @@ class CreateProductInAdjustmentDetailsTable extends Migration
         Schema::create('product_in_adjustment_details', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('variation_id');
             $table->unsignedBigInteger('product_adjustments_id');
             $table->integer('old_stock');
             $table->integer('new_stock');

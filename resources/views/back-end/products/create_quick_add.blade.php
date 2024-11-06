@@ -9,7 +9,7 @@
         <div
             class="modal-header  position-relative border-0 d-flex justify-content-between align-items-center @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
-            <h4 class="modal-title px-2 position-relative d-flex align-items-center" style="gap: 5px;"">@lang('lang.add_product')
+            <h4 class="modal-title px-2 position-relative d-flex align-items-center" style="gap: 5px;">@lang('lang.add_product')
                 <span class=" header-modal-pill"></span>
             </h4>
             <button type="button"

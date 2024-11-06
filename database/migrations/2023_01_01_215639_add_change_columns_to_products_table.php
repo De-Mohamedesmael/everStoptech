@@ -13,7 +13,7 @@ class AddChangeColumnsToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->string('name', 50)->change();
         });
     }
@@ -25,7 +25,7 @@ class AddChangeColumnsToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
         });
     }

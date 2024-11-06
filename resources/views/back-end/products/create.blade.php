@@ -1,22 +1,20 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.products'))
-
-@section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/supplier.css') }}">
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
+            style="text-decoration: none;color: #1565c0" href="{{ action('ProductController@index') }}">/
+            @lang('lang.products')</a>
+    </li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
+        @lang('lang.add_new_product')</li>
 @endsection
+
 @section('content')
     <section class="forms py-0">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 px-1">
-                    <div
-                        class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <h4 class="mb-0">
-                            @lang('lang.add_new_product')
-                            <span class="header-pill"></span>
-                        </h4>
-                    </div>
-
                     {!! Form::open([
                         'url' => action('ProductController@store'),
                         'id' => 'products-form',
@@ -24,7 +22,7 @@
                         'class' => '',
                         'enctype' => 'multipart/form-data',
                     ]) !!}
-                    @include('product.partial.create_product_form')
+                    @include('back-end.products.partial.create_product_form')
                     <div class="row my-2 justify-content-center align-items-center">
                         <div class="col-md-4">
                             <input type="button" value="{{ trans('lang.save') }}" id="submit-btn"
@@ -96,6 +94,7 @@
 @endsection
 
 @section('javascript')
+    <script src="{{asset('js/product.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
     <script>
@@ -251,87 +250,20 @@
             }, 500);
         }
     </script>
-
-    <script>
-        function get_unit(units, row_id) {
-            $v = document.getElementById('select_unit_id_' + row_id).value;
-
-            $.each(units, function(key, value) {
-
-                if ($v == key) {
-                    $('#number_vs_base_unit_' + row_id).val(value);
-                    if (value == 1) {
-                        $('#number_vs_base_unit_' + row_id).attr("disabled", true);
-                    } else {
-                        $('#number_vs_base_unit_' + row_id).attr("disabled", false);
-                    }
-
-                    console.log(value);
-                }
-            });
-        }
-    </script>
-    <script src="{{ asset('js/products.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#discount_customer_types').selectpicker('selectAll');
             $('#store_ids').selectpicker('selectAll');
-
-            $('#category_id').change();
-
-            if ($('#is_service').prop('checked')) {
-                $('.supplier_div').removeClass('hide');
-            } else {
-                $('.supplier_div').addClass('hide');
-            }
         });
-        $('.v_unit').on('change', function() {
-            alert(this.value);
-        });
+
     </script>
 
     <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 
 
     <script>
-        // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#productDetailsCollapse').on('show.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#productDetailsCollapse"] i').removeClass('fa-arrow-down').addClass(
-                'fa-arrow-up');
-        });
 
-        $('#productDetailsCollapse').on('hide.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#productDetailsCollapse"] i').removeClass('fa-arrow-up').addClass(
-                'fa-arrow-down');
-        });
 
-        // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#productOtherDetailsCollapse').on('show.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#productOtherDetailsCollapse"] i').removeClass('fa-arrow-down').addClass(
-                'fa-arrow-up');
-        });
-
-        $('#productOtherDetailsCollapse').on('hide.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#productOtherDetailsCollapse"] i').removeClass('fa-arrow-up').addClass(
-                'fa-arrow-down');
-        });
-
-        // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#addPrimaryMaterialCollapse').on('show.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#addPrimaryMaterialCollapse"] i').removeClass('fa-arrow-down').addClass(
-                'fa-arrow-up');
-        });
-
-        $('#addPrimaryMaterialCollapse').on('hide.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#addPrimaryMaterialCollapse"] i').removeClass('fa-arrow-up').addClass(
-                'fa-arrow-down');
-        });
 
         // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
         $('#discountInfoCollapse').on('show.bs.collapse', function() {
@@ -359,37 +291,7 @@
                 'fa-arrow-down');
         });
 
-        // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#pricesFromDifferentStoresCollapse').on('show.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#pricesFromDifferentStoresCollapse"] i').removeClass('fa-arrow-down')
-                .addClass(
-                    'fa-arrow-up');
-        });
 
-        $('#pricesFromDifferentStoresCollapse').on('hide.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#pricesFromDifferentStoresCollapse"] i').removeClass('fa-arrow-up').addClass(
-                'fa-arrow-down');
-        });
-
-        // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-        $('#varientCollapse').on('show.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-up' when the content is expanded
-            $('button[data-bs-target="#varientCollapse"] i').removeClass('fa-arrow-down')
-                .addClass(
-                    'fa-arrow-up');
-        });
-
-        $('#varientCollapse').on('hide.bs.collapse', function() {
-            // Change the arrow icon to 'chevron-down' when the content is collapsed
-            $('button[data-bs-target="#varientCollapse"] i').removeClass('fa-arrow-up').addClass(
-                'fa-arrow-down');
-        });
     </script>
-    <script>
-        $('#add_raw_material_row').on('click', function() {
-            console.log($('.bootstrap-select button'));
-        })
-    </script>
+
 @endsection

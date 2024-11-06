@@ -13,7 +13,7 @@ class AddWeightScaleToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->boolean('weighing_scale_barcode')->default(0);
         });
     }
@@ -25,7 +25,7 @@ class AddWeightScaleToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             //
         });
     }

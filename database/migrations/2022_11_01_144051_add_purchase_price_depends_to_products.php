@@ -13,7 +13,7 @@ class AddPurchasePriceDependsToProducts extends Migration
      */
     public function up()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->double('selling_price_depends')->nullable();
             $table->double('purchase_price_depends')->nullable();
         });
@@ -26,7 +26,7 @@ class AddPurchasePriceDependsToProducts extends Migration
      */
     public function down()
     {
-        Schema::table('products_', function (Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->dropColumn('selling_price_depends');
             $table->dropColumn('purchase_price_depends');
         });

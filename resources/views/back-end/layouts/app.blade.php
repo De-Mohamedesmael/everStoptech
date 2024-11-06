@@ -83,6 +83,375 @@
             appearance: auto !important;
             -webkit-appearance: auto !important;
         }
+        button.select-button.btn-flat.translation_btn .dripicons-web:before {
+            color: #fff;
+        }
+        .header-pill,
+        .toggle-pill,
+        .header-modal-pill {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+
+        }
+
+        .section-header-pill {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+        }
+
+        .form-label {
+            font-weight: 500;
+            font-size: 0.8rem !important;
+        }
+
+        .modal-input {
+            width: 100% !important;
+            background-color: #e6e6e6 !important;
+            outline: none !important;
+            border: 1px solid #e6e6e6 !important;
+            padding: 2px 5px !important;
+            border-radius: 6px !important;
+        }
+
+        .bootstrap-select {
+            width: 100% !important;
+            background-color: #e6e6e6 !important;
+            outline: none !important;
+            border: 1px solid #e6e6e6 !important;
+            padding: 2px 5px !important;
+            border-radius: 6px !important;
+        }
+
+        .bootstrap-select button {
+            height: 100%;
+            width: 100%;
+            padding: 0 15px;
+        }
+
+        .text-end {
+            text-align: end;
+        }
+
+        .toggle-button {
+            color: black !important;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 20px;
+            background-color: var(--primary-color);
+            border-radius: 8px;
+            outline: none !important;
+            border: none !important;
+            transition: 0.6s;
+        }
+
+        .toggle-button:hover {
+            color: black !important;
+            background-color: #c0e4fe;
+        }
+
+        .select-button {
+            outline: none;
+            border: none;
+            color: white;
+            background-color: var(--complementary-color-1);
+            border-radius: 6px;
+            height: 100%;
+        }
+
+        .select-button-group {
+            background-color: #e6e6e6 !important;
+            border-radius: 6px !important;
+        }
+
+        #submit-btn {
+            background-color: var(--secondary-color);
+            color: white;
+            width: 100%;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 1rem;
+        }
+
+        .btn-main {
+            background-color: var(--secondary-color) !important;
+            color: white !important;
+        }
+
+        .close {
+            margin: 0 !important;
+            padding: 0 !important;
+            width: 30px;
+            height: 30px;
+            /*background-color: #d70007 !important;*/
+            opacity: 1;
+        }
+
+        .modal-header {
+            padding: 10px 40px;
+        }
+
+        .modal-border {
+            bottom: -12%;
+            left: 15%;
+            background-color: #dadada;
+            width: 70%;
+            height: 3px;
+        }
+
+        .modal-footer {
+            border: none !important;
+            width: 70%;
+            margin: auto;
+        }
+
+        .card {
+            box-shadow: 0 6px 8px -6px #999 !important;
+        }
+
+        .btn-light {
+            background-color: transparent !important;
+        }
+
+
+        .select_product_button {
+            border: none;
+            outline: none;
+            background-color: var(--primary-color);
+            border-radius: 6px;
+            padding: 0px 12px;
+            transition: 0.6s;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .select_product_button:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .select-button-group .bootstrap-select {
+            width: 85% !important;
+        }
+
+        .select-button-group input {
+            width: fit-content !important;
+        }
+
+
+        input.form-control-custom[checked]+label::before, input.form-control-custom[checked]+label::after {
+            border: none;
+        }
+        input.form-control-custom:checked+label::after {
+            opacity: 1 !important;
+        }
+        input.form-control-custom+label::after {
+            content: "\f00c";
+            display: block;
+            font-size: 8px;
+            color: #fff !important;
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            -webkit-transition: all 0.1s;
+            transition: all 0.1s;
+            opacity: 0;
+            cursor: pointer;
+        }
+        input.form-control-custom:checked+label::before {
+            background: var(--complementary-color-1) !important;
+        }
+        input.form-control-custom[checked]+label::before, input.form-control-custom[checked]+label::after {
+            border: none;
+        }
+        input.form-control-custom+label::before {
+            content: "";
+            display: block;
+            width: 16px;
+            height: 16px;
+            line-height: 16px;
+            background: #ddd !important;
+            color: #fff !important;
+            text-align: center;
+            position: absolute;
+            top: 2px;
+            left: 0;
+            -webkit-transition: all 0.1s;
+            transition: all 0.1s;
+            cursor: pointer;
+        }
+        input.form-control-custom+label {
+            font-size: 0.75em !important;
+            margin-bottom: 0;
+            margin-left: 0;
+            color: #999 !important;
+            padding-left: 25px;
+            padding-top: 2px;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .forms label {
+                font-size: 0.9rem;
+            }
+        }
+
+    </style>
+    <style>
+        .variants {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .variants>div {
+            margin-right: 5px;
+        }
+
+        .variants>div:last-of-type {
+            margin-right: 0;
+        }
+
+        .file {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .file>input[type='file'] {
+            display: none
+        }
+
+        .file>label {
+            font-size: 1rem;
+            font-weight: 300;
+            cursor: pointer;
+            outline: 0;
+            user-select: none;
+            border-color: rgb(216, 216, 216) rgb(209, 209, 209) rgb(186, 186, 186);
+            border-style: solid;
+            border-radius: 4px;
+            border-width: 1px;
+            background-color: hsl(0, 0%, 100%);
+            color: hsl(0, 0%, 29%);
+            padding-left: 16px;
+            padding-right: 16px;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .file>label:hover {
+            border-color: hsl(0, 0%, 21%);
+        }
+
+        .file>label:active {
+            background-color: hsl(0, 0%, 96%);
+        }
+
+        .file>label>i {
+            padding-right: 5px;
+        }
+
+        .file--upload>label {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .file--upload>label:hover {
+            border-color: var(--secondary-color);
+            background-color: #145d1a
+        }
+
+        .file--upload>label:active {
+            background-color: hsl(204, 86%, 91%);
+        }
+
+        .file--uploading>label {
+            color: hsl(48, 100%, 67%);
+            border-color: hsl(48, 100%, 67%);
+        }
+
+        /*  */
+        .file--uploading>label>i {
+            animation: pulse 5s infinite;
+        }
+
+        .file--uploading>label:hover {
+            border-color: hsl(48, 100%, 67%);
+            background-color: hsl(48, 100%, 96%);
+        }
+
+        .file--uploading>label:active {
+            background-color: hsl(48, 100%, 91%);
+        }
+
+        .file--success>label {
+            color: hsl(141, 71%, 48%);
+            border-color: hsl(141, 71%, 48%);
+        }
+
+        .file--success>label:hover {
+            border-color: hsl(141, 71%, 48%);
+            background-color: hsl(141, 71%, 96%);
+        }
+
+        .file--success>label:active {
+            background-color: hsl(141, 71%, 91%);
+        }
+
+        .file--danger>label {
+            color: hsl(348, 100%, 61%);
+            border-color: hsl(348, 100%, 61%);
+        }
+
+        .file--danger>label:hover {
+            border-color: hsl(348, 100%, 61%);
+            background-color: hsl(348, 100%, 96%);
+        }
+
+        .file--danger>label:active {
+            background-color: hsl(348, 100%, 91%);
+        }
+
+        .file--disabled {
+            cursor: not-allowed;
+        }
+
+        .file--disabled>label {
+            border-color: #e6e7ef;
+            color: #e6e7ef;
+            pointer-events: none;
+        }
+       .file .modal-input {
+
+            padding: 25px 25px !important;
+        }
+
+
+        @keyframes pulse {
+            0% {
+                color: hsl(48, 100%, 67%);
+            }
+
+            50% {
+                color: hsl(48, 100%, 38%);
+            }
+
+            100% {
+                color: hsl(48, 100%, 67%);
+            }
+        }
     </style>
     @yield('styles')
     @stack('style')
