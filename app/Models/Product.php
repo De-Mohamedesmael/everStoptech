@@ -25,8 +25,6 @@ class Product extends Model implements HasMedia
      * @var array
      */
     protected $casts = [
-        'multiple_colors' => 'array',
-        'multiple_sizes' => 'array',
         'show_to_customer_types' => 'array',
         'translations' => 'array',
 

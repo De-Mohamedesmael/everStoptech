@@ -302,7 +302,21 @@
                 font-size: 0.9rem;
             }
         }
-
+        .table-responsive .table a.btn.btn-modal {
+            color: #1565c0;
+            background: #1565c021;
+            border: 1px solid #1565c06b;
+        }
+        table .btn-group  button.dropdown-toggle {
+            background-color: #1565c0 !important;
+            color: white !important;
+        }
+        span.category_name {
+            color: #1565c0 !important;
+        }
+        a.btn.text-red {
+            color: #a30c0c !important;
+        }
     </style>
     <style>
         .variants {
@@ -457,8 +471,8 @@
     @stack('style')
 </head>
 
-<body class="horizontal-layout relative">
-
+<div class="horizontal-layout relative">
+<div id="loader" style="display: none;"></div>
 <div class="overlay">
     <div style="width: 55%;overflow: hidden;position: relative;">
         <img style="width: 100%;z-index: 10;position: relative;" src="{{ asset('assets/back-end/images/logo3.png') }}"
@@ -468,225 +482,226 @@
 
 </div>
 
-
-<div id="infobar-notifications-sidebar" class="infobar-notifications-sidebar">
-    <div class="infobar-notifications-sidebar-head d-flex w-100 justify-content-between">
-        <h4>Notifications</h4><a href="javascript:void(0)" id="infobar-notifications-close"
-                                 class="infobar-notifications-close"><img src="{{ asset('assets/back-end/images/svg-icon/close.svg') }}"
-                                                                          class="img-fluid menu-hamburger-close" alt="close"></a>
-    </div>
-    <div class="infobar-notifications-sidebar-body">
-        <ul class="nav nav-pills nav-justified" id="infobar-pills-tab" role="tablist">
-            <li class="nav-item">
-                <a class="nav-link active" id="pills-messages-tab" data-toggle="pill" href="#pills-messages"
-                   role="tab" aria-controls="pills-messages" aria-selected="true">Messages</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-emails-tab" data-toggle="pill" href="#pills-emails" role="tab"
-                   aria-controls="pills-emails" aria-selected="false">Emails</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" id="pills-actions-tab" data-toggle="pill" href="#pills-actions" role="tab"
-                   aria-controls="pills-actions" aria-selected="false">Actions</a>
-            </li>
-        </ul>
-        <div class="tab-content" id="infobar-pills-tabContent">
-            <div class="tab-pane fade show active" id="pills-messages" role="tabpanel"
-                 aria-labelledby="pills-messages-tab">
-                <ul class="list-unstyled">
-                    <li class="media">
-                        <img class="mr-3 align-self-center rounded-circle"
-                             src="{{ asset('assets/back-end/images/users/girl.svg') }}" alt="Generic placeholder image">
-                        <div class="media-body">
-                            <h5>Amy Adams<span class="badge badge-success">1</span><span class="timing">Jan
-                                        22</span></h5>
-                            <p>Hey!! What are you doing tonight ?</p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <img class="mr-3 align-self-center rounded-circle" src="{{ asset('assets/back-end/images/users/boy.svg') }}"
-                             alt="Generic placeholder image">
-                        <div class="media-body">
-                            <h5>James Simpsons<span class="badge badge-success">2</span><span class="timing">Feb
-                                        15</span></h5>
-                            <p>What's up ???</p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <img class="mr-3 align-self-center rounded-circle" src="{{ asset('assets/back-end/images/users/men.svg') }}"
-                             alt="Generic placeholder image">
-                        <div class="media-body">
-                            <h5>Mark Witherspoon<span class="badge badge-success">3</span><span class="timing">Mar
-                                        03</span></h5>
-                            <p>I will be late today in office.</p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <img class="mr-3 align-self-center rounded-circle"
-                             src="{{ asset('assets/back-end/images/users/women.svg') }}" alt="Generic placeholder image">
-                        <div class="media-body">
-                            <h5>Jenniffer Wills<span class="badge badge-success">4</span><span class="timing">Apr
-                                        05</span></h5>
-                            <p>Venture presentation is ready.</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-pane fade" id="pills-emails" role="tabpanel" aria-labelledby="pills-emails-tab">
-                <ul class="list-unstyled">
-                    <li class="media">
-                        <span class="mr-3 align-self-center img-icon">N</span>
-                        <div class="media-body">
-                            <h5>Nelson Smith<span class="timing">Jan 22</span></h5>
-                            <p><span class="badge badge-danger-inverse">WORK</span>Salary has been processed.
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <span class="mr-3 align-self-center img-icon">C</span>
-                        <div class="media-body">
-                            <h5>Courtney Cox<i class="feather icon-star text-warning ml-2"></i><span
-                                    class="timing">Feb 15</span></h5>
-                            <p><span class="badge badge-success-inverse">URGENT</span>New product launching...
-                            </p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <span class="mr-3 align-self-center img-icon">R</span>
-                        <div class="media-body">
-                            <h5>Rachel White<span class="timing">Mar 03</span></h5>
-                            <p><span class="badge badge-secondary-inverse">ORDER</span><span
-                                    class="badge badge-info-inverse">SHOPPING</span>Your order has been...</p>
-                        </div>
-                    </li>
-                    <li class="media">
-                        <span class="mr-3 align-self-center img-icon">F</span>
-                        <div class="media-body">
-                            <h5>Freepik<span class="timing">Mar 03</span></h5>
-                            <p><a href="#" class="badge badge-primary mr-2">VERIFY NOW</a>New Sign
-                                verification req...</p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="tab-pane fade" id="pills-actions" role="tabpanel" aria-labelledby="pills-actions-tab">
-                <ul class="list-unstyled">
-                    <li class="media">
-                            <span class="mr-3 action-icon badge badge-success-inverse"><i
-                                    class="feather icon-check"></i></span>
-                        <div class="media-body">
-                            <h5 class="action-title">Payment Success !!!</h5>
-                            <p class="my-3">We have received your payment toward ad Account : 9876543210.
-                                Your Ad
-                                is Running.</p>
-                            <p><span class="badge badge-danger-inverse">INFO</span><span
-                                    class="badge badge-info-inverse">STATUS</span><span class="timing">Today,
-                                        09:39 PM</span></p>
-                        </div>
-                    </li>
-                    <li class="media">
-                            <span class="mr-3 action-icon badge badge-primary-inverse"><i
-                                    class="feather icon-calendar"></i></span>
-                        <div class="media-body">
-                            <h5 class="action-title">Nobita Applied for Leave.</h5>
-                            <p class="my-3">Nobita applied for leave due to personal reasons on 22nd Feb.</p>
-                            <p><span class="badge badge-success">APPROVE</span><span
-                                    class="badge badge-danger">REJECT</span><span class="timing">Yesterday,
-                                        05:25
-                                        PM</span></p>
-                        </div>
-                    </li>
-                    <li class="media">
-                            <span class="mr-3 action-icon badge badge-danger-inverse"><i
-                                    class="feather icon-alert-triangle"></i></span>
-                        <div class="media-body">
-                            <h5 class="action-title">Alert</h5>
-                            <p class="my-3">There has been new Log in fron your account at Melbourne. Mark it
-                                safe or report.</p>
-                            <p><i class="feather icon-check text-success mr-3"></i><a href="#"
-                                                                                      class="text-muted">Report Now</a><span class="timing">5 Jan 2019, 02:13
-                                        PM</span></p>
-                        </div>
-                    </li>
-                    <li class="media">
-                            <span class="mr-3 action-icon badge badge-warning-inverse"><i
-                                    class="feather icon-award"></i></span>
-                        <div class="media-body">
-                            <h5 class="action-title">Congratulations !!!</h5>
-                            <p class="my-3">Your role in the organization has been changed from Editor to
-                                Chief
-                                Strategist.</p>
-                            <p><span class="badge badge-danger-inverse">ACTIVITY</span><span class="timing">10
-                                        Jan
-                                        2019, 08:49 PM</span></p>
-                        </div>
-                    </li>
-                </ul>
-            </div>
+<div id="content">
+    <div id="infobar-notifications-sidebar" class="infobar-notifications-sidebar">
+        <div class="infobar-notifications-sidebar-head d-flex w-100 justify-content-between">
+            <h4>Notifications</h4><a href="javascript:void(0)" id="infobar-notifications-close"
+                                     class="infobar-notifications-close"><img src="{{ asset('assets/back-end/images/svg-icon/close.svg') }}"
+                                                                              class="img-fluid menu-hamburger-close" alt="close"></a>
         </div>
-    </div>
-</div>
-<!-- Start Containerbar -->
-<div id="containerbar" class=" bg-white">
-
-    @include('back-end.layouts.partials.header')
-    <div id="closing_cash_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
-         class="modal">
-    </div>
-
-
-    @include('back-end.layouts.partials.leftbar')
-
-    <!-- Start Rightbar -->
-    <div class="rightbar">
-
-        @yield('breadcrumbbar')
-
-        <div class="animate-in-page">
-            <div class="breadcrumbbar m-0 px-3 py-0">
-                <div
-                    class="d-flex align-items-center justify-content-between @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                    <div>
-                        <h4 class="page-title @if (app()->isLocale('ar')) text-end @else text-start @endif">
-                            @yield('page_title')
-                        </h4>
-                        <div class="breadcrumb-list">
-                            <ul
-                                class="breadcrumb m-0 p-0  d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                                @section('breadcrumbs')
-                                    <li
-                                        class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
-                                        <a style="text-decoration: none;color: #1565c0" href="{{ url('/') }}">/
-                                            @lang('lang.dashboard')</a>
-                                    </li>
-                                @show
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        @yield('button')
-                    </div>
+        <div class="infobar-notifications-sidebar-body">
+            <ul class="nav nav-pills nav-justified" id="infobar-pills-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="pills-messages-tab" data-toggle="pill" href="#pills-messages"
+                       role="tab" aria-controls="pills-messages" aria-selected="true">Messages</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-emails-tab" data-toggle="pill" href="#pills-emails" role="tab"
+                       aria-controls="pills-emails" aria-selected="false">Emails</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="pills-actions-tab" data-toggle="pill" href="#pills-actions" role="tab"
+                       aria-controls="pills-actions" aria-selected="false">Actions</a>
+                </li>
+            </ul>
+            <div class="tab-content" id="infobar-pills-tabContent">
+                <div class="tab-pane fade show active" id="pills-messages" role="tabpanel"
+                     aria-labelledby="pills-messages-tab">
+                    <ul class="list-unstyled">
+                        <li class="media">
+                            <img class="mr-3 align-self-center rounded-circle"
+                                 src="{{ asset('assets/back-end/images/users/girl.svg') }}" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <h5>Amy Adams<span class="badge badge-success">1</span><span class="timing">Jan
+                                            22</span></h5>
+                                <p>Hey!! What are you doing tonight ?</p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <img class="mr-3 align-self-center rounded-circle" src="{{ asset('assets/back-end/images/users/boy.svg') }}"
+                                 alt="Generic placeholder image">
+                            <div class="media-body">
+                                <h5>James Simpsons<span class="badge badge-success">2</span><span class="timing">Feb
+                                            15</span></h5>
+                                <p>What's up ???</p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <img class="mr-3 align-self-center rounded-circle" src="{{ asset('assets/back-end/images/users/men.svg') }}"
+                                 alt="Generic placeholder image">
+                            <div class="media-body">
+                                <h5>Mark Witherspoon<span class="badge badge-success">3</span><span class="timing">Mar
+                                            03</span></h5>
+                                <p>I will be late today in office.</p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <img class="mr-3 align-self-center rounded-circle"
+                                 src="{{ asset('assets/back-end/images/users/women.svg') }}" alt="Generic placeholder image">
+                            <div class="media-body">
+                                <h5>Jenniffer Wills<span class="badge badge-success">4</span><span class="timing">Apr
+                                            05</span></h5>
+                                <p>Venture presentation is ready.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="pills-emails" role="tabpanel" aria-labelledby="pills-emails-tab">
+                    <ul class="list-unstyled">
+                        <li class="media">
+                            <span class="mr-3 align-self-center img-icon">N</span>
+                            <div class="media-body">
+                                <h5>Nelson Smith<span class="timing">Jan 22</span></h5>
+                                <p><span class="badge badge-danger-inverse">WORK</span>Salary has been processed.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <span class="mr-3 align-self-center img-icon">C</span>
+                            <div class="media-body">
+                                <h5>Courtney Cox<i class="feather icon-star text-warning ml-2"></i><span
+                                        class="timing">Feb 15</span></h5>
+                                <p><span class="badge badge-success-inverse">URGENT</span>New product launching...
+                                </p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <span class="mr-3 align-self-center img-icon">R</span>
+                            <div class="media-body">
+                                <h5>Rachel White<span class="timing">Mar 03</span></h5>
+                                <p><span class="badge badge-secondary-inverse">ORDER</span><span
+                                        class="badge badge-info-inverse">SHOPPING</span>Your order has been...</p>
+                            </div>
+                        </li>
+                        <li class="media">
+                            <span class="mr-3 align-self-center img-icon">F</span>
+                            <div class="media-body">
+                                <h5>Freepik<span class="timing">Mar 03</span></h5>
+                                <p><a href="#" class="badge badge-primary mr-2">VERIFY NOW</a>New Sign
+                                    verification req...</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="pills-actions" role="tabpanel" aria-labelledby="pills-actions-tab">
+                    <ul class="list-unstyled">
+                        <li class="media">
+                                <span class="mr-3 action-icon badge badge-success-inverse"><i
+                                        class="feather icon-check"></i></span>
+                            <div class="media-body">
+                                <h5 class="action-title">Payment Success !!!</h5>
+                                <p class="my-3">We have received your payment toward ad Account : 9876543210.
+                                    Your Ad
+                                    is Running.</p>
+                                <p><span class="badge badge-danger-inverse">INFO</span><span
+                                        class="badge badge-info-inverse">STATUS</span><span class="timing">Today,
+                                            09:39 PM</span></p>
+                            </div>
+                        </li>
+                        <li class="media">
+                                <span class="mr-3 action-icon badge badge-primary-inverse"><i
+                                        class="feather icon-calendar"></i></span>
+                            <div class="media-body">
+                                <h5 class="action-title">Nobita Applied for Leave.</h5>
+                                <p class="my-3">Nobita applied for leave due to personal reasons on 22nd Feb.</p>
+                                <p><span class="badge badge-success">APPROVE</span><span
+                                        class="badge badge-danger">REJECT</span><span class="timing">Yesterday,
+                                            05:25
+                                            PM</span></p>
+                            </div>
+                        </li>
+                        <li class="media">
+                                <span class="mr-3 action-icon badge badge-danger-inverse"><i
+                                        class="feather icon-alert-triangle"></i></span>
+                            <div class="media-body">
+                                <h5 class="action-title">Alert</h5>
+                                <p class="my-3">There has been new Log in fron your account at Melbourne. Mark it
+                                    safe or report.</p>
+                                <p><i class="feather icon-check text-success mr-3"></i><a href="#"
+                                                                                          class="text-muted">Report Now</a><span class="timing">5 Jan 2019, 02:13
+                                            PM</span></p>
+                            </div>
+                        </li>
+                        <li class="media">
+                                <span class="mr-3 action-icon badge badge-warning-inverse"><i
+                                        class="feather icon-award"></i></span>
+                            <div class="media-body">
+                                <h5 class="action-title">Congratulations !!!</h5>
+                                <p class="my-3">Your role in the organization has been changed from Editor to
+                                    Chief
+                                    Strategist.</p>
+                                <p><span class="badge badge-danger-inverse">ACTIVITY</span><span class="timing">10
+                                            Jan
+                                            2019, 08:49 PM</span></p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-        @yield('content')
-        <div class="modal modal-jobs-edit animate__animated" data-animate-in="animate__rollIn" data-animate-out="animate__rollOut"
-             id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel" style="display: none;"
-             aria-hidden="true">
-                <div class="view_modal no-print">
-
-
-                </div>
-        </div>
     </div>
-    <!-- End Rightbar -->
+    <!-- Start Containerbar -->
+    <div id="containerbar" class=" bg-white">
 
-    @include('back-end.layouts.partials.footer')
-    @livewireScripts
-    <button id="toTopBtn" onclick="scrollToTop()">
-        <i class="fas fa-arrow-up"></i>
-    </button>
+        @include('back-end.layouts.partials.header')
+        <div id="closing_cash_modal" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+             class="modal">
+        </div>
 
+
+        @include('back-end.layouts.partials.leftbar')
+
+        <!-- Start Rightbar -->
+        <div class="rightbar">
+
+            @yield('breadcrumbbar')
+
+            <div class="animate-in-page">
+                <div class="breadcrumbbar m-0 px-3 py-0">
+                    <div
+                        class="d-flex align-items-center justify-content-between @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                        <div>
+                            <h4 class="page-title @if (app()->isLocale('ar')) text-end @else text-start @endif">
+                                @yield('page_title')
+                            </h4>
+                            <div class="breadcrumb-list">
+                                <ul
+                                    class="breadcrumb m-0 p-0  d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
+                                    @section('breadcrumbs')
+                                        <li
+                                            class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
+                                            <a style="text-decoration: none;color: #1565c0" href="{{ url('/') }}">/
+                                                @lang('lang.dashboard')</a>
+                                        </li>
+                                    @show
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            @yield('button')
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @yield('content')
+            <div class="modal modal-jobs-edit animate__animated" data-animate-in="animate__rollIn" data-animate-out="animate__rollOut"
+                 id="editModal" tabindex="-1" role="dialog" aria-labelledby="editBrandModalLabel" style="display: none;"
+                 aria-hidden="true">
+                    <div class="view_modal no-print">
+
+
+                    </div>
+            </div>
+        </div>
+        <!-- End Rightbar -->
+
+        @include('back-end.layouts.partials.footer')
+        @livewireScripts
+        <button id="toTopBtn" onclick="scrollToTop()">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+
+    </div>
 </div>
 <script>
     $(document).ready(function() {

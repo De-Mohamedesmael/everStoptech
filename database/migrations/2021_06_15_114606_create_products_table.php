@@ -18,9 +18,9 @@ class CreateProductsTable extends Migration
             $table->string('name', 25);
             $table->text('translations')->nullable();
             $table->unsignedBigInteger('brand_id')->nullable();
+            $table->unsignedBigInteger('color_id')->nullable();
+            $table->unsignedBigInteger('size_id')->nullable();
             $table->string('sku');
-            $table->string('multiple_colors')->nullable();
-            $table->string('multiple_sizes')->nullable();
             $table->boolean('is_service')->default(0);
             $table->string('barcode_type');
             $table->integer('alert_quantity')->nullable();

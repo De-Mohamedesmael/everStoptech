@@ -79,6 +79,8 @@
                                 {!! Form::select('category_id[]', $categories, request()->category_id, [
                                 'class' => 'form-control filter_product
                                 selectpicker',
+                                'multiple',
+                                'id' => 'category_id',
                                 'data-live-search' => 'true',
                                 'placeholder' => __('lang.all'),
                                 ]) !!}

@@ -1322,4 +1322,6 @@
   'lang.customer_types' => 'Lang.customer types',
   'Male' => 'Male',
   'edit_brand' => 'Edit brand',
+  'Wrong Password!' => 'Wrong Password!',
+  'Correct Password!' => 'Correct Password!',
 );

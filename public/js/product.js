@@ -58,31 +58,8 @@ $(document).on("click", "#clear_all_input_form", function () {
 
 
 
-// Dropzone.autoDiscover = false;
-// myDropzone = new Dropzone("div#my-dropzone", {
-//     addRemoveLinks: true,
-//     autoProcessQueue: false,
-//     uploadMultiple: true,
-//     parallelUploads: 100,
-//     maxFilesize: 12,
-//     paramName: "images",
-//     clickable: true,
-//     method: "POST",
-//     url: $("form#products-form").attr("action"),
-//     headers: {
-//         "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
-//     },
-//     renameFile: function (file) {
-//         var dt = new Date();
-//         var time = dt.getTime();
-//         return time + file.name;
-//     },
-//     acceptedFiles: ".jpeg,.jpg,.png,.gif",
-//     init: function () {
-//         var myDropzone = this;
 $("#submit-btn").on("click", function (e) {
     e.preventDefault();
-    let system_mode = $("#system_mode").val();
     let sku = $('#sku').val();
 
     if (sku.trim() !== "") {
@@ -99,28 +76,7 @@ $("#submit-btn").on("click", function (e) {
           }
         },
       });
-    }else if(system_mode != "garments"){
-        let name = $("#name").val();
-        let product_class_id = $("#product_class_id").val();
-        let category_id = $("#category_id").val();
-            $.ajax({
-                method: "get",
-                url: "/products/check-name",
-                data: {
-                    name: name,
-                    product_class_id: product_class_id,
-                    category_id: category_id,
-                },
-                success: function (result) {
-                    if (!result.success) {
-                        swal("Error", result.msg, "error");
-                        $("#name").val("");
-                    }else {
-                        submitForm();
-                    }
-                },
-            });
-    } else {
+    }else {
       submitForm();
     }
   });
@@ -135,9 +91,13 @@ $("#submit-btn").on("click", function (e) {
                 url: $("form#products-form").attr("action"),
                 data: $("#products-form").serialize(),
                 success: function (response) {
-                    myFunction();
+
                     if (response.success) {
-                        swal("Success", response.msg, "success");
+                        Swal.fire({
+                            title: 'Success',
+                            text: response.msg,
+                            icon: 'success',
+                        })
                         $("#sku").val("").change();
                         $("#show_at_the_main_pos_page").prop('checked', false);
                         $("#name").val("").change();
@@ -149,105 +109,36 @@ $("#submit-btn").on("click", function (e) {
                         }
                         const previewContainer = document.querySelector('.preview-container');
                         previewContainer.innerHTML = '';
+                        document.getElementById("content").style.display = "block";
+                        document.getElementById("loader").style.display = "none";
+
                     } else {
-                        swal("Error", response.msg, "error");
+                        Swal.fire({
+                            title: 'Error',
+                            text: response.msg,
+                            icon: 'error',
+                        })
+
                     }
                 },
                 error: function (response) {
-                    myFunction();
+
                     if (!response.success) {
-                        swal("Error", response.msg, "error");
+                       Swal.fire({
+                            title: 'Error',
+                            text: response.msg,
+                            icon: 'error',
+                        });
                     }
+                    document.getElementById("content").style.display = "block";
+                    document.getElementById("loader").style.display = "none";
+
                 },
             });
+
         }
     }
 
-//
-//         this.on("sending", function (file, xhr, formData) {
-//             document.getElementById("loader").style.display = "block";
-//             document.getElementById("content").style.display = "none";
-//             var data = $("#products-form").serializeArray();
-//             $.each(data, function (key, el) {
-//                 formData.append(el.name, el.value);
-//             });
-//         });
-//         this.on("complete", function (file) {
-//             this.removeAllFiles(true);
-//             myFunction();
-//         });
-//     },
-//     error: function (file, response) {
-//         console.log(response);
-//     },
-//     successmultiple: function (file, response) {
-//         if (response.success) {
-//             swal("Success", response.msg, "success");
-//         }
-//         if (!response.success) {
-//             swal("Error", response.msg, "error");
-//         }
-//     },
-//     completemultiple: function (file, response) {},
-//     reset: function () {
-//         this.removeAllFiles(true);
-//     },
-// });
-
-var modalTemplate = $("#product_cropper_modal");
-
-// myDropzone.on("thumbnail", function (file) {
-//     if (file.cropped) return;
-//
-//     var cachedFilename = file.name;
-//     myDropzone.removeFile(file);
-//
-//     var $cropperModal = $(modalTemplate);
-//     var $uploadCrop = $cropperModal.find("#product_crop");
-//
-//     $cropperModal.find(".product_preview_div").empty();
-//
-//     var $img = document.getElementById("product_sample_image");
-//
-//     var reader = new FileReader();
-//     var cropper;
-//     reader.onloadend = function () {
-//         $($img).attr("src", reader.result);
-//         $cropperModal.modal("show");
-//         modalTemplate.on("shown.bs.modal", function () {
-//             cropper= null;
-//             cropper = new Cropper($img, {
-//                 initialAspectRatio: 1 / 1,
-//                 aspectRatio: 1 / 1,
-//                 cropBoxResizable: false,
-//                 viewMode: 2,
-//                 preview: ".product_preview_div",
-//             });
-//         });
-//     };
-//     reader.readAsDataURL(file);
-//
-//     $uploadCrop.on("click", function () {
-//         var blob = cropper.getCroppedCanvas().toDataURL();
-//         var newFile = dataURItoBlob(blob);
-//         newFile.cropped = true;
-//         newFile.name = cachedFilename;
-//
-//         myDropzone.addFile(newFile);
-//         $cropperModal.modal("hide");
-//         cropper.destroy();
-//         cropper = null;
-//     });
-// });
-// modalTemplate.on("hidden.bs.modal", function () {
-//     console.log(cropper);
-//     if (typeof cropper !== "undefined") {
-//         if (copper !== null) {
-//             // cropper.destroy();
-//             cropper = null;
-//         }
-//     }
-// });
 
 // transform cropper dataURI output to a Blob which Dropzone accepts
 function dataURItoBlob(dataURI) {
@@ -434,9 +325,9 @@ $(document).on("submit", "form#quick_add_color_form", function (e) {
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
-                        $("#multiple_colors").empty().append(data_html);
-                        $("#multiple_colors").selectpicker("refresh");
-                        $("#multiple_colors").selectpicker(
+                        $("#color_id").empty().append(data_html);
+                        $("#color_id").selectpicker("refresh");
+                        $("#color_id").selectpicker(
                             "val",
                             [color_id]
                         );
@@ -473,18 +364,17 @@ $(document).on("submit", "form#quick_add_size_form", function (e) {
                     icon: 'success',
                 });
                 var size_id = result.size_id;
-                multiple_sizes_array.push(size_id);
                 $.ajax({
                     method: "get",
                     url: "/size/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
-                        $("#multiple_sizes").empty().append(data_html);
-                        $("#multiple_sizes").selectpicker("refresh");
-                        $("#multiple_sizes").selectpicker(
+                        $("#size_id").empty().append(data_html);
+                        $("#size_id").selectpicker("refresh");
+                        $("#size_id").selectpicker(
                             "val",
-                            multiple_sizes_array
+                            [size_id]
                         );
                     },
                 });
@@ -513,17 +403,22 @@ $("#expiry_date").change(function () {
 
 $(document).on("change", "#sku", function () {
     let sku = $(this).val();
-    $.ajax({
-        method: "get",
-        url: "/products/check-sku/" + sku,
-        data: {},
-        success: function (result) {
-            if (!result.success) {
-                swal("Error", result.msg, "error");
-                $("#sku").val("");
-            }
-        },
-    });
+    if(sku !== undefined &&
+        sku !== "" &&
+        sku !== null){
+        $.ajax({
+            method: "get",
+            url: "/products/check-sku/" + sku,
+            data: {},
+            success: function (result) {
+                if (!result.success) {
+                    swal("Error", result.msg, "error");
+                    $("#sku").val("");
+                }
+            },
+        });
+    }
+
 });
 $(document).on("change", "#name , #category_id", function () {
     checkName();
@@ -544,7 +439,11 @@ function checkName() {
             },
             success: function (result) {
                 if (!result.success) {
-                    swal("Error", result.msg, "error");
+                    Swal.fire({
+                        title: 'Error',
+                        text: result.msg,
+                        icon: 'error',
+                    })
                     $("#name").val("");
                 }
             },

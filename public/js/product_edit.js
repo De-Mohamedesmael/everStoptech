@@ -24,17 +24,17 @@ $(".this_product_have_variant_div").slideUp();
 $("#this_product_have_variant").change(function () {
     if ($(this).prop("checked")) {
         // $(
-        //     "#multiple_units, #multiple_colors, #multiple_sizes, #multiple_grades"
+        //     "#multiple_units, #color_id, #size_id, #multiple_grades"
         // ).selectpicker("val", "");
         // $(
-        //     "#multiple_units, #multiple_colors, #multiple_sizes, #multiple_grades"
+        //     "#multiple_units, #color_id, #size_id, #multiple_grades"
         // )
         //     .attr("disabled", true)
         //     .selectpicker("refresh");
         $(".this_product_have_variant_div").slideDown();
     } else {
         $(
-            "#multiple_units, #multiple_colors, #multiple_sizes, #multiple_grades"
+            "#multiple_units, #color_id, #size_id, #multiple_grades"
         )
             .attr("disabled", false)
             .selectpicker("refresh");
@@ -553,9 +553,9 @@ $(document).on("submit", "form#quick_add_unit_form", function (e) {
         },
     });
 });
-var multiple_colors_array = [];
-$("#multiple_colors").change(function () {
-    multiple_colors_array.push($(this).val());
+var color_id_array = [];
+$("#color_id").change(function () {
+    color_id_array.push($(this).val());
 });
 $(document).on("submit", "form#quick_add_color_form", function (e) {
     $("form#quick_add_color_form").validate();
@@ -573,18 +573,18 @@ $(document).on("submit", "form#quick_add_color_form", function (e) {
                 swal("Success", result.msg, "success");
                 $(".view_modal").modal("hide");
                 var color_id = result.color_id;
-                multiple_colors_array.push(color_id);
+                color_id_array.push(color_id);
                 $.ajax({
                     method: "get",
                     url: "/color/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
-                        $("#multiple_colors").empty().append(data_html);
-                        $("#multiple_colors").selectpicker("refresh");
-                        $("#multiple_colors").selectpicker(
+                        $("#color_id").empty().append(data_html);
+                        $("#color_id").selectpicker("refresh");
+                        $("#color_id").selectpicker(
                             "val",
-                            multiple_colors_array
+                            color_id_array
                         );
                     },
                 });
@@ -594,9 +594,9 @@ $(document).on("submit", "form#quick_add_color_form", function (e) {
         },
     });
 });
-var multiple_sizes_array = [];
-$("#multiple_sizes").change(function () {
-    multiple_sizes_array.push($(this).val());
+var size_id_array = [];
+$("#size_id").change(function () {
+    size_id_array.push($(this).val());
 });
 $(document).on("submit", "form#quick_add_size_form", function (e) {
     $("form#quick_add_size_form").validate();
@@ -614,18 +614,18 @@ $(document).on("submit", "form#quick_add_size_form", function (e) {
                 swal("Success", result.msg, "success");
                 $(".view_modal").modal("hide");
                 var size_id = result.size_id;
-                multiple_sizes_array.push(size_id);
+                size_id_array.push(size_id);
                 $.ajax({
                     method: "get",
                     url: "/size/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
-                        $("#multiple_sizes").empty().append(data_html);
-                        $("#multiple_sizes").selectpicker("refresh");
-                        $("#multiple_sizes").selectpicker(
+                        $("#size_id").empty().append(data_html);
+                        $("#size_id").selectpicker("refresh");
+                        $("#size_id").selectpicker(
                             "val",
-                            multiple_sizes_array
+                            size_id_array
                         );
                     },
                 });
@@ -699,7 +699,7 @@ $(document).on("change", "#sku", function () {
 
     $.ajax({
         method: "get",
-        url: "/product/check-sku/" + sku,
+        url: "/products/check-sku/" + sku,
         data: {},
         success: function (result) {
             console.log(result.success);

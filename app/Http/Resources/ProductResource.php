@@ -21,7 +21,7 @@ class ProductResource extends JsonResource
             'product_class_id' => $this->product_class_id,
             'image' => !empty($this->getFirstMediaUrl('products')) ? $this->getFirstMediaUrl('products') : null,
             'sku' => $this->sku,
-            'multiple_sizes' => $this->multiple_sizes,
+            'size_id' => $this->size_id,
             'is_service' => $this->is_service,
             'product_details' => $this->product_details,
             'purchase_price' => $this->purchase_price,

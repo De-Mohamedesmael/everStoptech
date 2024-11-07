@@ -190,14 +190,14 @@
                     </div>
                     <div class="col-md-3">
                         <div class="form-group">
-                            {!! Form::label('multiple_colors', __('lang.color'), [
+                            {!! Form::label('color_id', __('lang.color'), [
                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                             ]) !!}
-                            {!! Form::select('multiple_colors[]', $colors, false, [
+                            {!! Form::select('color_id[]', $colors, false, [
                                 'class' => 'selectpicker form-control',
                                 'data-live-search' => 'true',
                                 'placeholder' => __('lang.please_select'),
-                                'id' => 'multiple_colors',
+                                'id' => 'color_id',
                             ]) !!}
 
                         </div>
@@ -205,14 +205,14 @@
                 @endif
                 <div class="col-md-3">
                     <div class="form-group">
-                        {!! Form::label('multiple_sizes', __('lang.size'), [
+                        {!! Form::label('size_id', __('lang.size'), [
                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                         ]) !!}
-                        {!! Form::select('multiple_sizes[]', $sizes, false, [
+                        {!! Form::select('size_id[]', $sizes, false, [
                             'class' => 'selectpicker form-control',
                             'data-live-search' => 'true',
                             'placeholder' => __('lang.please_select'),
-                            'id' => 'multiple_sizes',
+                            'id' => 'size_id',
                         ]) !!}
 
                     </div>

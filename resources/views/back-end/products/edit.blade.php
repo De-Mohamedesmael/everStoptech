@@ -558,17 +558,17 @@
                                     </div>
 
                                     <div class="col-md-4 px-5">
-                                        {!! Form::label('multiple_colors', __('lang.color'), [
+                                        {!! Form::label('color_id', __('lang.color'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
                                         <div class="input-group my-group select-button-group">
-                                            {!! Form::select('multiple_colors[]', $colors, $product->multiple_colors, [
+                                            {!! Form::select('color_id[]', $colors, $product->color_id, [
                                                 'class' => 'selectpicker form-control',
                                                 'data-live-search' => 'true',
                                                 'disabled' => false,
                                                 'style' => 'width: 80%',
                                                 'multiple',
-                                                'id' => 'multiple_colors',
+                                                'id' => 'color_id',
                                             ]) !!}
                                             <span class="input-group-btn">
                                                 @can('product_module.color.create_and_edit')
@@ -581,17 +581,17 @@
                                     </div>
                                 @endif
                                 <div class="col-md-4 px-5">
-                                    {!! Form::label('multiple_sizes', __('lang.size'), [
+                                    {!! Form::label('size_id', __('lang.size'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
                                     <div class="input-group my-group select-button-group">
-                                        {!! Form::select('multiple_sizes[]', $sizes, $product->multiple_sizes, [
+                                        {!! Form::select('size_id[]', $sizes, $product->size_id, [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'disabled' => $product->type == 'variable' ? true : false,
                                             'style' => 'width: 80%',
                                             'multiple',
-                                            'id' => 'multiple_sizes',
+                                            'id' => 'size_id',
                                         ]) !!}
                                         <span class="input-group-btn">
                                             @can('product_module.size.create_and_edit')

@@ -127,20 +127,20 @@
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
-                            {!! Form::label('multiple_colors', __('lang.color'), []) !!}
-                            {!! Form::select('multiple_colors[]', $colors,
+                            {!! Form::label('color_id', __('lang.color'), []) !!}
+                            {!! Form::select('color_id[]', $colors,
                             false, ['class' => 'selectpicker form-control', 'data-live-search'=>"true", 'placeholder' =>
-                            __('lang.please_select'), 'id' => 'multiple_colors']) !!}
+                            __('lang.please_select'), 'id' => 'color_id']) !!}
 
                         </div>
                     </div>
                 @endif
                 <div class="col-md-4">
                     <div class="form-group">
-                        {!! Form::label('multiple_sizes', __('lang.size'), []) !!}
-                        {!! Form::select('multiple_sizes[]', $sizes,
+                        {!! Form::label('size_id', __('lang.size'), []) !!}
+                        {!! Form::select('size_id[]', $sizes,
                         false, ['class' => 'selectpicker form-control', 'data-live-search'=>"true", 'placeholder' =>
-                        __('lang.please_select'), 'id' => 'multiple_sizes']) !!}
+                        __('lang.please_select'), 'id' => 'size_id']) !!}
 
                     </div>
                 </div>

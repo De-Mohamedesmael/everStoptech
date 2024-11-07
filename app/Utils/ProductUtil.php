@@ -205,12 +205,12 @@ class ProductUtil extends Util
                 ProductStore::updateOrcreate(
                     [
                         'product_id' => $product->id,
-                        'variation_id' => $variation->id,
+
                         'store_id' => $store->id
                     ],
                     [
                         'product_id' => $product->id,
-                        'variation_id' => $variation->id,
+
                         'store_id' => $store->id,
                         'qty' => 0,
                         'price' => !empty($product_stores[$store->id]['price']) ? $product_stores[$store->id]['price'] : $product->sell_price // if variation is default save the different price for store else save the default sell price
@@ -221,11 +221,11 @@ class ProductUtil extends Util
             foreach ($stores as $store) {
                 ProductStore::updateOrcreate([
                     'product_id' => $product->id,
-                    'variation_id' => $variation->id,
+
                     'store_id' => $store->id
                 ], [
                     'product_id' => $product->id,
-                    'variation_id' => $variation->id,
+
                     'store_id' => $store->id,
                     'qty' => 0,
                     'price' => !empty($variant_stores[$store->id]['price']) ? $variant_stores[$store->id]['price'] : $variation->default_sell_price //if other then default variation save the variation price
@@ -234,159 +234,6 @@ class ProductUtil extends Util
         }
     }
 
-    /**
-     * create or update products variation data
-     *
-     * @param object $product
-     * @param object $request
-     * @return boolean
-     */
-    public function createOrUpdateVariations($product, $request)
-    {
-        $variations = $request->variations;
-        $keey_variations = [];
-        $purchase_price=!empty($request->is_service) ? $this->num_uf($product->purchase_price):0;
-        $sell_price= !empty($request->is_service) ? $this->num_uf($product->sell_price):0;
-        if (!empty($variations)) {
-            $variation_data['name'] = 'Default';
-            $variation_data['product_id'] = $product->id;
-            $variation_data['sub_sku'] = $product->sku;
-            $variation_data['color_id'] = !empty($request->multiple_colors) ? $request->multiple_colors[0] : null;
-            $variation_data['size_id'] = !empty($request->multiple_sizes) ? $request->multiple_sizes[0] : null;
-            $variation_data['grade_id'] = !empty($request->multiple_grades) ? $request->multiple_grades[0] : null;
-            $variation_data['unit_id'] = !empty($request->multiple_units) ? $request->multiple_units[0] : null;
-
-            $variation_data['is_dummy'] = 1;
-            $variation_data['default_purchase_price'] = $purchase_price;
-            $variation_data['default_sell_price'] = $sell_price;
-
-            // $variation = Variation::create($variation_data);
-            // $variation_array[] = ['variation' => $variation_data, 'variant_stores' =>  []];
-            // $keey_variations[] = $variation->id;
-            foreach ($variations as $v) {
-
-                $c = Variation::where('product_id', $product->id)
-                        ->count() + 1;
-                if ($v['name'] == 'Default') {
-                    $sub_sku = $product->sku;
-                    $color_id = !empty($request->multiple_colors) ? $request->multiple_colors[0] : null;
-                    $size_id = !empty($request->multiple_sizes) ? $request->multiple_sizes[0] : null;
-                    $grade_id = !empty($request->multiple_grades) ? $request->multiple_grades[0] : null;
-                    $unit_id = !empty($request->multiple_units) ? $request->multiple_units[0] : null;
-
-                } else {
-                    $unit_id=$v['unit_id'] ??null;
-                    $color_id=$v['color_id'] ??null;
-                    $size_id=$v['size_id'] ??null;
-                    $grade_id=$v['grade_id'] ??null;
-                    $sub_sku = !empty($v['sub_sku']) ? $v['sub_sku'] : $this->generateSubSku($product->sku, $c, $product->barcode_type);
-                }
-
-                if (!empty($v['id'])) {
-                    $v['default_purchase_price'] = (float)$this->num_uf($v['default_purchase_price']);
-                    $v['default_sell_price'] = (float)$this->num_uf($v['default_sell_price']);
-                    $variation = Variation::find($v['id']);
-                    $variation->name = $v['name'];
-                    $variation->sub_sku = $sub_sku;
-                    $variation->color_id = $color_id;
-                    $variation->size_id = $size_id ;
-                    $variation->grade_id = $grade_id  ;
-                    $variation->unit_id = $unit_id;
-                    $variation->number_vs_base_unit= $v['number_vs_base_unit'] ?? 0;
-                    $variation->default_purchase_price = !empty($v['default_purchase_price']) ? $this->num_uf($v['default_purchase_price']) : $this->num_uf($product->purchase_price);
-                    $variation->default_sell_price = !empty($v['default_sell_price']) ? $this->num_uf($v['default_sell_price']) : $this->num_uf($product->sell_price);
-                    $variation->save();
-                    $variation_array[] = ['variation' => $variation, 'variant_stores' => $v['variant_stores']];
-                    $keey_variations[] = $v['id'];
-                } else {
-                    $variation_data['name'] = $v['name'];
-                    $variation_data['product_id'] = $product->id;
-                    $variation_data['sub_sku'] = !empty($v['sub_sku']) ? $v['sub_sku'] : $this->generateSubSku($product->sku, $c, $product->barcode_type);
-                    $variation_data['color_id'] = $v['color_id'] ?? null;
-                    $variation_data['size_id'] = $v['size_id'] ?? null;
-                    $variation_data['grade_id'] = $v['grade_id'] ?? null;
-                    $variation_data['unit_id'] = $v['unit_id'] ??  null;
-                    $variation_data['number_vs_base_unit']= $v['number_vs_base_unit'] ?? 0;
-                    $variation_data['default_purchase_price'] = !empty($v['default_purchase_price']) ? $this->num_uf($v['default_purchase_price']) : $this->num_uf($product->purchase_price);
-                    $variation_data['default_sell_price'] = !empty($v['default_sell_price']) ? $this->num_uf($v['default_sell_price']) : $this->num_uf($product->sell_price);
-                    $variation_data['is_dummy'] = 0;
-
-                    $variation = Variation::create($variation_data);
-                    $variation_array[] = ['variation' => $variation, 'variant_stores' => $v['variant_stores']];
-                    $keey_variations[] = $variation->id;
-                }
-            }
-        } else {
-            $variation_data['name'] = 'Default';
-            $variation_data['product_id'] = $product->id;
-            $variation_data['sub_sku'] = $product->sku;
-            $variation_data['color_id'] = !empty($request->multiple_colors) ? $request->multiple_colors[0] : null;
-            $variation_data['size_id'] = !empty($request->multiple_sizes) ? $request->multiple_sizes[0] : null;
-            $variation_data['grade_id'] = !empty($request->multiple_grades) ? $request->multiple_grades[0] : null;
-            $variation_data['unit_id'] = !empty($request->multiple_units) ? $request->multiple_units[0] : null;
-
-            $variation_data['is_dummy'] = 1;
-            $variation_data['default_purchase_price'] = $purchase_price;
-            $variation_data['default_sell_price'] = $sell_price;
-
-            $variation = Variation::create($variation_data);
-            $variation_array[] = ['variation' => $variation, 'variant_stores' =>  []];
-            $keey_variations[] = $variation->id;
-        }
-
-        if (!empty($keey_variations)) {
-            //delete the variation removed by user
-            Variation::where('product_id', $product->id)->whereNotIn('id', $keey_variations)->delete();
-            ProductStore::where('product_id', $product->id)->whereNotIn('variation_id', $keey_variations)->delete();
-        }
-        foreach ($variation_array as $array) {
-            $this->createOrUpdateProductStore($product, $array['variation'], $request, $array['variant_stores']);
-        }
-
-        return true;
-    }
-
-    /**
-     * create or update products consumption data
-     *
-     * @param int $variation_id
-     * @param array $consumption_details
-     * @return boolean
-     */
-    public function createOrUpdateRawMaterialToProduct($variation_id, $consumption_details)
-    {
-        $keep_consumption_product = [];
-        if (!empty($consumption_details)) {
-            foreach ($consumption_details as $v) {
-                if (!empty($v['raw_material_id'])) {
-                    if (!empty($v['id'])) {
-                        $consumtion_product = ConsumptionProduct::find($v['id']);
-                        $consumtion_product->raw_material_id = $v['raw_material_id'];
-                        $consumtion_product->variation_id = $variation_id;
-                        $consumtion_product->amount_used = $this->num_uf($v['amount_used']);
-                        $consumtion_product->unit_id = $v['unit_id'];
-
-                        $consumtion_product->save();
-                        $keep_consumption_product[] = $v['id'];
-                    } else {
-                        $consumtion_product_data['raw_material_id'] = $v['raw_material_id'];
-                        $consumtion_product_data['variation_id'] = $variation_id;
-                        $consumtion_product_data['amount_used'] = $v['amount_used'];
-                        $consumtion_product_data['unit_id'] = $v['unit_id'];
-                        $consumtion_product = ConsumptionProduct::create($consumtion_product_data);
-                        $keep_consumption_product[] = $consumtion_product->id;
-                    }
-                }
-            }
-        }
-
-        if (!empty($keep_consumption_product)) {
-            //delete the consumption products removed by user
-            ConsumptionProduct::where('variation_id', $variation_id)->whereNotIn('id', $keep_consumption_product)->delete();
-        }
-
-        return true;
-    }
     /**
      * create or update products consumption data
      *
@@ -402,7 +249,6 @@ class ProductUtil extends Util
                 if (!empty($v['id'])) {
                     $consumtion_product = ConsumptionProduct::find($v['id']);
                     $consumtion_product->raw_material_id = $raw_material->id;
-                    $consumtion_product->variation_id = $v['variation_id'];
                     $consumtion_product->amount_used = $this->num_uf($v['amount_used']);
                     $consumtion_product->unit_id = $v['unit_id'];
 
@@ -2096,11 +1942,11 @@ class ProductUtil extends Util
         }
 
         if (!empty(request()->color_id)) {
-            $products->whereJsonContains('multiple_colors', request()->color_id);
+            $products->whereJsonContains('color_id', request()->color_id);
         }
 
         if (!empty(request()->size_id)) {
-            $products->whereJsonContains('multiple_sizes', request()->size_id);
+            $products->whereJsonContains('size_id', request()->size_id);
         }
 
         if (!empty(request()->grade_id)) {
@@ -2250,8 +2096,8 @@ class ProductUtil extends Util
                 'name' => $name,
                 'sku' => !empty($sku) ? $sku : $this->generateSku($name),
                 'multiple_units' => [],
-                'multiple_colors' => [],
-                'multiple_sizes' => [],
+                'color_id' => [],
+                'size_id' => [],
                 'multiple_grades' => [],
                 'is_service' => 1,
                 'product_details' => null,

@@ -585,7 +585,7 @@ $(document).on("change", "#sku", function () {
 
     $.ajax({
         method: "get",
-        url: "/product/check-sku/" + sku,
+        url: "/products/check-sku/" + sku,
         data: {},
         success: function (result) {
             if (!result.success) {

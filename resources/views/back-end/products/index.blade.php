@@ -2,6 +2,15 @@
 @section('title', __('lang.products'))
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
+    <style>
+        .dropdown-menu.edit-options li {
+            padding: 0px !important;
+        }
+        .btn-group .dropdown-toggle::after {
+            color: #fff;
+        }
+
+    </style>
 @endsection
 @section('page_title')
     {{__('lang.products')}}
@@ -63,13 +72,6 @@
 
             @include('back-end.products.partial.filter')
 
-            <div
-                class="d-flex align-items-center my-2 @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                <h5 class="mb-0 position-relative" style="margin-right: 30px">
-                    @lang('lang.classification')
-                    <span class="header-pill"></span>
-                </h5>
-            </div>
             <div class="card my-3">
 
                 <div class="table-responsive" style="height: 60vh">
@@ -82,18 +84,10 @@
                             <th>@lang('lang.image')</th>
                             <th style="">@lang('lang.name')</th>
                             <th>@lang('lang.product_code')</th>
-                            <th>
-                                @if (session('system_mode') == 'restaurant')
-                                    @lang('lang.category')
-                                @else
-                                    @lang('lang.class')
-                                @endif
-                            </th>
-
+                            <th>@lang('lang.categories')  </th>
                             <th>@lang('lang.select_to_delete')
                                 <input type="checkbox" name="product_delete_all" class="product_delete_all mx-1"/>
                             </th>
-                            <th>@lang('lang.categories')</th>
                             <th>@lang('lang.purchase_history')</th>
                             <th>@lang('lang.batch_number')</th>
                             <th>@lang('lang.selling_price')</th>
@@ -103,7 +97,6 @@
                             <th>@lang('lang.size')</th>
                             <th class="sum">@lang('lang.current_stock')</th>
                             <th class="sum">@lang('lang.current_stock_value')</th>
-                            <th>@lang('lang.customer_type')</th>
                             <th>@lang('lang.expiry_date')</th>
                             <th>@lang('lang.manufacturing_date')</th>
                             <th>@lang('lang.discount')</th>
@@ -262,7 +255,8 @@
         });
         $(document).on('click', '.delete_product', function (e) {
             e.preventDefault();
-            swal({
+
+            Swal.fire({
                 title: 'Are you sure?',
                 text: "@lang('lang.all_transactions_related_to_this_product_will_be_deleted')",
                 icon: 'warning',
@@ -271,23 +265,14 @@
                     var check_password = $(this).data('check_password');
                     var href = $(this).data('href');
                     var data = $(this).serialize();
-
-                    swal({
-                        title: 'Please Enter Your Password',
-                        content: {
-                            element: "input",
-                            attributes: {
-                                placeholder: "Type your password",
-                                type: "password",
-                                autocomplete: "off",
-                                autofocus: true,
-                            },
-                        },
+                    Swal.fire({
+                        title: "{!! __('lang.please_enter_your_password') !!}",
+                        input: 'password',
                         inputAttributes: {
-                            autocapitalize: 'off',
-                            autoComplete: 'off',
+                            placeholder: "{!! __('lang.type_your_password') !!}",
+                            autocomplete: 'off',
+                            autofocus: true,
                         },
-                        focusConfirm: true
                     }).then((result) => {
                         if (result) {
                             $.ajax({
@@ -300,11 +285,11 @@
                                 success: (data) => {
 
                                     if (data.success == true) {
-                                        swal(
-                                            'Success',
-                                            'Correct Password!',
-                                            'success'
-                                        );
+                                        Swal.fire({
+                                            title: 'Success',
+                                            text: "{{translate('Correct Password!')}}",
+                                            icon: 'success',
+                                        });
 
                                         $.ajax({
                                             method: 'DELETE',
@@ -314,33 +299,34 @@
                                             success: function (result) {
                                                 if (result.success ==
                                                     true) {
-                                                    swal(
-                                                        'Success',
-                                                        result.msg,
-                                                        'success'
-                                                    );
+                                                    Swal.fire({
+                                                        title: 'Success',
+                                                        text: result.msg,
+                                                        icon: 'success',
+                                                    });
+
                                                     setTimeout(() => {
                                                         location
                                                             .reload();
                                                     }, 1500);
                                                     location.reload();
                                                 } else {
-                                                    swal(
-                                                        'Error',
-                                                        result.msg,
-                                                        'error'
-                                                    );
+                                                    Swal.fire({
+                                                        title: 'Error',
+                                                        text: result.msg,
+                                                        icon: 'error',
+                                                    });
+
                                                 }
                                             },
                                         });
 
                                     } else {
-                                        swal(
-                                            'Failed!',
-                                            'Wrong Password!',
-                                            'error'
-                                        )
-
+                                        Swal.fire({
+                                            title: 'Failed!',
+                                            text: "{{translate('Wrong Password!')}}",
+                                            icon: 'error',
+                                        });
                                     }
                                 }
                             });
@@ -386,7 +372,6 @@
                         d.product_id = $('#product_id').val();
                         d.category_id = $('#category_id').val();
                         d.brand_id = $('#brand_id').val();
-                        d.supplier_id = $('#supplier_id').val();
                         d.color_id = $('#color_id').val();
                         d.size_id = $('#size_id').val();
                         d.tax_id = $('#tax_id').val();
@@ -413,16 +398,16 @@
                         name: 'image'
                     },
                     {
-                        data: 'variation_name',
+                        data: 'name',
                         name: 'products.name'
                     },
                     {
-                        data: 'sub_sku',
-                        name: 'variations.sub_sku'
+                        data: 'sku',
+                        name: 'products.sku'
                     },
                     {
-                        data: 'product_class',
-                        name: 'product_classes.name'
+                        data: 'categories_names',
+                        name: 'categories_names'
                     },
                     {
                         data: "selection_checkbox_delete",
@@ -430,10 +415,7 @@
                         searchable: false,
                         orderable: false,
                     },
-                    {
-                        data: 'category',
-                        name: 'categories.name'
-                    },
+
                      {
                         data: 'purchase_history',
                         name: 'purchase_history'
@@ -468,18 +450,14 @@
                         data: 'current_stock',
                         name: 'current_stock',
                         searchable: false
-                    },
-                    {
-                        data: 'current_stock_value',
-                        name: 'current_stock_value',
-                        searchable: false
                         @if (empty($page))
                         , visible: false
                         @endif
                     },
                     {
-                        data: 'customer_type',
-                        name: 'customer_type'
+                        data: 'current_stock_value',
+                        name: 'current_stock_value',
+                        searchable: false
                     },
                     {
                         data: 'exp_date',
@@ -493,13 +471,13 @@
                         data: 'discount',
                         name: 'discount'
                     },
-                        @can('product_module.purchase_price.view')
-                    {
-                        data: 'default_purchase_price',
-                        name: 'default_purchase_price',
-                        searchable: false
-                    },
-                        @endcan
+                    @can('product_module.purchase_price.view')
+                        {
+                            data: 'default_purchase_price',
+                            name: 'default_purchase_price',
+                            searchable: false
+                        },
+                    @endcan
 
                     {
                         data: 'active',
@@ -620,6 +598,7 @@
         });
 
         $(document).on('change', '.filter_product', function () {
+            console.log($('#category_id').val());
             product_table.ajax.reload();
         })
         $(document).on('click', '.clear_filters', function () {

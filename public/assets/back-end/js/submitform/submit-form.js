@@ -27,7 +27,7 @@ $(document).on("submit", "form#quick_add_brand_form", function (e) {
                 var brand_id = result.id;
                 $.ajax({
                     method: "get",
-                    url: "/brands/get-dropdown",
+                    url: "/brand/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {

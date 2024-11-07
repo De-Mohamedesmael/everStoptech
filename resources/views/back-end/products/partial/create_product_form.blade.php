@@ -169,21 +169,20 @@
                     ]) !!}
                 </div>
             </div>
-            <div class="col-md-3 px-5">
-                {!! Form::label('multiple_colors', __('lang.color'), [
+            <div class="col-md-2 px-5">
+                {!! Form::label('color_id', __('lang.color'), [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
                 <div class="input-group my-group select-button-group">
                     {!! Form::select(
-                        'multiple_colors[]',
+                        'color_id',
                         $colors,
-                        !empty($recent_product) ? $recent_product->multiple_colors : false,
+                        !empty($recent_product) ? $recent_product->color_id : false,
                         [
                             'class' => 'clear_input_form selectpicker form-control',
                             'data-live-search' => 'true',
                             'style' => 'width: 80%',
                             'placeholder' => __('lang.please_select'),
-                            'id' => 'multiple_colors',
                         ],
                     ) !!}
                     <span class="input-group-btn">
@@ -195,17 +194,16 @@
                             </span>
                 </div>
             </div>
-            <div class="col-md-3 px-5">
-                {!! Form::label('multiple_sizes', __('lang.size'), [
+            <div class="col-md-2 px-5">
+                {!! Form::label('size_id', __('lang.size'), [
                     'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                 ]) !!}
                 <div class="input-group my-group select-button-group">
-                    {!! Form::select('multiple_sizes[]', $sizes, !empty($recent_product) ? $recent_product->multiple_sizes : false, [
+                    {!! Form::select('size_id', $sizes, !empty($recent_product) ? $recent_product->size_id : false, [
                         'class' => 'clear_input_form selectpicker form-control',
                         'data-live-search' => 'true',
                         'style' => 'width: 80%',
                         'placeholder' => __('lang.please_select'),
-                        'id' => 'multiple_sizes',
                     ]) !!}
                     <span class="input-group-btn">
                             @can('product_module.size.create_and_edit')
@@ -215,6 +213,28 @@
                         @endcan
                         </span>
                 </div>
+            </div>
+            <div class="col-md-2 px-5">
+                {!! Form::label('brand_id', __('lang.brand'), [
+                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                ]) !!}
+                <div class="input-group my-group select-button-group">
+                    {!! Form::select('brand_id', $brands, !empty($recent_product) ? $recent_product->brand_id : false, [
+                        'class' => 'clear_input_form selectpicker form-control',
+                        'data-live-search' => 'true',
+                        'style' => 'width: 80%',
+                        'placeholder' => __('lang.please_select'),
+                        'required',
+                    ]) !!}
+                    <span class="input-group-btn">
+                            @can('product_module.brand.create_and_edit')
+                            <button class="btn-modal select-button btn-flat"
+                                    data-href="{{ action('BrandController@create') }}?quick_add=1"
+                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
+                        @endcan
+                        </span>
+                </div>
+                <div class="error-msg text-red"></div>
             </div>
         </div>
     </div>
@@ -301,28 +321,26 @@
     <div class="card mb-3">
         <div class="card-body p-2">
             <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
-                    <div class="col-md-3 px-5">
-                        <div class="form-group">
-                            {!! Form::label('barcode_type', __('lang.barcode_type'), [
-                                'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                            ]) !!}
-                            {!! Form::select(
-                                'barcode_type',
-                                [
-                                    'C128' => 'Code 128',
-                                    'C39' => 'Code 39',
-                                    'UPCA' => 'UPC-A',
-                                    'UPCE' => 'UPC-E',
-                                    'EAN8' => 'EAN-8',
-                                    'EAN13' => 'EAN-13',
-                                ],
-                                !empty($recent_product) ? $recent_product->barcode_type : false,
-                                ['class' => 'form-control', 'required'],
-                            ) !!}
-                        </div>
+                <div class="col-md-3 px-5">
+                    <div class="form-group">
+                        {!! Form::label('barcode_type', __('lang.barcode_type'), [
+                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                        ]) !!}
+                        {!! Form::select(
+                            'barcode_type',
+                            [
+                                'C128' => 'Code 128',
+                                'C39' => 'Code 39',
+                                'UPCA' => 'UPC-A',
+                                'UPCE' => 'UPC-E',
+                                'EAN8' => 'EAN-8',
+                                'EAN13' => 'EAN-13',
+                            ],
+                            !empty($recent_product) ? $recent_product->barcode_type : false,
+                            ['class' => 'form-control', 'required'],
+                        ) !!}
                     </div>
-                @endif
+                </div>
 
                 <div class="col-md-3 px-5">
                     <div class="form-group">
