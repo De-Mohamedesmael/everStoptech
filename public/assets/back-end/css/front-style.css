@@ -1022,10 +1022,12 @@ thead tr {
     overflow-y: scroll;
 }
 
-.dropdown-toggle::after {
+/*.dropdown-toggle::after {*/
+/*     color: #fff;*/
+/*}*/
+button.btn.table-btns.dropdown-toggle::after {
     color: #fff;
 }
-
 .dropdown-menu .dropdown-item {
     padding: 0.5rem 1.5rem;
     color: #1565c0;

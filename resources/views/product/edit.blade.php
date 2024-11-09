@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('lang.product'))
+@section('title', __('lang.products'))
 @section('styles')
     <style>
         .preview-edit-product-container {
@@ -217,7 +217,7 @@
 
                 {!! Form::open([
                     'url' => action('ProductController@update', $product->id),
-                    'id' => 'product-edit-form',
+                    'id' => 'products-edit-form',
                     'method' => 'PUT',
                     'class' => '',
                     'enctype' => 'multipart/form-data',
@@ -445,7 +445,7 @@
                                 @include('layouts.partials.translation_inputs', [
                                     'attribute' => 'name',
                                     'translations' => $product->translations,
-                                    'type' => 'product',
+                                    'type' => 'products',
                                 ])
                             </div>
                             <div class="col-md-4 px-5">
@@ -501,9 +501,9 @@
 
                         <div class="col-md-6 d-flex justify-content-center">
                             <div class="preview-edit-product-container">
-                                @if (!empty($product->getFirstMediaUrl('product')))
+                                @if (!empty($product->getFirstMediaUrl('products')))
                                     <div id="preview{{ $product->id }}" class="preview">
-                                        <img src="{{ $product->getFirstMediaUrl('product') }}"
+                                        <img src="{{ $product->getFirstMediaUrl('products') }}"
                                             id="img{{ $product->id }}" alt="">
                                         <div class="action_div"></div>
                                         <button type="button" class="delete-btn"><i style="font-size: 16px;"
@@ -558,17 +558,17 @@
                                     </div>
 
                                     <div class="col-md-4 px-5">
-                                        {!! Form::label('multiple_colors', __('lang.color'), [
+                                        {!! Form::label('color_id', __('lang.color'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
                                         <div class="input-group my-group select-button-group">
-                                            {!! Form::select('multiple_colors[]', $colors, $product->multiple_colors, [
+                                            {!! Form::select('color_id[]', $colors, $product->color_id, [
                                                 'class' => 'selectpicker form-control',
                                                 'data-live-search' => 'true',
                                                 'disabled' => false,
                                                 'style' => 'width: 80%',
                                                 'multiple',
-                                                'id' => 'multiple_colors',
+                                                'id' => 'color_id',
                                             ]) !!}
                                             <span class="input-group-btn">
                                                 @can('product_module.color.create_and_edit')
@@ -581,17 +581,17 @@
                                     </div>
                                 @endif
                                 <div class="col-md-4 px-5">
-                                    {!! Form::label('multiple_sizes', __('lang.size'), [
+                                    {!! Form::label('size_id', __('lang.size'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
                                     <div class="input-group my-group select-button-group">
-                                        {!! Form::select('multiple_sizes[]', $sizes, $product->multiple_sizes, [
+                                        {!! Form::select('size_id[]', $sizes, $product->size_id, [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'disabled' => $product->type == 'variable' ? true : false,
                                             'style' => 'width: 80%',
                                             'multiple',
-                                            'id' => 'multiple_sizes',
+                                            'id' => 'size_id',
                                         ]) !!}
                                         <span class="input-group-btn">
                                             @can('product_module.size.create_and_edit')
@@ -705,7 +705,7 @@
                                 {{--    <div class="col-md-4">
                                         <div class="i-checks">
                                             <input id="buy_from_supplier" name="buy_from_supplier" type="checkbox"
-                                                @if ($product->buy_from_supplier == 1) checked @endif value="1"
+                                                @if ($products->buy_from_supplier == 1) checked @endif value="1"
                                                 class="form-control-custom">
                                             <label for="buy_from_supplier"><strong>@lang('lang.buy_from_supplier')</strong></label>
                                         </div>
@@ -795,13 +795,13 @@
                                             $index_old = 0;
                                         @endphp
 
-                                        {{-- @if ($product->discount)
+                                        {{-- @if ($products->discount)
                                             @php
                                             $index_old=1;
                                             @endphp
-                                            @include('product.partial.raw_discount', [
+                                            @include('products.partial.raw_discount', [
                                                 'row_id' => 0,
-                                                'discount_product'=>$product,
+                                                'discount_product'=>$products,
                                             ])
                                         @endif --}}
                                         @foreach ($discounts as $discount)
@@ -1076,7 +1076,7 @@
                                             <th class="py-2 text-center px-1">@lang('lang.grade')</th>
                                             <th class="py-2 text-center px-1">@lang('lang.unit')</th>
                                             <th class="py-2 text-center px-1">@lang('lang.number_vs_base_unit')</th>
-                                            {{-- @if (empty($product->is_service)) hide @endif --}}
+                                            {{-- @if (empty($products->is_service)) hide @endif --}}
                                             <th class="supplier_div @if (empty($is_service)) hide @endif">
                                                 @lang('lang.purchase_price')</th>
                                             <th class="supplier_div @if (empty($is_service)) hide @endif">
@@ -1256,12 +1256,12 @@
         getEditProductImages()
         e.preventDefault();
         setTimeout(() => {
-            if ($("#product-edit-form").valid()) {
+            if ($("#products-edit-form").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
-                    url: $("#product-edit-form").attr("action"),
-                    data: $("#product-edit-form").serialize(),
+                    url: $("#products-edit-form").attr("action"),
+                    data: $("#products-edit-form").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");
@@ -1280,9 +1280,9 @@
         });
     });
     @if ($product)
-        {{-- document.getElementById("cropBtn{{ $product->id }}").addEventListener('click', () => { --}}
+        {{-- document.getElementById("cropBtn{{ $products->id }}").addEventListener('click', () => { --}}
         {{--    setTimeout(() => { --}}
-        {{--        launchEditProductCropTool(document.getElementById("img{{ $product->id }}")); --}}
+        {{--        launchEditProductCropTool(document.getElementById("img{{ $products->id }}")); --}}
         {{--    }, 500); --}}
         {{-- }); --}}
         document.getElementById("deleteBtn{{ $product->id }}").addEventListener('click', () => {
@@ -1309,12 +1309,12 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script>
-    var fileEditProductInput = document.querySelector('#file-product-edit-product');
-    var previewEditProductContainer = document.querySelector('.preview-edit-product-container');
-    var croppieEditProductModal = document.querySelector('#croppie-edit-product-modal');
-    var croppieEditProductContainer = document.querySelector('#croppie-edit-product-container');
-    var croppieEditProductCancelBtn = document.querySelector('#croppie-edit-product-cancel-btn');
-    var croppieEditProductSubmitBtn = document.querySelector('#croppie-edit-product-submit-btn');
+    var fileEditProductInput = document.querySelector('#file-products-edit-products');
+    var previewEditProductContainer = document.querySelector('.preview-edit-products-container');
+    var croppieEditProductModal = document.querySelector('#croppie-edit-products-modal');
+    var croppieEditProductContainer = document.querySelector('#croppie-edit-products-container');
+    var croppieEditProductCancelBtn = document.querySelector('#croppie-edit-products-cancel-btn');
+    var croppieEditProductSubmitBtn = document.querySelector('#croppie-edit-products-submit-btn');
 
     // let currentFiles = [];
     fileEditProductInput.addEventListener('change', () => {
@@ -1436,7 +1436,7 @@
 
     function getEditProductImages() {
         setTimeout(() => {
-            const container = document.querySelectorAll('.preview-edit-product-container');
+            const container = document.querySelectorAll('.preview-edit-products-container');
             let images = [];
             $("#cropped_edit_product_images").empty();
             for (let i = 0; i < container[0].children.length; i++) {

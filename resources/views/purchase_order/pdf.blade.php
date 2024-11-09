@@ -111,7 +111,7 @@
                                 <table class="table table-bordered table-striped table-condensed" id="product_table">
                                     <thead>
                                         <tr>
-                                            <th style="width: 25%" class="col-sm-8">@lang('lang.products')</th>
+                                            <th style="width: 25%" class="col-sm-8">@lang('lang.products_')</th>
                                             @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
                                                 <th style="width: 25%" class="col-sm-4">@lang('lang.sku')</th>
                                             @endif

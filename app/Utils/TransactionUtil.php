@@ -145,7 +145,7 @@ class TransactionUtil extends Util
 
 
     /**
-     * create sell line for product in sale
+     * create sell line for products in sale
      *
      * @param object $transaction
      * @param array $transaction_sell_lines
@@ -871,7 +871,7 @@ class TransactionUtil extends Util
 
             if ($commission_total > 0) {
                 $employee_commission = Transaction::where('parent_sale_id', $transaction->id)->where('employee_id', $employee->id)->where('type', 'employee_commission')->first();
-                $commission_value = $employee_commission->grand_total - $commission_total;  //deduct commission for returned products value
+                $commission_value = $employee_commission->grand_total - $commission_total;  //deduct commission for returned products_ value
                 $employee_commission->update(['final_total' => $commission_value, 'grand_total' => $commission_value]);
             }
         }
@@ -994,7 +994,7 @@ class TransactionUtil extends Util
         $points = 0;
 
         foreach ($sell_lines as $line) {
-            //if product in this order is valid for reward
+            //if products in this order is valid for reward
             $product_id = (int) $line->product_id;
             $product_contain = RedemptionOfPoint::where('id', $redemption_of_points->id)->whereJsonContains('product_ids', $product_id)->first();
             if (!empty($product_contain)) {
@@ -1048,7 +1048,7 @@ class TransactionUtil extends Util
         $total_redeemable_value = $this->calculateTotalRewardPointsValue($customer_id, $store_id);
         foreach ($product_array as $line) {
             if ($total_redeemable_value > 0) {
-                //if product in this order is valid for redeem
+                //if products in this order is valid for redeem
                 $product_id = (int)$line['product_id'];
                 $sub_total = $line['sub_total'];
                 $product_contain = RedemptionOfPoint::where('id', $redemption_of_points->id)->whereJsonContains('product_ids', $product_id)->first();
@@ -1101,7 +1101,7 @@ class TransactionUtil extends Util
     }
 
     /**
-     * calculate point for each valid product
+     * calculate point for each valid products
      *
      * @param object $sell_lines
      * @param object $earning_point_system
@@ -1112,7 +1112,7 @@ class TransactionUtil extends Util
         $points = 0;
 
         foreach ($sell_lines as $line) {
-            //if product in this order is valid for reward
+            //if products in this order is valid for reward
             $product_id = $line->product_id;
             $product_contain = EarningOfPoint::where('id', $earning_point_system->id)->whereJsonContains('product_ids', $product_id)->first();
 
@@ -1468,7 +1468,7 @@ class TransactionUtil extends Util
     }
 
     /**
-     * calculate the cost of sold product for restaurants
+     * calculate the cost of sold products for restaurants
      *
      * @param string $start_date
      * @param string $end_date
@@ -1510,7 +1510,7 @@ class TransactionUtil extends Util
         return 0;
     }
     /**
-     * calculate the cost of sold product for restaurants
+     * calculate the cost of sold products for restaurants
      *
      * @param string $start_date
      * @param string $end_date
@@ -1996,7 +1996,7 @@ class TransactionUtil extends Util
     }
 
     /**
-     * extract products using product tree selection
+     * extract products_ using products tree selection
      *
      * @param array $data_selected
      * @return array

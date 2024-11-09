@@ -35,7 +35,7 @@
                     <thead>
                         <tr>
                             <td style="width: 20%;">@lang('lang.raw_material')</td>
-                            <td style="width: 20%;">@lang('lang.products')</td>
+                            <td style="width: 20%;">@lang('lang.products_')</td>
                             <td style="width: 20%;">@lang('lang.quantity')</td>
                             <td style="width: 20%;">@lang('lang.unit')</td>
                         </tr>

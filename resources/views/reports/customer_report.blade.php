@@ -96,8 +96,8 @@
                     @endif --}}
                                     {{--  <div class="col-md-3 px-5">
                         <div class="form-group">
-                            {!! Form::label('product_id', __('lang.product'), []) !!}
-                            {!! Form::select('product_id', $products, request()->product_id, ['class' =>'form-control sale_filter', 'placeholder' => __('lang.all'),'data-live-search'=>"true"]) !!}
+                            {!! Form::label('product_id', __('lang.products'), []) !!}
+                            {!! Form::select('product_id', $products_, request()->product_id, ['class' =>'form-control sale_filter', 'placeholder' => __('lang.all'),'data-live-search'=>"true"]) !!}
                         </div>
                     </div> --}}
 
@@ -117,7 +117,7 @@
                                         <tr>
                                             <th>@lang('lang.date') </th>
                                             <th>@lang('lang.reference')</th>
-                                            <th>@lang('lang.product')</th>
+                                            <th>@lang('lang.products')</th>
                                             <th>@lang('lang.customer_type')</th>
                                             <th>@lang('lang.sale_status')</th>
                                             <th>@lang('lang.payment_status')</th>

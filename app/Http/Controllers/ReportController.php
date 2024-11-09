@@ -135,7 +135,7 @@ class ReportController extends Controller
         }
 
         $purchase_query = Transaction::leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
-            ->leftjoin('products', 'transaction_sell_lines.product_id', 'products.id')
+            ->leftjoin('products_', 'transaction_sell_lines.product_id', 'products.id')
             ->where('transactions.type', 'sell')
             ->where('transactions.status', 'final');
 
@@ -401,7 +401,7 @@ class ReportController extends Controller
                 ->leftjoin('customers', 'transactions.customer_id', 'customers.id')
                 ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
                 ->leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
-                ->leftjoin('products', 'transaction_sell_lines.product_id', 'products.id')
+                ->leftjoin('products_', 'transaction_sell_lines.product_id', 'products.id')
                 ->leftjoin('admins', 'transactions.created_by', 'admins.id')
                 ->leftjoin('currencies as received_currency', 'transactions.received_currency_id', 'received_currency.id')
                 ->where('transactions.payment_status', 'paid')
@@ -587,7 +587,7 @@ class ReportController extends Controller
                         return '<span class="badge badge-success">' . ucfirst($row->status) . '</span>';
                     }
                 })
-                ->addColumn('products', function ($row) {
+                ->addColumn('products_', function ($row) {
                     $string = '';
                     foreach ($row->sell_variations as $sell_variation) {
                         if (!empty($sell_variation)) {
@@ -704,7 +704,7 @@ class ReportController extends Controller
                     'due',
                     'status',
                     'store_name',
-                    'products',
+                    'products_',
                     'created_by',
                 ])
                 ->make(true);
@@ -1427,7 +1427,7 @@ class ReportController extends Controller
     }
 
     /**
-     * show the best selling product
+     * show the best selling products
      *
      * @return view
      */
@@ -1484,7 +1484,7 @@ class ReportController extends Controller
     }
 
     /**
-     * show the product report
+     * show the products report
      *
      * @return view
      */
@@ -1498,7 +1498,7 @@ class ReportController extends Controller
         })->leftjoin('add_stock_lines as pl', function ($join) {
             $join->on('transactions.id', 'pl.transaction_id');
         })
-            ->join('products as p', function ($join) {
+            ->join('products_ as p', function ($join) {
                 $join->on('pl.product_id', 'p.id')
                     ->orOn('tsl.product_id', 'p.id');
             })
@@ -1548,7 +1548,7 @@ class ReportController extends Controller
             DB::raw("SUM(IF(transactions.type='add_stock', pl.quantity * pl.purchase_price, 0)) as purchased_amount"),
             DB::raw("SUM(IF(transactions.type='sell', tsl.quantity, 0)) as sold_qty"),
             DB::raw("SUM(IF(transactions.type='add_stock', pl.quantity, 0)) as purchased_qty"),
-            DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products ON product_stores.product_id=products.id WHERE products.id=p.id ' . $store_query . ') as in_stock'),
+            DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products_ ON product_stores.product_id=products.id WHERE products.id=p.id ' . $store_query . ') as in_stock'),
             'p.sku',
             'pc.name as product_class_name',
             'p.name as product_name',
@@ -1570,7 +1570,7 @@ class ReportController extends Controller
     }
 
     /**
-     * view product details
+     * view products details
      *
      * @return view
      */
@@ -1933,7 +1933,7 @@ class ReportController extends Controller
         $query = Transaction::leftjoin('transaction_sell_lines as tsl', function ($join) {
             $join->on('transactions.id', 'tsl.transaction_id');
         })
-            ->leftjoin('products as p', function ($join) {
+            ->leftjoin('products_ as p', function ($join) {
                 $join->on('tsl.product_id', 'p.id');
             })
             ->whereIn('transactions.type', ['sell'])
@@ -1974,7 +1974,7 @@ class ReportController extends Controller
             'sale_note',
             DB::raw("SUM(IF(transactions.type='sell', final_total, 0)) as sold_amount"),
             DB::raw("SUM(IF(transactions.type='sell', tsl.quantity, 0)) as sold_qty"),
-            DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products ON product_stores.product_id=products.id WHERE products.id=p.id ' . $store_query . ') as in_stock'),
+            DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products_ ON product_stores.product_id=products.id WHERE products.id=p.id ' . $store_query . ') as in_stock'),
             'p.name as product_name'
 
         )->groupBy('p.id')->get();
@@ -2037,7 +2037,7 @@ class ReportController extends Controller
                 'add_stock_lines.product_id as id',
                 DB::raw('SUM(add_stock_lines.sub_total) as total_purchase'),
                 DB::raw('SUM(add_stock_lines.quantity) as total_qty'),
-                DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products ON product_stores.product_id=products.id WHERE products.id=add_stock_lines.product_id ' . $store_query . ') as in_stock'),
+                DB::raw('(SELECT SUM(product_stores.qty_available) FROM product_stores JOIN products_ ON product_stores.product_id=products.id WHERE products.id=add_stock_lines.product_id ' . $store_query . ') as in_stock'),
             )->groupBy('add_stock_lines.product_id')->first();
 
             $transactions[$key] = $trans;
@@ -2063,7 +2063,7 @@ class ReportController extends Controller
             ->leftjoin('add_stock_lines as pl', function ($join) {
                 $join->on('transactions.id', 'pl.transaction_id');
             })
-            ->leftjoin('products as p', function ($join) {
+            ->leftjoin('products_ as p', function ($join) {
                 $join->on('tsl.product_id', 'p.id');
             })
             ->leftjoin('product_classes as pc', function ($join) {
@@ -2334,7 +2334,7 @@ class ReportController extends Controller
     }
 
     /**
-     * product quantity alert report
+     * products quantity alert report
      *
      * @return void
      */
@@ -2669,7 +2669,7 @@ class ReportController extends Controller
                 ->leftjoin('customers', 'transactions.customer_id', 'customers.id')
                 ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
                 ->leftjoin('transaction_sell_lines', 'transactions.id', 'transaction_sell_lines.transaction_id')
-                ->leftjoin('products', 'transaction_sell_lines.product_id', 'products.id')
+                ->leftjoin('products_', 'transaction_sell_lines.product_id', 'products.id')
                 ->leftjoin('admins', 'transactions.created_by', 'admins.id')
                 ->leftjoin('currencies as received_currency', 'transactions.received_currency_id', 'received_currency.id')
                 ->where('transactions.payment_status', 'paid')
@@ -2765,8 +2765,8 @@ class ReportController extends Controller
 
                 return $string;
             })
-            // products
-            ->addColumn('products', function ($row) {
+            // products_
+            ->addColumn('products_', function ($row) {
                 $string = '';
                 foreach ($row->sell_variations as $sell_variation) {
                     if (!empty($sell_variation)) {
@@ -2830,7 +2830,7 @@ class ReportController extends Controller
                 return '<span data-currency_id="' . $received_currency_id . '">' . $this->commonUtil->num_f($due) . '</span>';
             })
 
-            ->addColumn('product', function ($row) {
+            ->addColumn('products', function ($row) {
                 $productInfo = '';
                 foreach ($row->transaction_sell_lines as $line) {
                     $productInfo .= '(' . $line->quantity . ')';
@@ -2994,7 +2994,7 @@ class ReportController extends Controller
                 'due',
                 'status',
                 'store_name',
-                'products',
+                'products_',
                 'created_by',
             ])
             ->make(true);

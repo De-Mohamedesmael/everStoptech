@@ -92,7 +92,7 @@
                                     @endif
                                     <div class="col-md-3 px-5">
                                         <div class="form-group">
-                                            {!! Form::label('product_id', __('lang.product'), [
+                                            {!! Form::label('product_id', __('lang.products'), [
                                                 'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                             ]) !!}
                                             {!! Form::select('product_id', $products, request()->product_id, [
@@ -220,7 +220,7 @@
                                                         </button>
                                                         <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default"
                                                             user="menu">
-                                                            @can('product_module.product.view')
+                                                            @can('product_module.products.view')
                                                                 <li>
                                                                     <a data-href="{{ action('ReportController@viewProductDetails', $transaction->id) }}?store_id={{ request()->store_id }}"
                                                                         data-container=".view_modal" class="btn btn-modal"><i
@@ -229,7 +229,7 @@
                                                                 </li>
                                                                 <li class="divider"></li>
                                                             @endcan
-                                                            @can('product_module.product.create_and_edit')
+                                                            @can('product_module.products.create_and_edit')
                                                                 <li>
 
                                                                     <a href="{{ action('ProductController@edit', $transaction->id) }}"
@@ -238,7 +238,7 @@
                                                                 </li>
                                                                 <li class="divider"></li>
                                                             @endcan
-                                                            @can('product_module.product.delete')
+                                                            @can('product_module.products.delete')
                                                                 <li>
                                                                     <a data-href="{{ action('ProductController@destroy', $transaction->id) }}"
                                                                         data-check_password="{{ action('AdminController@checkPassword', Auth::user()->id) }}"

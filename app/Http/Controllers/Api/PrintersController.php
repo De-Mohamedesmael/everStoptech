@@ -30,7 +30,7 @@ class PrintersController extends BaseController
 
 
 
-       // $product = Printer::where(['is_active' => 1 , 'is_kitchen' =>  1, 'is_cashier' =>  0])->get(['name']);
+       // $products = Printer::where(['is_active' => 1 , 'is_kitchen' =>  1, 'is_cashier' =>  0])->get(['name']);
        $printers = Printer::where(['is_active' => 1])->get();
        foreach($printers as $printer) {
          if($printer->is_kitchen == 1 && $printer->is_cashier == 0) {

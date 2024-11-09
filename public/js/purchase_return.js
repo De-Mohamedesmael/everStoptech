@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    //Add products
+    //Add products_
     if ($("#search_product").length > 0) {
         $("#search_product")
             .autocomplete({

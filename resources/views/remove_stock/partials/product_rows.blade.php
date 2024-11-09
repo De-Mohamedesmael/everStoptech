@@ -13,7 +13,7 @@ $i = 0;
                 <td>
                     {!! Form::checkbox('product_selected[]', $i, false, ['class' => 'product_checkbox']) !!}
                 </td>
-                <td><img src="@if (!empty($line->product->getFirstMediaUrl('product'))) {{ $line->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                <td><img src="@if (!empty($line->product->getFirstMediaUrl('products'))) {{ $line->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                         alt="photo" width="50" height="50"></td>
                 <td>
                     {{ $line->product->name }}

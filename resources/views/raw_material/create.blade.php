@@ -26,7 +26,7 @@
 
                     {!! Form::open([
                         'url' => action('RawMaterialController@store'),
-                        'id' => 'product-form',
+                        'id' => 'products-form',
                         'method' => 'POST',
                         'class' => '',
                         'enctype' => 'multipart/form-data',
@@ -91,7 +91,7 @@
                 'fa-arrow-down');
         });
     </script>
-    <script src="{{ asset('js/product.js') }}"></script>
+    <script src="{{ asset('js/products.js') }}"></script>
     <script src="{{ asset('js/raw_material.js') }}"></script>
     <script type="text/javascript"></script>
 

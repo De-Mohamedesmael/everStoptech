@@ -14,7 +14,6 @@ class AddManufactureCostUnitSellToManufacturings extends Migration
     public function up()
     {
         Schema::table('manufacturings', function (Blueprint $table) {
-            $table->decimal('manufacture_cost_unit_sell', 15, 4)->default(0);
         });
     }
 
@@ -26,7 +25,6 @@ class AddManufactureCostUnitSellToManufacturings extends Migration
     public function down()
     {
         Schema::table('manufacturings', function (Blueprint $table) {
-            $table->dropColumn('manufacture_cost_unit_sell');
         });
     }
 }

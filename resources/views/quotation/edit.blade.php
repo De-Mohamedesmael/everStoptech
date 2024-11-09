@@ -66,7 +66,7 @@
                                         <table id="product_table" style="width: 100% " class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 20%">{{ __('lang.product') }}</th>
+                                                    <th style="width: 20%">{{ __('lang.products') }}</th>
                                                     <th style="width: 20%">{{ __('lang.quantity') }}</th>
                                                     <th style="width: 20%">{{ __('lang.price') }}</th>
                                                     <th style="width: 20%">{{ __('lang.discount') }}</th>
@@ -76,7 +76,7 @@
                                             </thead>
                                             <tbody>
                                                 @include('sale.partials.edit_product_row', [
-                                                    'products' => $sale->transaction_sell_lines,
+                                                    'products_' => $sale->transaction_sell_lines,
                                                 ])
                                             </tbody>
                                             <tfoot>

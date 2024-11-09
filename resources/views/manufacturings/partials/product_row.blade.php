@@ -4,7 +4,7 @@
     @endphp
     @if ($product->product_stores->first()->qty_available > 0)
         <tr class="product_row">
-            <td><img src="@if (!empty($product->getFirstMediaUrl('product'))) {{ $product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+            <td><img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                     alt="photo" width="50" height="50"></td>
             <td>
                 @if ($product->variation_name != 'Default')

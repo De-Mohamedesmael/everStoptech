@@ -13,28 +13,28 @@
                                 class="dripicons-meter"></i><span>{{ __('lang.dashboard') }}</span></a></li>
                 @endif
                 @if (!empty($module_settings['product_module']))
-                    @if (auth()->user()->can('product_module.product.create_and_edit') ||
-                            auth()->user()->can('product_module.product.view') ||
+                    @if (auth()->user()->can('product_module.products.create_and_edit') ||
+                            auth()->user()->can('product_module.products.view') ||
                             auth()->user()->can('product_classification_tree.create_and_edit') ||
                             auth()->user()->can('product_module.barcode.create_and_edit'))
                         <li class="side_main_menu_link"><a class="link" href="#product" aria-expanded="false"
                                 data-toggle="collapse"> <i
-                                    class="fa fa-cubes"></i><span>{{ __('lang.product') }}</span><span></a>
+                                    class="fa fa-cubes"></i><span>{{ __('lang.products') }}</span><span></a>
                             <ul id="product"
-                                class="collapse list-unstyled @if (in_array(request()->segment(1), ['product', 'product-classification-tree', 'barcode'])) show @endif">
-                                @can('product_module.product.create_and_edit')
-                                    <li class="@if (request()->segment(1) == 'product' && request()->segment(2) == 'create') active @endif">
+                                class="collapse list-unstyled @if (in_array(request()->segment(1), ['products', 'products-classification-tree', 'barcode'])) show @endif">
+                                @can('product_module.products.create_and_edit')
+                                    <li class="@if (request()->segment(1) == 'products' && request()->segment(2) == 'create') active @endif">
                                         <a
                                             href="{{ action('ProductController@create') }}">{{ __('lang.add_new_product') }}</a>
                                     </li>
                                 @endcan
-                                @can('product_module.product.view')
-                                    <li class="@if (request()->segment(1) == 'product' && empty(request()->segment(2))) active @endif">
+                                @can('product_module.products.view')
+                                    <li class="@if (request()->segment(1) == 'products' && empty(request()->segment(2))) active @endif">
                                         <a href="{{ action('ProductController@index') }}">{{ __('lang.product_list') }}</a>
                                     </li>
                                 @endcan
                                 @can('product_module.product_classification_tree.view')
-                                    <li class="@if (request()->segment(1) == 'product-classification-tree' && empty(request()->segment(2))) active @endif">
+                                    <li class="@if (request()->segment(1) == 'products-classification-tree' && empty(request()->segment(2))) active @endif">
                                         <a
                                             href="{{ action('ProductClassificationTreeController@index') }}">{{ __('lang.product_classification_tree') }}</a>
                                     </li>
@@ -242,7 +242,7 @@
                                         'internal-stock-return',
                                     ])) show @endif">
                                 @can('stock.add_stock.create_and_edit')
-                                    <li class="@if (request()->segment(1) == 'product-stocks' && empty(request()->segment(2))) active @endif">
+                                    <li class="@if (request()->segment(1) == 'products-stocks' && empty(request()->segment(2))) active @endif">
                                         <a
                                             href="{{ action('ProductController@getProductStocks') }}">{{ __('lang.product_stocks') }}</a>
                                     </li>
@@ -538,13 +538,13 @@
                                     </li>
                                 @endcan
                                 @can('adjustment.cash_in_adjustment.create_and_edit')
-                                    <li class="@if (request()->segment(1) == 'product-in-adjustment-create' && request()->segment(2) == 'create') active @endif">
+                                    <li class="@if (request()->segment(1) == 'products-in-adjustment-create' && request()->segment(2) == 'create') active @endif">
                                         <a
                                             href="{{ action('ProductInAdjustmentsController@create') }}">{{ __('lang.add_product_in_adjustment') }}</a>
                                     </li>
                                 @endcan
                                 @can('adjustment.cash_in_adjustment.view')
-                                    <li class="@if (request()->segment(1) == 'product-in-adjustment-index' && empty(request()->segment(2))) active @endif">
+                                    <li class="@if (request()->segment(1) == 'products-in-adjustment-index' && empty(request()->segment(2))) active @endif">
                                         <a
                                             href="{{ action('ProductInAdjustmentsController@index') }}">{{ __('lang.view_product_in_adjustment') }}</a>
                                     </li>
@@ -680,7 +680,7 @@
                                     </li>
                                 @endcan
                                 @can('reports.product_report.view')
-                                    <li class="@if (request()->segment(1) == 'report' && request()->segment(2) == 'get-product-report') active @endif">
+                                    <li class="@if (request()->segment(1) == 'report' && request()->segment(2) == 'get-products-report') active @endif">
                                         <a
                                             href="{{ action('ReportController@getProductReport') }}">{{ __('lang.product_report') }}</a>
                                     </li>
@@ -741,7 +741,7 @@
                                     </li>
                                 @endcan
                                 @can('reports.product_quantity_alert_report.view')
-                                    <li class="@if (request()->segment(1) == 'report' && request()->segment(2) == 'get-product-quantity-alert-report') active @endif">
+                                    <li class="@if (request()->segment(1) == 'report' && request()->segment(2) == 'get-products-quantity-alert-report') active @endif">
                                         <a
                                             href="{{ action('ReportController@getProductQuantityAlertReport') }}">{{ __('lang.product_quantity_alert_report') }}</a>
                                     </li>
@@ -1120,7 +1120,7 @@
                                     'store-pos',
                                     'terms-and-conditions',
                                     'settings',
-                                    'product-class',
+                                    'products-class',
                                     'category',
                                     'sub-category',
                                     'brand',
@@ -1134,7 +1134,7 @@
                                     'exchange-rate',
                                 ])) show @endif">
                             @can('product_module.product_class.view')
-                                <li class="@if (request()->segment(1) == 'product-class' && empty(request()->segment(2))) active @endif">
+                                <li class="@if (request()->segment(1) == 'products-class' && empty(request()->segment(2))) active @endif">
                                     <a href="{{ action('ProductClassController@index') }}">
                                         @if (session('system_mode') == 'restaurant')
                                             {{ __('lang.category') }}

@@ -431,7 +431,7 @@ class RemoveStockController extends Controller
     }
 
     /**
-     * Returns the html for product row
+     * Returns the html for products row
      *
      * @return \Illuminate\Http\Response
      */
@@ -452,7 +452,7 @@ class RemoveStockController extends Controller
     }
 
     /**
-     * return product rows of add stock
+     * return products rows of add stock
      *
      * @param int $id
      * @return void
@@ -528,7 +528,7 @@ class RemoveStockController extends Controller
                     return $html;
                 })
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {

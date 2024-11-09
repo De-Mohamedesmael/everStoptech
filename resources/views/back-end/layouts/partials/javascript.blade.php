@@ -379,7 +379,7 @@ for (var i = 0; i < dollarCells.length; i++) {
             contentType: "html",
             success: function(result) {
                 if (result.success) {
-                    Swal.fire("Success", response.msg, "success");
+                    Swal.fire("Success", result.msg, "success");
                 }
             },
         });
@@ -506,12 +506,13 @@ for (var i = 0; i < dollarCells.length; i++) {
     //open edit modal for modules
     $(document).on('click', '.btn-modal', function(e) {
         e.preventDefault();
+
         var container = $(this).data('container');
         $.ajax({
             url: $(this).data('href'),
             dataType: 'html',
             success: function(result) {
-
+                console.log('ddd');
                 $(container).html(result);
                 $('#editModal').modal('show');
                 $('.select2').select2();

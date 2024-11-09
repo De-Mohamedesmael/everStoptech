@@ -57,7 +57,7 @@
                         @endif
                         <div class="col-md-3">
                             <div class="form-group">
-                                {!! Form::label('product_id', __('lang.product'), []) !!}
+                                {!! Form::label('product_id', __('lang.products'), []) !!}
                                 {!! Form::select('product_id', $products, request()->product_id, ['class' => 'form-control', 'placeholder' => __('lang.all'), 'data-live-search' => 'true']) !!}
                             </div>
                         </div>

@@ -971,7 +971,7 @@ class SellPosController extends Controller
     }
 
     /**
-     * get the product items list for pos on user search term
+     * get the products items list for pos on user search term
      *
      * @return json
      */
@@ -1041,7 +1041,7 @@ class SellPosController extends Controller
             }
             $result = [];
             $i = 1;
-            // $no_of_records = $products->count();
+            // $no_of_records = $products_->count();
             if (!empty($products_array)) {
                 foreach ($products_array as $key => $value) {
                     $name = $value['name'];
@@ -1098,7 +1098,7 @@ class SellPosController extends Controller
 
 
     /**
-     * Returns the html for product row
+     * Returns the html for products row
      *
      * @return \Illuminate\Http\Response
      */
@@ -1232,13 +1232,13 @@ class SellPosController extends Controller
         //
         //            if (!empty($product_id)) {
         //                $index = $request->input('row_count');
-        //                $products = $this->productUtil->getDetailsFromProductByStore($product_id, $variation_id, $store_id);
+        //                $products_ = $this->productUtil->getDetailsFromProductByStore($product_id, $variation_id, $store_id);
         //
         //                $product_discount_details = $this->productUtil->getProductDiscountDetails($product_id, $customer_id);
         //                // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
         //                $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
         //                $html_content =  view('sale_pos.partials.product_row')
-        //                    ->with(compact('products', 'index', 'sale_promotion_details', 'product_discount_details', 'edit_quantity', 'is_direct_sale', 'dining_table_id', 'exchange_rate'))->render();
+        //                    ->with(compact('products_', 'index', 'sale_promotion_details', 'product_discount_details', 'edit_quantity', 'is_direct_sale', 'dining_table_id', 'exchange_rate'))->render();
         //
         //                $output['success'] = true;
         //                $output['html_content'] = $html_content;
@@ -1272,7 +1272,7 @@ class SellPosController extends Controller
         }
     }
     /**
-     * get the row for non identifiable products
+     * get the row for non identifiable products_
      *
      * @param Request $request
      * @return void
@@ -1338,7 +1338,7 @@ class SellPosController extends Controller
         //Check for prefix.
         if ((strlen($scale_setting['label_prefix']) == 0) || Str::startsWith($scale_barcode, $scale_setting['label_prefix'])) {
             $scale_barcode = substr($scale_barcode, strlen($scale_setting['label_prefix']));
-            //Get product sku, trim left side 0
+            //Get products sku, trim left side 0
             $sku = substr($scale_barcode, 0, $scale_setting['product_sku_length'] + 1);
 
             $last_digits_type = $scale_setting['last_digits_type'];
@@ -1384,7 +1384,7 @@ class SellPosController extends Controller
         ];
     }
     /**
-     * Returns the html for product row
+     * Returns the html for products row
      *
      * @return \Illuminate\Http\Response
      */

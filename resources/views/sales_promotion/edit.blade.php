@@ -126,7 +126,7 @@
                                                     @include(
                                                         'sales_promotion.partials.product_conditions_row',
                                                         [
-                                                            'products' => $condition_products,
+                                                            'products_' => $condition_products,
                                                         ]
                                                     )
                                                 </tbody>
@@ -160,7 +160,7 @@
                                         <tbody>
 
                                             @include('sales_promotion.partials.product_details_row', [
-                                                'products' => $product_details,
+                                                'products_' => $product_details,
                                                 'type' => $sales_promotion->type,
                                                 'package_promotion_qty' => $sales_promotion->package_promotion_qty,
                                             ])
@@ -774,7 +774,7 @@
             $(".footer_purchase_price_total").text(__currency_trans_from_en(0, false));
             $.ajax({
                 method: "get",
-                url: "/sales-promotion/get-product-details-rows",
+                url: "/sales-promotion/get-products-details-rows",
                 data: {
                     store_ids: $("#store_ids").val(),
                     type: $("#type").val(),

@@ -72,7 +72,7 @@ class InternalStockRequestController extends Controller
     public function create()
     {
         if (!auth()->user()->can('stock.internal_stock_request.create_and_edit') && !auth()->user()->can('raw_material_module.internal_stock_request.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $stores = Store::getDropdown();
         $stores_keys = array_keys($stores);
@@ -129,7 +129,7 @@ class InternalStockRequestController extends Controller
     public function store(Request $request)
     {
         if (!auth()->user()->can('stock.internal_stock_request.create_and_edit') && !auth()->user()->can('raw_material_module.internal_stock_request.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         try {
             $data = $request->except('_token');
@@ -354,7 +354,7 @@ class InternalStockRequestController extends Controller
                     return $html;
                 })
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {

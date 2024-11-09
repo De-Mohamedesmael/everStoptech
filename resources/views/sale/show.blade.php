@@ -50,7 +50,7 @@
                         <thead class="bg-success" style="color: white">
                             <tr>
                                 <th style="width: 25%" class="col-sm-8">@lang('lang.image')</th>
-                                <th style="width: 25%" class="col-sm-8">@lang('lang.products')</th>
+                                <th style="width: 25%" class="col-sm-8">@lang('lang.products_')</th>
                                 <th style="width: 25%" class="col-sm-4">@lang('lang.sku')</th>
                                 <th style="width: 25%" class="col-sm-4">@lang('lang.batch_number')</th>
                                 <th style="width: 25%" class="col-sm-4">@lang('lang.quantity')</th>
@@ -62,7 +62,7 @@
                         <tbody>
                             @foreach ($sale->transaction_sell_lines as $line)
                                 <tr>
-                                    <td><img src="@if (!empty($line->product) && !empty($line->product->getFirstMediaUrl('product'))) {{ $line->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                    <td><img src="@if (!empty($line->product) && !empty($line->product->getFirstMediaUrl('products'))) {{ $line->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                             alt="photo" width="50" height="50"></td>
                                     <td>
                                         {{ $line->product->name ?? '' }}

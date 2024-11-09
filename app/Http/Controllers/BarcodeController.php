@@ -105,7 +105,7 @@ class BarcodeController extends Controller
     }
 
     /**
-     * Returns the html for product row
+     * Returns the html for products row
      *
      * @return \Illuminate\Http\Response
      */
@@ -174,7 +174,7 @@ class BarcodeController extends Controller
     public function printBarcode(Request $request)
     {
         // try {
-        $products = $request->get('products');
+        $products = $request->get('products_');
 
 
         $product_details = [];

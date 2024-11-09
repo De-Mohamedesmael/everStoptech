@@ -174,7 +174,7 @@
                                                     <th>@lang('lang.date')</th>
                                                     <th>@lang('lang.reference_no')</th>
                                                     <th>@lang('lang.customer')</th>
-                                                    <th>@lang('lang.product')</th>
+                                                    <th>@lang('lang.products')</th>
                                                     <th class="sum">@lang('lang.grand_total')</th>
                                                     <th>@lang('lang.status')</th>
                                                     <th>@lang('lang.action')</th>

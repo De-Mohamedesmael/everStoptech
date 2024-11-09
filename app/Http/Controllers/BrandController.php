@@ -38,7 +38,7 @@ class BrandController extends Controller
     {
         $brands = Brand::get();
 
-        return view('brand.index')->with(compact(
+        return view('back-end.products.brands.index')->with(compact(
             'brands'
         ));
     }
@@ -54,7 +54,7 @@ class BrandController extends Controller
 
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('brand.create')->with(compact(
+        return view('back-end.products.brands.create')->with(compact(
             'quick_add',
             'brands'
         ));
@@ -148,7 +148,7 @@ class BrandController extends Controller
         $brand = Brand::find($id);
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('brand.edit')->with(compact(
+        return view('back-end.products.brands.edit')->with(compact(
             'brand',
             'brands',
         ));
@@ -242,29 +242,6 @@ class BrandController extends Controller
 
         return $brand_dp;
     }
-    public function getBase64Image($Image)
-    {
 
-        $image_path = str_replace(env("APP_URL") . "/", "", $Image);
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $image_path);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        $image_content = curl_exec($ch);
-        curl_close($ch);
-//    $image_content = file_get_contents($image_path);
-        $base64_image = base64_encode($image_content);
-        $b64image = "data:image/jpeg;base64," . $base64_image;
-        return  $b64image;
-    }
-    public function getCroppedImages($cropImages){
-        $dataNewImages = [];
-        foreach ($cropImages as $img) {
-            if (strlen($img) < 200){
-                $dataNewImages[] = $this->getBase64Image($img);
-            }else{
-                $dataNewImages[] = $img;
-            }
-        }
-        return $dataNewImages;
-    }
+
 }

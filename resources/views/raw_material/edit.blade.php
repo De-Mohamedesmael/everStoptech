@@ -25,7 +25,7 @@
                     </div>
                     {!! Form::open([
                         'url' => action('RawMaterialController@update', $raw_material->id),
-                        'id' => 'product-edit-form',
+                        'id' => 'products-edit-form',
                         'method' => 'PUT',
                         'class' => '',
                         'enctype' => 'multipart/form-data',
@@ -127,13 +127,13 @@
                                 </div>
 
                                 <div class="col-md-12">
-                                    @if (!empty($raw_material->getFirstMediaUrl('product')))
+                                    @if (!empty($raw_material->getFirstMediaUrl('products')))
                                         <div style="width: 120px;" class="images_div">
                                             <button type="button" class="delete-image btn btn-danger btn-xs"
                                                 data-href="{{ action('ProductController@deleteProductImage', $raw_material->id) }}"
                                                 style="margin-left: 100px; border-radius: 50%"><i
                                                     class="fa fa-times"></i></button>
-                                            <img src="@if (!empty($raw_material->getFirstMediaUrl('product'))) {{ $raw_material->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                            <img src="@if (!empty($raw_material->getFirstMediaUrl('products'))) {{ $raw_material->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                 alt="photo" style="width: 120px;">
                                         </div>
                                     @endif
@@ -378,12 +378,12 @@
         $("#submit-btn").on("click", function(e) {
             e.preventDefault();
             setTimeout(() => {
-                if ($("#product-edit-form").valid()) {
+                if ($("#products-edit-form").valid()) {
                     tinyMCE.triggerSave();
                     $.ajax({
                         type: "POST",
-                        url: $("#product-edit-form").attr("action"),
-                        data: $("#product-edit-form").serialize(),
+                        url: $("#products-edit-form").attr("action"),
+                        data: $("#products-edit-form").serialize(),
                         success: function(response) {
                             if (response.success) {
                                 swal("Success", response.msg, "success");

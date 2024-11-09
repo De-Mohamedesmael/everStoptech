@@ -452,7 +452,6 @@ class NotificationUtil extends Util
                 'transactions.id as transaction_id',
                 'transactions.store_id',
                 'product_id',
-                'variation_id',
                 'expiry_date',
                 'expiry_warning',
                 'convert_status_expire',
@@ -504,7 +503,6 @@ class NotificationUtil extends Util
                 $expired_date = Carbon::parse($item->expiry_date)->subDays($item->convert_status_expire)->format('Y-m-d');
                 if (Carbon::now()->format('Y-m-d') == $expired_date) {
                     $ps = ProductStore::where('product_stores.product_id', $item->product_id)
-                        ->where('product_stores.variation_id', $item->variation_id)
                         ->where('product_stores.store_id', $item->store_id)
                         ->first();
                     $ps->expired_qauntity = $ps->expired_qauntity + $item->remaining_qty;

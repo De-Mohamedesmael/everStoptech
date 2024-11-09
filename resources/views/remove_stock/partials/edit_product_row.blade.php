@@ -1,6 +1,6 @@
 @forelse ($remove_stock->remove_stock_lines as $product)
 <tr>
-    <td><img src="@if(!empty($product->product->getFirstMediaUrl('product'))){{$product->product->getFirstMediaUrl('product')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
+    <td><img src="@if(!empty($product->product->getFirstMediaUrl('products'))){{$product->product->getFirstMediaUrl('products')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
             alt="photo" width="50" height="50"></td>
     <td>
         {{$product->product->name}}

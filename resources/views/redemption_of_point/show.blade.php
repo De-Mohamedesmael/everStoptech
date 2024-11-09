@@ -27,7 +27,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="form-group">
-                        <b>{!! Form::label('product_ids', __( 'lang.product' ) . ':') !!}</b> {{implode(', ', $redemption_of_point->products->pluck('name')->toArray())}}
+                        <b>{!! Form::label('product_ids', __( 'lang.products' ) . ':') !!}</b> {{implode(', ', $redemption_of_point->products->pluck('name')->toArray())}}
 
                     </div>
                 </div>

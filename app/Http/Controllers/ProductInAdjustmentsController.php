@@ -194,7 +194,7 @@ class ProductInAdjustmentsController extends Controller
             // return $products;
             return DataTables::of($products)
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
@@ -246,8 +246,8 @@ class ProductInAdjustmentsController extends Controller
                 ->editColumn('color', function ($row){
                     $color='';
                     if($row->variation_name == "Default"){
-                        if(isset($row->multiple_colors)){
-                          $color_m=Color::whereId($row->multiple_colors)->first();
+                        if(isset($row->color_id)){
+                          $color_m=Color::whereId($row->color_id)->first();
                           if($color_m){
                              $color= $color_m ->name;
                           }
@@ -258,22 +258,8 @@ class ProductInAdjustmentsController extends Controller
                     return $color;
                 })
                 ->editColumn('size', function ($row){
-                    $size='';
-                    if($row->variation_name == "Default"){
-
-                        if(isset($row->multiple_sizes)){
-                            $size_m=Size::whereId($row->multiple_sizes)->first();
-                            if($size_m){
-                                $size= $size_m ->name;
-                            }
-                        }
-
-                    }else{
-                        $size = $row->size;
-                    }
-                    return $size;
+                        return $row->size;
                 })
-                ->editColumn('grade', '{{$grade}}')
                 // ->editColumn('current_stock', '@if($is_service){{@num_format(0)}} @else{{@num_f($current_stock)}}@endif')
                 ->editColumn('current_stock', function ($row) {
                     if($row->is_service){
@@ -364,14 +350,14 @@ class ProductInAdjustmentsController extends Controller
                             </button>
                             <ul class="dropdown-menu edit-options dropdown-menu-right dropdown-default" user="menu">';
 
-                        if (auth()->user()->can('product_module.product.view')) {
+                        if (auth()->user()->can('product_module.products.view')) {
                             $html .=
                                 '<li><a data-href="' . action('ProductController@show', $row->id) . '"
                                 data-container=".view_modal" class="btn btn-modal"><i class="fa fa-eye"></i>
                                 ' . __('lang.view') . '</a></li>';
                         }
                         $html .= '<li class="divider"></li>';
-                        if (auth()->user()->can('product_module.product.create_and_edit')) {
+                        if (auth()->user()->can('product_module.products.create_and_edit')) {
                             $html .=
                                 '<li><a href="' . action('ProductController@edit', $row->id) . '" class="btn"
                             target="_blank"><i class="dripicons-document-edit"></i> ' . __('lang.edit') . '</a></li>';
@@ -383,7 +369,7 @@ class ProductInAdjustmentsController extends Controller
                             target="_blank"><i class="fa fa-plus"></i> ' . __('lang.add_new_stock') . '</a></li>';
                         }
                         $html .= '<li class="divider"></li>';
-                        // if (auth()->user()->can('product_module.product.delete')) {
+                        // if (auth()->user()->can('product_module.products.delete')) {
 
                         //     $html .=
                         //         '<li>
@@ -402,7 +388,7 @@ class ProductInAdjustmentsController extends Controller
 
                 ->setRowAttr([
                     'data-href' => function ($row) {
-                        if (auth()->user()->can("product.view")) {
+                        if (auth()->user()->can("products.view")) {
                             return  action('ProductController@show', [$row->id]);
                         } else {
                             return '';
@@ -580,7 +566,7 @@ class ProductInAdjustmentsController extends Controller
 
     }
     public function getDetails($id){
-         $adjustment_details = ProductInAdjustmentDetails::where('product_adjustments_id',$id)->with('product')->get();
+         $adjustment_details = ProductInAdjustmentDetails::where('product_adjustments_id',$id)->with('products')->get();
         return view('product_in_adjustment.details')->with(compact('adjustment_details'));
     }
     /**

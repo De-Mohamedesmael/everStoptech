@@ -10,7 +10,7 @@
             style="text-align: center; width: 100%; border-collapse: collapse; border: 1px solid #999;">
             <thead>
                 <tr>
-                    <th style="width: 25%; border: 1px solid #999;" class="col-sm-8">@lang( 'lang.products' )</th>
+                    <th style="width: 25%; border: 1px solid #999;" class="col-sm-8">@lang( 'lang.products_' )</th>
                     <th style="width: 25%; border: 1px solid #999;" class="col-sm-4">@lang( 'lang.sku' )</th>
                     <th style="width: 25%; border: 1px solid #999;" class="col-sm-4">@lang( 'lang.quantity' )</th>
                     <th style="width: 12%; border: 1px solid #999;" class="col-sm-4">@lang( 'lang.purchase_price' )</th>

@@ -1,6 +1,6 @@
 <div class="row product_row">
     <div class="col-md-3">
-        <img src="@if (!empty($product->getFirstMediaUrl('product'))) {{ $product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+        <img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
             alt="photo" width="50" height="50">
         @if ($product->variation_name == 'Default')
             {{ $product->name }}

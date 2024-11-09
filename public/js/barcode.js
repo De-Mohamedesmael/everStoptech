@@ -1,9 +1,9 @@
 $(document).ready(function () {
-    //Add products
+    //Add products_
     if ($("#search_product_for_label").length > 0) {
         $("#search_product_for_label")
             .autocomplete({
-                source: "/product/get-products",
+                source: "/products/get-products_",
                 minLength: 2,
                 response: function (event, ui) {
                     if (ui.content.length == 1) {
@@ -60,7 +60,7 @@ $(document).ready(function () {
                 window.open(url, "newwindow");
             }
         } else {
-            swal("No product selected.").then((value) => {
+            swal("No products selected.").then((value) => {
                 $("#search_product_for_label").focus();
             });
         }

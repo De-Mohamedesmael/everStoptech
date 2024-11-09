@@ -111,7 +111,7 @@
                                     <table class="table table-bordered table-striped table-condensed" id="product_table">
                                         <thead>
                                             <tr>
-                                                <th style="width: 25%" class="col-sm-8">@lang('lang.products')</th>
+                                                <th style="width: 25%" class="col-sm-8">@lang('lang.products_')</th>
                                                 @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
                                                     <th style="width: 25%" class="col-sm-4">@lang('lang.sku')</th>
                                                 @endif
@@ -249,16 +249,16 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             console.log('click');
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
-                    url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    url: "/products",
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");;

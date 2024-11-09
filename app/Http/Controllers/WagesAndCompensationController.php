@@ -101,7 +101,7 @@ class WagesAndCompensationController extends Controller
         $jobs = JobType::getDropdown();
         $stores = Store::getDropdown();
 
-        return view('wages_and_compensations.index')->with(compact(
+        return view('back-end.Hr.wages_and_compensations.index')->with(compact(
             'employees',
             'jobs',
             'stores',
@@ -121,7 +121,7 @@ class WagesAndCompensationController extends Controller
         $payment_types = WagesAndCompensation::getPaymentTypes();
         $admins = Admin::pluck('name', 'id');
 
-        return view('wages_and_compensations.create')->with(compact(
+        return view('back-end.Hr.wages_and_compensations.create')->with(compact(
             'employees',
             'payment_types',
             'admins',
@@ -243,7 +243,7 @@ class WagesAndCompensationController extends Controller
         $wages_and_compensation = WagesAndCompensation::find($id);
         $admins = Admin::pluck('name', 'id');
 
-        return view('wages_and_compensations.show')->with(compact(
+        return view('back-end.Hr.wages_and_compensations.show')->with(compact(
             'wages_and_compensation',
             'employees',
             'admins',
@@ -265,7 +265,7 @@ class WagesAndCompensationController extends Controller
         $wages_and_compensation = WagesAndCompensation::find($id);
         $admins = Admin::pluck('name', 'id');
 
-        return view('wages_and_compensations.edit')->with(compact(
+        return view('back-end.Hr.wages_and_compensations.edit')->with(compact(
             'wages_and_compensation',
             'employees',
             'admins',

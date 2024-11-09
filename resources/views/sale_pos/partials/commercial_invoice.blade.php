@@ -278,7 +278,7 @@
                         <tr>
                             <th style="width: 5% !important;">#</th>
                             <th style="width: 10% !important;">@lang('lang.image')</th>
-                            <th style="width: 20% !important;">@lang('lang.products')</th>
+                            <th style="width: 20% !important;">@lang('lang.products_')</th>
                             <th style="width: 10% !important;">@lang('lang.sku')</th>
                             <th style="width: 10% !important;">@lang('lang.batch_number')</th>
                             <th style="width: 10% !important;">@lang('lang.quantity')</th>
@@ -295,7 +295,7 @@
                             <tr>
                                 <td style="width: 5% !important;">{{ $loop->iteration }}</td>
                                 <td style="width: 10% !important;"><img
-                                        src="@if (!empty($line->product) && !empty($line->product->getFirstMediaUrl('product'))) {{ $line->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                        src="@if (!empty($line->product) && !empty($line->product->getFirstMediaUrl('products'))) {{ $line->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                         alt="photo" width="50" height="50"></td>
                                 <td style="width: 20% !important;">
                                     {{ $line->product->name ?? '' }}

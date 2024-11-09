@@ -762,7 +762,7 @@
             $(".footer_purchase_price_total").text(__currency_trans_from_en(0, false));
             $.ajax({
                 method: "get",
-                url: "/sales-promotion/get-product-details-rows",
+                url: "/sales-promotion/get-products-details-rows",
                 data: {
                     store_ids: $("#store_ids").val(),
                     type: $("#type").val(),

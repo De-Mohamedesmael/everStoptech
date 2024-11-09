@@ -144,7 +144,7 @@
 </div><!-- /.modal-dialog -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script>
-    $("#create-product-class-btn").click(function(e) {
+    $("#create-products-class-btn").click(function(e) {
         e.preventDefault();
         getClassImages()
         setTimeout(() => {

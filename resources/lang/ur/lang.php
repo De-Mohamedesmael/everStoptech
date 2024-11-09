@@ -52,7 +52,7 @@ return [
     'help' => 'مدد',
 
     'required_fields_info' => '* کے ساتھ نشان زدہ فیلڈ لیبلز ضروری ان پٹ فیلڈز ہیں۔.',
-    'product' => 'پروڈکٹ',
+    'products' => 'پروڈکٹ',
     'add_new_product' => 'نئی پروڈکٹ شامل کریں۔',
     'class' => 'کلاس',
     'submit' => 'جمع کرائیں',
@@ -182,7 +182,7 @@ return [
     'product_classification_tree' => 'مصنوعات کی درجہ بندی درخت',
     'print_barcode' => 'بارکوڈ پرنٹ کریں۔',
     'enter_product_name_to_print_labels' => 'بار کوڈ پرنٹ کرنے کے لیے پروڈکٹ کا نام درج کریں۔',
-    'products' => 'مصنوعات',
+    'products_' => 'مصنوعات',
     'no_of_labels' => 'لیبلز کی تعداد',
     'product_name' => 'پروڈکٹ کا نام',
     'paper_size' => 'کاغذ کا سائز',

@@ -82,7 +82,7 @@
                                         <table id="product_table" style="width: 100% " class="table table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 30%">{{ __('lang.product') }}</th>
+                                                    <th style="width: 30%">{{ __('lang.products') }}</th>
                                                     <th style="width: 20%">{{ __('lang.returned_quantity') }}</th>
                                                     <th style="width: 20%">{{ __('lang.price') }}</th>
                                                     <th style="width: 20%">{{ __('lang.current_stock') }}</th>
@@ -93,7 +93,7 @@
                                             </thead>
                                             <tbody>
                                                 @include('purchase_return.partials.edit_product_row', [
-                                                    'products' => $purchase_return->purchase_return_lines,
+                                                    'products_' => $purchase_return->purchase_return_lines,
                                                 ])
                                             </tbody>
                                             <tfoot>

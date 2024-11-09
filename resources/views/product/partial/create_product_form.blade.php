@@ -224,7 +224,7 @@
                 @include('layouts.partials.translation_inputs', [
                     'attribute' => 'name',
                     'translations' => [],
-                    'type' => 'product',
+                    'type' => 'products',
                 ])
             </div>
             <div class="col-md-4 px-5">
@@ -322,20 +322,20 @@
                         </div>
                     </div>
                     <div class="col-md-4 px-5">
-                        {!! Form::label('multiple_colors', __('lang.color'), [
+                        {!! Form::label('color_id', __('lang.color'), [
                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                         ]) !!}
                         <div class="input-group my-group select-button-group">
                             {!! Form::select(
-                                'multiple_colors[]',
+                                'color_id[]',
                                 $colors,
-                                !empty($recent_product) ? $recent_product->multiple_colors : false,
+                                !empty($recent_product) ? $recent_product->color_id : false,
                                 [
                                     'class' => 'clear_input_form selectpicker form-control',
                                     'data-live-search' => 'true',
                                     'style' => 'width: 80%',
                                     'placeholder' => __('lang.please_select'),
-                                    'id' => 'multiple_colors',
+                                    'id' => 'color_id',
                                 ],
                             ) !!}
                             <span class="input-group-btn">
@@ -349,16 +349,16 @@
                     </div>
                 @endif
                 <div class="col-md-4 px-5">
-                    {!! Form::label('multiple_sizes', __('lang.size'), [
+                    {!! Form::label('size_id', __('lang.size'), [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
                     <div class="input-group my-group select-button-group">
-                        {!! Form::select('multiple_sizes[]', $sizes, !empty($recent_product) ? $recent_product->multiple_sizes : false, [
+                        {!! Form::select('size_id[]', $sizes, !empty($recent_product) ? $recent_product->size_id : false, [
                             'class' => 'clear_input_form selectpicker form-control',
                             'data-live-search' => 'true',
                             'style' => 'width: 80%',
                             'placeholder' => __('lang.please_select'),
-                            'id' => 'multiple_sizes',
+                            'id' => 'size_id',
                         ]) !!}
                         <span class="input-group-btn">
                             @can('product_module.size.create_and_edit')
@@ -537,7 +537,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @include('product.partial.raw_discount', ['row_id' => 0]) --}}
+                        {{-- @include('products.partial.raw_discount', ['row_id' => 0]) --}}
                     </tbody>
                 </table>
                 <div class="d-flex justify-content-center">

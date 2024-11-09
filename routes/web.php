@@ -43,45 +43,45 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::post('general/upload-file-temp', 'GeneralController@uploadFileTemp');
     Route::get('general/view-uploaded-files/{model_name}/{model_id}', 'GeneralController@viewUploadedFiles');
 
-    Route::get('product/get-raw-material-details/{raw_material_id}', 'ProductController@getRawMaterialDetail');
-    // Route::get('product/show-pr', 'ProductController@showPr');
-    // Route::get('product/show-pr-data', 'ProductController@showPrData');
-    Route::get('product/get-raw-material-row', 'ProductController@getRawMaterialRow');
-    Route::get('product/get-raw-discount', 'ProductController@getRawDiscount');
-    Route::get('product/get-variation-row', 'ProductController@getVariationRow');
-    Route::get('product/get-products', 'ProductController@getProducts');
-    Route::get('product/get-purchase-history/{id}', 'ProductController@getPurchaseHistory');
-    Route::post('product/save-import', 'ProductController@saveImport');
-    Route::get('product/import', 'ProductController@getImport');
-    Route::get('product/check-sku/{sku}', 'ProductController@checkSku');
-    Route::get('product/check-name', 'ProductController@checkName');
-    Route::get('product-stocks', 'ProductController@getProductStocks');
-    Route::get('product/delete-product-image/{id}', 'ProductController@deleteProductImage');
-    Route::get('product/remove_damage/{id}', 'ProductController@get_remove_damage');
-    Route::get('product/remove_expiry/{id}', 'ProductController@get_remove_expiry');
-    Route::get('product/create/product_id={id}/convolutions', 'ProductController@addConvolution')->name("addConvolution");
-    Route::get('product/create/product_id={id}/getDamageProduct', 'ProductController@getDamageProduct')->name("getDamageProduct");
-    Route::post('product/convolutions/storeStockRemoved', 'ProductController@storeStockRemoved')->name("storeStockRemoved");
-    Route::post('product/convolutions/storeStockDamaged', 'ProductController@storeStockDamaged')->name("storeStockDamaged");
-    Route::post('product/convolutions/deleteExpiryRow', 'ProductController@deleteExpiryRow')->name("deleteExpiryRow");
-   Route::get('product/toggle-appearance-pos/{id}', 'ProductController@toggleAppearancePos');
+    Route::get('products/get-raw-material-details/{raw_material_id}', 'ProductController@getRawMaterialDetail');
+    // Route::get('products/show-pr', 'ProductController@showPr');
+    // Route::get('products/show-pr-data', 'ProductController@showPrData');
+    Route::get('products/get-raw-material-row', 'ProductController@getRawMaterialRow');
+    Route::get('products/get-raw-discount', 'ProductController@getRawDiscount');
+    Route::get('products/get-variation-row', 'ProductController@getVariationRow');
+    Route::get('products/get-products', 'ProductController@getProducts');
+    Route::get('products/get-purchase-history/{id}', 'ProductController@getPurchaseHistory');
+    Route::post('products/save-import', 'ProductController@saveImport');
+    Route::get('products/import', 'ProductController@getImport');
+    Route::get('products/check-sku/{sku}', 'ProductController@checkSku');
+    Route::get('products/check-name', 'ProductController@checkName');
+    Route::get('products-stocks', 'ProductController@getProductStocks');
+    Route::get('products/delete-products-image/{id}', 'ProductController@deleteProductImage');
+    Route::get('products/remove_damage/{id}', 'ProductController@get_remove_damage');
+    Route::get('products/remove_expiry/{id}', 'ProductController@get_remove_expiry');
+    Route::get('products/create/product_id={id}/convolutions', 'ProductController@addConvolution')->name("addConvolution");
+    Route::get('products/create/product_id={id}/getDamageProduct', 'ProductController@getDamageProduct')->name("getDamageProduct");
+    Route::post('products/convolutions/storeStockRemoved', 'ProductController@storeStockRemoved')->name("storeStockRemoved");
+    Route::post('products/convolutions/storeStockDamaged', 'ProductController@storeStockDamaged')->name("storeStockDamaged");
+    Route::post('products/convolutions/deleteExpiryRow', 'ProductController@deleteExpiryRow')->name("deleteExpiryRow");
+   Route::get('products/toggle-appearance-pos/{id}', 'ProductController@toggleAppearancePos');
 
-//    Route::post('product/remove_expiry/{id}', 'ProductController@send_remove_damage');
-    Route::resource('product', ProductController::class);
-    Route::post('product/multiDeleteRow', 'ProductController@multiDeleteRow');
+//    Route::post('products/remove_expiry/{id}', 'ProductController@send_remove_damage');
+    Route::resource('products', ProductController::class);
+    Route::post('products/multiDeleteRow', 'ProductController@multiDeleteRow');
     Route::post('/update-column-visibility', 'ProductController@updateColumnVisibility');
     Route::get('raw-material/add-stock/create', 'AddStockController@create');
     Route::post('/update-stock-column-visibility', 'AddStockController@updateStockColumnVisibility');
     Route::get('raw-material/add-stock', 'AddStockController@index');
-    Route::get('raw-material/add-product-row', 'RawMaterialController@addProductRow');
+    Route::get('raw-material/add-products-row', 'RawMaterialController@addProductRow');
     Route::resource('raw-material', RawMaterialController::class);
 
     Route::get('consumption/get-sufficient-suggestions/{raw_material_id}', 'ConsumptionController@getSufficientSuggestions');
     Route::get('consumption/get-raw-material-details', 'ConsumptionController@getConsumptionDetailRow');
     Route::get('consumption/add-row', 'ConsumptionController@addRow');
     Route::resource('consumption', ConsumptionController::class);
-    Route::get('product-class/get-dropdown', 'ProductClassController@getDropdown');
-    Route::resource('product-class', ProductClassController::class);
+    Route::get('products-class/get-dropdown', 'ProductClassController@getDropdown');
+    Route::resource('products-class', ProductClassController::class);
     Route::get('category/get-sub-category-dropdown', 'CategoryController@getSubCategoryDropdown');
     Route::get('category/get-dropdown', 'CategoryController@getDropdown');
     Route::get('sub-category', 'CategoryController@getSubCategories');
@@ -101,7 +101,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('tax/get-dropdown', 'TaxController@getDropdown');
     Route::get('tax/get-details/{tax_id}', 'TaxController@getDetails');
     Route::resource('tax', TaxController::class);
-    Route::get('barcode/add-product-row', 'BarcodeController@addProductRow');
+    Route::get('barcode/add-products-row', 'BarcodeController@addProductRow');
     Route::get('barcode/print-barcode', 'BarcodeController@printBarcode');
     Route::resource('barcode', BarcodeController::class);
 
@@ -128,8 +128,8 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('customer-sizes', CustomerSizeController::class);
 
     Route::get('customer-type/get-dropdown', 'CustomerTypeController@getDropdown');
-    Route::get('customer-type/get-product-discount-row', 'CustomerTypeController@getProductDiscountRow');
-    Route::get('customer-type/get-product-point-row', 'CustomerTypeController@getProductPointRow');
+    Route::get('customer-type/get-products-discount-row', 'CustomerTypeController@getProductDiscountRow');
+    Route::get('customer-type/get-products-point-row', 'CustomerTypeController@getProductPointRow');
     Route::resource('customer-type', CustomerTypeController::class);
 
     Route::get('supplier/get-dropdown', 'SupplierController@getDropdown');
@@ -142,7 +142,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     // Route::resource('supplier-service', SupplierServiceController::class);
     Route::get('supplier-category/get-dropdown', 'SupplierCategoryController@getDropdown');
     Route::resource('supplier-category', SupplierCategoryController::class);
-    Route::resource('product-classification-tree', ProductClassificationTreeController::class);
+    Route::resource('products-classification-tree', ProductClassificationTreeController::class);
 
     Route::get('store/get-dropdown', 'StoreController@getDropdown');
     Route::resource('store', StoreController::class);
@@ -156,17 +156,17 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::post('purchase-order/save-import', 'PurchaseOrderController@saveImport');
     Route::get('purchase-order/import', 'PurchaseOrderController@getImport');
     Route::get('purchase-order/get-products', 'PurchaseOrderController@getProducts');
-    Route::get('purchase-order/add-product-row', 'PurchaseOrderController@addProductRow');
+    Route::get('purchase-order/add-products-row', 'PurchaseOrderController@addProductRow');
     Route::get('purchase-order/get-po-number', 'PurchaseOrderController@getPoNumber');
     Route::get('purchase-order/draft-purchase-order', 'PurchaseOrderController@getDraftPurchaseOrder');
     Route::get('purchase-order/quick-add-draft', 'PurchaseOrderController@quickAddDraft');
     Route::resource('purchase-order', PurchaseOrderController::class);
 
     Route::get('add-stock/get-source-by-type-dropdown/{type}', 'AddStockController@getSourceByTypeDropdown');
-    Route::get('add-stock/add-product-row', 'AddStockController@addProductRow');
-    Route::get('add-stock/add-multiple-product-row', 'AddStockController@addMultipleProductRow');
-    Route::get('add-stock/add-product-different-batch-row', 'AddStockController@addProductBatchRow');
-    Route::get('add-stock/add-product-batch-row', 'AddStockController@addProductBatchRow');
+    Route::get('add-stock/add-products-row', 'AddStockController@addProductRow');
+    Route::get('add-stock/add-multiple-products-row', 'AddStockController@addMultipleProductRow');
+    Route::get('add-stock/add-products-different-batch-row', 'AddStockController@addProductBatchRow');
+    Route::get('add-stock/add-products-batch-row', 'AddStockController@addProductBatchRow');
 
     Route::get('add-stock/get-purchase-order-details/{id}', 'AddStockController@getPurchaseOrderDetails');
     Route::post('add-stock/save-import', 'AddStockController@saveImport');
@@ -180,11 +180,11 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('raw-materials/remove-stock/create', 'RemoveStockController@create');
     Route::get('raw-materials/remove-stock/index', 'RemoveStockController@index');
     Route::resource('remove-stock', RemoveStockController::class);
-    Route::get('internal-stock-request/get-product-table', 'InternalStockRequestController@getProductTable');
+    Route::get('internal-stock-request/get-products-table', 'InternalStockRequestController@getProductTable');
     Route::get('internal-stock-request/update-status/{id}', 'InternalStockRequestController@getUpdateStatus');
     Route::post('internal-stock-request/update-status/{id}', 'InternalStockRequestController@postUpdateStatus');
     Route::resource('internal-stock-request', InternalStockRequestController::class);
-    Route::get('internal-stock-return/get-product-table', 'InternalStockReturnController@getProductTable');
+    Route::get('internal-stock-return/get-products-table', 'InternalStockReturnController@getProductTable');
     Route::get('internal-stock-return/update-status/{id}', 'InternalStockReturnController@getUpdateStatus');
     Route::post('internal-stock-return/update-status/{id}', 'InternalStockReturnController@postUpdateStatus');
     Route::get('internal-stock-return/send-the-goods/{id}', 'InternalStockReturnController@sendTheGoods');
@@ -193,11 +193,11 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('raw-materials/internal-stock-request', InternalStockRequestController::class);
     Route::resource('raw-materials/internal-stock-return', InternalStockReturnController::class);
     Route::get('raw-materials/transfer/get-print/{id}', 'TransferController@print');
-    Route::get('raw-materials/transfer/add-product-row', 'TransferController@addProductRow');
+    Route::get('raw-materials/transfer/add-products-row', 'TransferController@addProductRow');
     Route::resource('raw-materials/transfer', TransferController::class);
 
     Route::get('transfer/get-print/{id}', 'TransferController@print');
-    Route::get('transfer/add-product-row', 'TransferController@addProductRow');
+    Route::get('transfer/add-products-row', 'TransferController@addProductRow');
     Route::resource('transfer', TransferController::class);
     Route::post('user/check-admin-password', [HomeController::class, 'checkAdminPassword'])->name('check_admin_password');
 
@@ -217,11 +217,11 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('pos/update-status-to-cancel/{id}', 'SellPosController@updateStatusToCancel');
     Route::get('pos/get-non-identifiable-item-row', 'SellPosController@getNonIdentifiableItemRow');
     Route::get('pos/get-products', 'SellPosController@getProducts');
-    Route::get('pos/add-product-row', 'SellPosController@addProductRow');
+    Route::get('pos/add-products-row', 'SellPosController@addProductRow');
     Route::get('sale/addEditProductRow', 'SellPosController@addEditProductRow');
     Route::get('pos/add-discounts', 'SellPosController@addDiscounts');
-    Route::get('pos/get-product-discount', 'SellPosController@getProductDiscount');
-    Route::get('pos/get-product-items-by-filter', 'SellPosController@getProductItemsByFilter');
+    Route::get('pos/get-products-discount', 'SellPosController@getProductDiscount');
+    Route::get('pos/get-products-items-by-filter', 'SellPosController@getProductItemsByFilter');
     Route::get('pos/get-online-order-transactions', 'SellPosController@getOnlineOrderTransactions');
     Route::get('pos/get-draft-transactions', 'SellPosController@getDraftTransactions');
     Route::get('pos/get-recent-transactions', 'SellPosController@getRecentTransactions');
@@ -260,7 +260,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('sale-return', SellReturnController::class);
     Route::get('cash-register/get-available-cash-register/{admin_id}', 'CashRegisterController@getAvailableCashRegister');
     Route::resource('cash-register', CashRegisterController::class);
-    Route::get('purchase-return/add-product-row', 'PurchaseReturnController@addProductRow');
+    Route::get('purchase-return/add-products-row', 'PurchaseReturnController@addProductRow');
     Route::resource('purchase-return', PurchaseReturnController::class);
 
     Route::get('coupon/get-details/{coupon_code}/{customer_id}', 'CouponController@getDetails');
@@ -312,10 +312,10 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('redemption-of-points', RedemptionOfPointController::class);
 
     Route::get('sales-promotion/get-sale-promotion-details/{id}', 'SalesPromotionController@getSalePromotionDetails');
-    Route::get('sales-promotion/get-product-details-rows', 'SalesPromotionController@getProductDetailsRows');
-    Route::get('sales-promotion/get-product-condition-rows', 'SalesPromotionController@getProductConditionRows');
-    Route::get('sales-promotion/get-product-condition-tree', 'SalesPromotionController@getProductConditionTree');
-    Route::get('sales-promotion/get-product-selection-tree', 'SalesPromotionController@getProductSelectionTree');
+    Route::get('sales-promotion/get-products-details-rows', 'SalesPromotionController@getProductDetailsRows');
+    Route::get('sales-promotion/get-products-condition-rows', 'SalesPromotionController@getProductConditionRows');
+    Route::get('sales-promotion/get-products-condition-tree', 'SalesPromotionController@getProductConditionTree');
+    Route::get('sales-promotion/get-products-selection-tree', 'SalesPromotionController@getProductSelectionTree');
     Route::resource('sales-promotion', SalesPromotionController::class);
 
     Route::get('cash/print-closing-cash/{cash_register_id}', 'CashController@printClosingCash');
@@ -339,12 +339,12 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('customer-balance-adjustment', CustomerBalanceAdjustmentController::class);
     Route::resource('customer-point-adjustment', CustomerPointAdjustmentController::class);
 
-    Route::resource('product-in-adjustment', ProductInAdjustmentsController::class);
-    Route::get('product-in-adjustment-index', 'ProductInAdjustmentsController@index');
-    Route::get('product-in-adjustment-create', 'ProductInAdjustmentsController@create');
-    Route::post('product-in-adjustment-store', 'ProductInAdjustmentsController@store')->name('add_product_adjustment');
-    Route::delete('product-in-adjustment-delete/{id}', 'ProductInAdjustmentsController@delete')->name('delete_product_adjustment');
-    Route::get('product-in-adjustment/get-details/{id}', 'ProductInAdjustmentsController@getDetails');
+    Route::resource('products-in-adjustment', ProductInAdjustmentsController::class);
+    Route::get('products-in-adjustment-index', 'ProductInAdjustmentsController@index');
+    Route::get('products-in-adjustment-create', 'ProductInAdjustmentsController@create');
+    Route::post('products-in-adjustment-store', 'ProductInAdjustmentsController@store')->name('add_product_adjustment');
+    Route::delete('products-in-adjustment-delete/{id}', 'ProductInAdjustmentsController@delete')->name('delete_product_adjustment');
+    Route::get('products-in-adjustment/get-details/{id}', 'ProductInAdjustmentsController@getDetails');
 
     Route::get('report/get-profit-loss', 'ReportController@getProfitLoss');
     Route::get('report/daily-sales-summary', 'ReportController@getDailySalesSummary');
@@ -354,10 +354,10 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('report/get-expected-payable-report', 'ReportController@getExpectedPayableReport');
     Route::get('report/get-summary-report', 'ReportController@getSummaryReport');
     Route::get('report/get-best-seller-report', 'ReportController@getBestSellerReport');
-    Route::get('report/print-product-report-table', 'ReportController@printProductReportTable');
+    Route::get('report/print-products-report-table', 'ReportController@printProductReportTable');
 
-    Route::get('report/view-product-details/{id}', 'ReportController@viewProductDetails');
-    Route::get('report/get-product-report', 'ReportController@getProductReport');
+    Route::get('report/view-products-details/{id}', 'ReportController@viewProductDetails');
+    Route::get('report/get-products-report', 'ReportController@getProductReport');
     Route::get('report/get-category-purchases', 'ReportController@getCategoryPurchases');
     Route::get('report/get-daily-sale-report', 'ReportController@getDailySaleReport');
     Route::get('report/get-monthly-sale-report', 'ReportController@getMonthlySaleReport');
@@ -368,7 +368,7 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::get('report/get-purchase-report', 'ReportController@getPurchaseReport');
     Route::get('report/get-store-report', 'ReportController@getStoreReport');
     Route::get('report/get-store-stock-chart', 'ReportController@getStoreStockChart');
-    Route::get('report/get-product-quantity-alert-report', 'ReportController@getProductQuantityAlertReport');
+    Route::get('report/get-products-quantity-alert-report', 'ReportController@getProductQuantityAlertReport');
     Route::get('report/get-user-report', 'ReportController@getAdminReport');
     // +++++++++++ getCustomerReport +++++++++++
     Route::get('report/get-customer-report', 'ReportController@getCustomerReport');
@@ -442,8 +442,8 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::post('manufacturing-s/update', 'ManufacturingController@updates');
 });
 
-Route::get('manufacturing/add-product-row', 'ManufacturingController@addProductRow')->name("manufacturing.add_product_row");
-Route::get('manufacturing/add-product-to-stock', 'ManufacturingController@add_product_stock')->name("manufacturing.add_product_stock");
+Route::get('manufacturing/add-products-row', 'ManufacturingController@addProductRow')->name("manufacturing.add_product_row");
+Route::get('manufacturing/add-products-to-stock', 'ManufacturingController@add_product_stock')->name("manufacturing.add_product_stock");
 
 
 Route::get('contact-us', 'ContactUsController@getContactUs');

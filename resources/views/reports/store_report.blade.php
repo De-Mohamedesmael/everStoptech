@@ -86,7 +86,7 @@
                                         <th>@lang('lang.date')</th>
                                         <th>@lang('lang.reference_no')</th>
                                         <th>@lang('lang.customer')</th>
-                                        <th>@lang('lang.product')</th>
+                                        <th>@lang('lang.products')</th>
                                         <th class="sum">@lang('lang.grand_total')</th>
                                         <th class="sum">@lang('lang.paid')</th>
                                         <th class="sum">@lang('lang.due')</th>
@@ -216,7 +216,7 @@
                                         <th>@lang('lang.date')</th>
                                         <th>@lang('lang.reference_no')</th>
                                         <th>@lang('lang.customer')</th>
-                                        <th>@lang('lang.product')</th>
+                                        <th>@lang('lang.products')</th>
                                         <th class="sum">@lang('lang.grand_total')</th>
                                         <th class="sum">@lang('lang.paid')</th>
                                         <th class="sum">@lang('lang.due')</th>
@@ -319,7 +319,7 @@
                                         <th>@lang('lang.date')</th>
                                         <th>@lang('lang.reference_no')</th>
                                         <th>@lang('lang.customer')</th>
-                                        <th>@lang('lang.product')</th>
+                                        <th>@lang('lang.products')</th>
                                         <th class="sum">@lang('lang.grand_total')</th>
                                         <th class="sum">@lang('lang.paid')</th>
                                         <th class="sum">@lang('lang.due')</th>
@@ -424,7 +424,7 @@
                                         <th>@lang('lang.date')</th>
                                         <th>@lang('lang.reference_no')</th>
                                         <th>@lang('lang.customer')</th>
-                                        <th>@lang('lang.product')</th>
+                                        <th>@lang('lang.products')</th>
                                         <th class="sum">@lang('lang.grand_total')</th>
                                         <th class="sum">@lang('lang.paid')</th>
                                         <th class="sum">@lang('lang.due')</th>

@@ -83,7 +83,7 @@
                                             @lang('lang.raw_material')</td>
                                         <td
                                             style="width: 20%;font-weight: 500;font-size: 0.8rem !important;text-align: center">
-                                            @lang('lang.products')</td>
+                                            @lang('lang.products_')</td>
                                         <td
                                             style="width: 20%;font-weight: 500;font-size: 0.8rem !important;text-align: center">
                                             @lang('lang.quantity')</td>

@@ -1,7 +1,6 @@
 @extends('back-end.layouts.app')
 @section('title', __('lang.employee'))
 @section('styles')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/stock.css') }}">
     <style>
         .dropdown-menu.edit-options li a, .dropdown-menu.edit-options li .btn-link {
             color: var(--tertiary-color);
@@ -309,9 +308,7 @@
                     );
                 },
             });
-            $(document).on('change', '.filter', function() {
-                employee_table.ajax.reload();
-            });
+
         })
     </script>
 @endsection

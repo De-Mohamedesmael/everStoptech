@@ -38,7 +38,7 @@
         <p style="margin:0px"><i class="fa fa-exclamation-triangle " style="color: rgb(255, 187, 60)"></i>
             @lang('lang.expiry_alert')</p>
         <br>
-        <span class="text-muted">@lang('lang.product'):
+        <span class="text-muted">@lang('lang.products'):
             {{$notification->product->name}} ({{$notification->product->sku}}) @lang('lang.will_be_exired_in')
             {{$notification->days}} @lang('lang.days')</span>
         <span class="text-muted">@lang('lang.in_stock'):
@@ -55,7 +55,7 @@
         <p style="margin:0px"><i class="fa fa-exclamation-triangle " style="color: rgb(255, 19, 19)"></i>
             @lang('lang.expired')</p>
         <br>
-        <span class="text-muted">@lang('lang.product'):
+        <span class="text-muted">@lang('lang.products'):
             {{$notification->product->name}} ({{$notification->product->sku}})
             {{strtolower(__('lang.expired'))}} {{$notification->days}} @lang('lang.days_ago')</span>
         <span class="text-muted">@lang('lang.expired_quantity'):

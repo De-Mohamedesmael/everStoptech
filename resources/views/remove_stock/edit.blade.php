@@ -47,7 +47,7 @@
                                     <thead>
                                         <tr>
                                             <th>@lang( 'lang.image' )</th>
-                                            <th>@lang( 'lang.products' )</th>
+                                            <th>@lang( 'lang.products_' )</th>
                                             <th>@lang( 'lang.sku' )</th>
                                             <th>@lang( 'lang.class' )</th>
                                             <th>@lang( 'lang.category' )</th>

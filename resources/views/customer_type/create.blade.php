@@ -85,7 +85,7 @@
             var row_id = parseInt($('#row_id_point').val()) + 1;
             $.ajax({
                 method: 'get',
-                url: '/customer-type/get-product-point-row?row_id=' + row_id,
+                url: '/customer-type/get-products-point-row?row_id=' + row_id,
                 data: {},
                 contentType: 'html',
                 success: function(result) {

@@ -19,8 +19,6 @@ class CreateTransactionSellLinesTable extends Migration
             $table->foreign('transaction_id')->references('id')->on('transactions')->onDelete('cascade');
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
-            $table->unsignedBigInteger('variation_id');
-            $table->foreign('variation_id')->references('id')->on('variations')->onDelete('cascade');
             $table->decimal('quantity', 15, 4);
             $table->decimal('quantity_returned', 15, 4)->default(0);
             $table->decimal('purchase_price', 15, 4);

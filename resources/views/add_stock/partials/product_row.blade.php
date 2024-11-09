@@ -22,7 +22,7 @@
     @endphp
     <tr class="product_row">
         <td class="row_number"></td>
-        <td><img src="@if (!empty($product->getFirstMediaUrl('product'))) {{ $product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+        <td><img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                 alt="photo" width="50" height="50"></td>
         <td>
             <h6 style="width: 100%;height: 100%;" class="d-flex justify-content-center align-items-center">
@@ -90,7 +90,7 @@
                     class="form-control modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif selling_price selling_price_{{ $i }}"
                     name="add_stock_lines[{{ $i }}][selling_price]" required index_id="{{ $i }}"
                     value="@if (isset($sell_price)) {{ @num_format($sell_price) }}@else @if ($product->selling_price_depends == null) {{ @num_format($product->sell_price) }} @else {{ @num_format($product->selling_price_depends) }} @endif @endif">
-                {{--        <input class="final_cost" type="hidden" name="add_stock_lines[{{$i}}][final_cost]" value="@if (isset($product->default_purchase_price)){{@num_format($product->default_purchase_price / $exchange_rate)}}@else{{0}}@endif"> --}}
+                {{--        <input class="final_cost" type="hidden" name="add_stock_lines[{{$i}}][final_cost]" value="@if (isset($products->default_purchase_price)){{@num_format($products->default_purchase_price / $exchange_rate)}}@else{{0}}@endif"> --}}
             </div>
         </td>
         <td>

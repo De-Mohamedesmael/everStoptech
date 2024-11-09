@@ -63,7 +63,7 @@ class RawMaterialController extends Controller
     public function index(Request $request)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         if (request()->ajax()) {
@@ -119,7 +119,7 @@ class RawMaterialController extends Controller
 
             return DataTables::of($products)
                 ->addColumn('image', function ($row) {
-                    $image = $row->getFirstMediaUrl('product');
+                    $image = $row->getFirstMediaUrl('products');
                     if (!empty($image)) {
                         return '<img src="' . $image . '" height="50px" width="50px">';
                     } else {
@@ -253,7 +253,7 @@ class RawMaterialController extends Controller
     public function create()
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
@@ -293,7 +293,7 @@ class RawMaterialController extends Controller
     public function store(Request $request)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $this->validate(
             $request,
@@ -307,8 +307,8 @@ class RawMaterialController extends Controller
                 'brand_id' => $request->brand_id,
                 'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
                 'multiple_units' => $request->multiple_units,
-                'multiple_colors' => $request->multiple_colors ?? [],
-                'multiple_sizes' => $request->multiple_sizes ?? [],
+                'color_id' => $request->color_id ?? [],
+                'size_id' => $request->size_id ?? [],
                 'multiple_grades' => $request->multiple_grades ?? [],
                 'is_service' => !empty($request->is_service) ? 1 : 0,
                 'product_details' => $request->product_details,
@@ -334,7 +334,7 @@ class RawMaterialController extends Controller
 
             if ($request->images) {
                 foreach ($request->images as $image) {
-                    $raw_material->addMedia($image)->toMediaCollection('product');
+                    $raw_material->addMedia($image)->toMediaCollection('products');
                 }
             }
             if (!empty($request->supplier_id)) {
@@ -369,7 +369,7 @@ class RawMaterialController extends Controller
     public function show($id)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $product = Product::find($id);
@@ -391,7 +391,7 @@ class RawMaterialController extends Controller
     public function edit($id)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $raw_material = Product::findOrFail($id);
 
@@ -435,7 +435,7 @@ class RawMaterialController extends Controller
     public function update(Request $request, $id)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $this->validate(
             $request,
@@ -449,8 +449,8 @@ class RawMaterialController extends Controller
                 'brand_id' => $request->brand_id,
                 'sku' => !empty($request->sku) ? $request->sku : $this->productUtil->generateSku($request->name),
                 'multiple_units' => $request->multiple_units,
-                'multiple_colors' => $request->multiple_colors ?? [],
-                'multiple_sizes' => $request->multiple_sizes ?? [],
+                'color_id' => $request->color_id ?? [],
+                'size_id' => $request->size_id ?? [],
                 'multiple_grades' => $request->multiple_grades ?? [],
                 'is_service' => !empty($request->is_service) ? 1 : 0,
                 'product_details' => $request->product_details,
@@ -475,9 +475,9 @@ class RawMaterialController extends Controller
 
 
             if ($request->images) {
-                $raw_material->clearMediaCollection('product');
+                $raw_material->clearMediaCollection('products');
                 foreach ($request->images as $image) {
-                    $raw_material->addMedia($image)->toMediaCollection('product');
+                    $raw_material->addMedia($image)->toMediaCollection('products');
                 }
             }
 

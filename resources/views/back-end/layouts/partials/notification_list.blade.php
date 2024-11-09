@@ -39,9 +39,9 @@
 </style>
 @php
     // $new_notifications = App\Models\Notification::where('id', Auth::user()->id)->whereDate('created_at',
-    // date('Y-m-d'))->orderBy('created_at', 'desc')->with(['created_by_user', 'product', 'transaction'])->limit(2)->get();
+    // date('Y-m-d'))->orderBy('created_at', 'desc')->with(['created_by_user', 'products', 'transaction'])->limit(2)->get();
     // $new_count = $new_notifications->where('is_seen', 0)->count();
-    // $earlier_notifications = App\Models\Notification::where('id', Auth::user()->id)->whereDate('created_at', '<', date('Y-m-d'))->orderBy('created_at', 'desc')->with(['created_by_user', 'product', 'transaction'])->limit(2)->get();
+    // $earlier_notifications = App\Models\Notification::where('id', Auth::user()->id)->whereDate('created_at', '<', date('Y-m-d'))->orderBy('created_at', 'desc')->with(['created_by_user', 'products', 'transaction'])->limit(2)->get();
 @endphp
 {{-- +++++++++++++++++ New (Unread) Notification +++++++++++++++++ --}}
 <ul class="m-0 pr-2 pl-0 mt-1">

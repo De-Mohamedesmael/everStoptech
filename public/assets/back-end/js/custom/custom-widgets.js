@@ -4,7 +4,7 @@
 ---------------------------------
 */
 "use strict";
-$(document).ready(function() {    
+$(document).ready(function() {
     var navigation_performance = document.querySelector('.js-switch-performance');
     var switchery = new Switchery(navigation_performance, { color: '#6e81dc', size: 'small' });
     /* -----  Chartjs - Global Style  ----- */
@@ -24,7 +24,7 @@ $(document).ready(function() {
     Chart.defaults.global.tooltips.yPadding = 10;
     Chart.defaults.global.tooltips.titleMarginBottom = 10;
     Chart.defaults.global.tooltips.bodySpacing = 8;
-    Chart.defaults.global.tooltips.cornerRadius = 5;    
+    Chart.defaults.global.tooltips.cornerRadius = 5;
     Chart.defaults.global.legend.labels.boxWidth = 15;
     Chart.defaults.global.legend.labels.fontSize = 15;
     Chart.defaults.global.legend.labels.padding = 16;
@@ -55,7 +55,7 @@ $(document).ready(function() {
             elements: {
                 point: {
                     radius: 0,
-                  }                   
+                  }
             },
             plugins: {
                 filler: {
@@ -66,12 +66,12 @@ $(document).ready(function() {
                 display: false
             },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                     display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -114,7 +114,7 @@ $(document).ready(function() {
                 },
                 scales: {
                     xAxes: [{
-                        display: false,       
+                        display: false,
                         gridLines: {
                             color: '#dcdde1',
                             lineWidth: 1,
@@ -274,12 +274,12 @@ $(document).ready(function() {
                 display: false
             },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                     display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -342,12 +342,12 @@ $(document).ready(function() {
                 display: false
             },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                     display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -367,7 +367,7 @@ $(document).ready(function() {
         }
     });
     /* --- Chartjs - Product Chart --- */
-    var productID = document.getElementById("chartjs-product-chart").getContext('2d');
+    var productID = document.getElementById("chartjs-products-chart").getContext('2d');
     var gradient3 = productID.createLinearGradient(0, 0, 0, 90);
     gradient3.addColorStop(0, 'rgba(95, 194, 126,0.5)');
     gradient3.addColorStop(0.75, 'rgba(255,255,255,0.05)');
@@ -410,12 +410,12 @@ $(document).ready(function() {
                 display: false
             },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                     display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,
@@ -478,12 +478,12 @@ $(document).ready(function() {
                 display: false
             },
             scales: {
-                xAxes: [{  
+                xAxes: [{
                     display: false,
                     ticks: {
                         autoSkip: false,
                         maxRotation: 0
-                    },     
+                    },
                     gridLines: {
                         color: '#dcdde1',
                         lineWidth: 1,

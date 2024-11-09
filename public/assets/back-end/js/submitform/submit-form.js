@@ -27,7 +27,7 @@ $(document).on("submit", "form#quick_add_brand_form", function (e) {
                 var brand_id = result.id;
                 $.ajax({
                     method: "get",
-                    url: "/brands/get-dropdown",
+                    url: "/brand/get-dropdown",
                     data: {},
                     contactType: "html",
                     success: function (data_html) {
@@ -135,7 +135,7 @@ $(document).on("click", ".createStoreModal", function (e) {
 });
 
 
-// ++++++++++++++++++ ajax : products module : quick_add_store ++++++++++++++++++
+// ++++++++++++++++++ ajax : products_ module : quick_add_store ++++++++++++++++++
 $(document).on("submit", "form#quick_add_store_form", function (e) {
     e.preventDefault();
     var data = $(this).serialize();
@@ -349,7 +349,7 @@ $(document).on("submit", "#create-category-form", function (e) {
 });
 //
 $(document).ready(function () {
-    $("#create-product-tax-btn").click(function (e) {
+    $("#create-products-tax-btn").click(function (e) {
         e.preventDefault();
         setTimeout(() => {
             $("#quick_add_product_tax_form").submit();

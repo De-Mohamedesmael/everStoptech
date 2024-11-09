@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('lang.product'))
+@section('title', __('lang.products'))
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/main.css') }}">
 @endsection
@@ -446,7 +446,7 @@
                     [2, 'asc']
                 ],
                 "ajax": {
-                    "url": "/product-in-adjustment-create",
+                    "url": "/products-in-adjustment-create",
                     "data": function(d) {
                         d.product_id = $('#product_id').val();
                         d.product_class_id = $('#product_class_id').val();

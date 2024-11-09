@@ -11,7 +11,7 @@
                 <thead>
                     <tr>
                         <th style="width: 7%" class="col-sm-8">@lang( 'lang.image' )</th>
-                        <th style="width: 10%" class="col-sm-8">@lang( 'lang.products' )</th>
+                        <th style="width: 10%" class="col-sm-8">@lang( 'lang.products_' )</th>
                         <th style="width: 20%" class="col-sm-4">@lang( 'lang.sku' )</th>
                         <th style="width: 20%" class="col-sm-4">@lang( 'lang.quantity' )</th>
                         <th style="width: 20%" class="col-sm-4">@lang( 'lang.purchase_price' )</th>
@@ -32,4 +32,3 @@
     </div>
   </div>
 
-  

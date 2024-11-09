@@ -93,7 +93,7 @@
                                         <h4>{{ number_format(App\Models\Color::count()) }} @lang('lang.color')</h4>
                                         <h4>{{ number_format(App\Models\Size::count()) }} @lang('lang.size')</h4>
                                         <h4>{{ number_format(App\Models\Grade::count()) }} @lang('lang.grade')</h4>
-                                        <h4>{{ number_format(DB::table('media')->where('collection_name', 'product')->count()) }}
+                                        <h4>{{ number_format(DB::table('media')->where('collection_name', 'products')->count()) }}
                                             @lang('lang.image')</h4>
                                     </div>
                                 </div>
@@ -232,7 +232,7 @@
                                                                                     @include(
                                                                                         'product_classification_tree.partials.product_inner_part',
                                                                                         [
-                                                                                            'product' => $product,
+                                                                                            'products' => $product,
                                                                                         ]
                                                                                     )
                                                                                 @endforeach
@@ -364,7 +364,7 @@
                                                         @foreach ($products as $product)
                                                             <div class="row product_row">
                                                                 <div class="col-md-3">
-                                                                    <img src="@if (!empty($product->getFirstMediaUrl('product'))) {{ $product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                                    <img src="@if (!empty($product->getFirstMediaUrl('products'))) {{ $product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                                         alt="photo" width="50" height="50">
                                                                     {{ $product->name }}
                                                                 </div>

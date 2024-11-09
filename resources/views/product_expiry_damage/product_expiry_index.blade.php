@@ -36,8 +36,8 @@
                                 @foreach ($product_expires as $product_expiry)
                                     <tr>
                                         <td>
-                                            @if(!empty($product_expiry->product->getFirstMediaUrl('product')))
-                                              <img src="{{ $product_expiry->product->getFirstMediaUrl('product') }}" height="50px" width="50px">
+                                            @if(!empty($product_expiry->product->getFirstMediaUrl('products')))
+                                              <img src="{{ $product_expiry->product->getFirstMediaUrl('products') }}" height="50px" width="50px">
                                             @else
                                              <img src="{{ asset('/uploads/' . session('logo')) }}" height="50px" width="50px">
                                             @endif

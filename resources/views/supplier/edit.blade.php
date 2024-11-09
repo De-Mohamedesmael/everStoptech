@@ -93,14 +93,14 @@
                                     </div>
 
                                     <div class="col-md-3 px-5 mb-2">
-                                        {!! Form::label('products', __('lang.products'), [
+                                        {!! Form::label('products_', __('lang.products_'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                         ]) !!}
-                                        {!! Form::select('products[]', $products, $supplier->supplier_products->pluck('product_id'), [
+                                        {!! Form::select('products_[]', $products, $supplier->supplier_products->pluck('product_id'), [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'placeholder' => __('lang.please_select'),
-                                            'id' => 'products',
+                                            'id' => 'products_',
                                             'multiple',
                                         ]) !!}
                                     </div>

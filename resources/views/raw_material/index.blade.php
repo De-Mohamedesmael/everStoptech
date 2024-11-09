@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 {!! Form::label(
                                     'variation_id',
-                                    __('lang.product') .
+                                    __('lang.products') .
                                         ':
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         (' .
                                         __('lang.that_raw_materials_are_used_for') .
@@ -173,7 +173,7 @@
                             <button type="button" value="11"
                                 class="select_product_button column-toggle">@lang('lang.edited_by')</button>
                             <button type="button" value="12"
-                                class="select_product_button column-toggle">@lang('lang.products')</button>
+                                class="select_product_button column-toggle">@lang('lang.products_')</button>
                             <button type="button" value="13"
                                 class="select_product_button column-toggle">@lang('lang.supplier')</button>
                             @can('product_module.purchase_price.view')
@@ -211,7 +211,7 @@
                                             <th>@lang('lang.expiry_date')</th>
                                             <th>@lang('lang.created_by')</th>
                                             <th>@lang('lang.edited_by')</th>
-                                            <th>@lang('lang.products')</th>
+                                            <th>@lang('lang.products_')</th>
                                             <th>@lang('lang.supplier')</th>
                                             @can('product_module.purchase_price.view')
                                                 <th>@lang('lang.purchase_price')</th>

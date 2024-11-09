@@ -28,11 +28,11 @@ $Variation=\App\Models\Variation::where('id',$product->variation_id)->first();
                         'discount_end_date',
                     )
                     ->get();
-                       
+
 @endphp
     <tr class="product_row">
         <td style="width: 20%">
-            
+
 
             @if ($product->variation->name != 'Default')
                 <b>{{ $product->variation->name }}</b>
@@ -69,7 +69,7 @@ $Variation=\App\Models\Variation::where('id',$product->variation_id)->first();
             <!-- value is percentage or fixed value from coupon data -->
             <input type="hidden" name="transaction_sell_line[{{ $loop->index }}][coupon_discount_amount]"
                 class="coupon_discount_amount" value="{{ $product->coupon_discount_amount }}">
-            <!-- after calculation actual discounted amount for row product row -->
+            <!-- after calculation actual discounted amount for row products row -->
         </td>
         <td style="width: 15%">
             <div class="input-group">
@@ -94,9 +94,9 @@ $Variation=\App\Models\Variation::where('id',$product->variation_id)->first();
                 name="transaction_sell_line[{{ $loop->index }}][sell_price]" required
                 value="@if (isset($product->sell_price)) {{ @num_format($product->sell_price) }}@else{{ 0 }} @endif">
         </td>
-      
 
-        
+
+
         <td style="width: @if(session('system_mode')  != 'restaurant') 11% @else 15% @endif">
 
             <div class="input-group">

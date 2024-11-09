@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', __('lang.product'))
+@section('title', __('lang.products'))
 
 @section('content')
     <div class="container-fluid">
         @if (empty($page))
-            @can('product_module.product.create_and_edit')
+            @can('product_module.products.create_and_edit')
                 <a style="color: white" href="{{ action('ProductController@create') }}" class="btn btn-info"><i
                         class="dripicons-plus"></i>
                     @lang('lang.add_product')</a>
@@ -362,7 +362,7 @@
                 $(obj).val(i)
             });
             product_table = $('#product_table').DataTable({
-                
+
                 lengthChange: true,
                 paging: true,
                 info: false,
@@ -420,7 +420,7 @@
                         data: 'variation_name',
                         name: 'products.name'
                     },
-             
+
                     {
                         data: 'sub_sku',
                         name: 'variations.sub_sku'

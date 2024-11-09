@@ -11,13 +11,13 @@
             'required',
         ]) !!}
         </td>
-        {{-- <td colspan="1"><img src="@if (!empty($product->getFirstMediaUrl('product'))){{$product->getFirstMediaUrl('product')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
+        {{-- <td colspan="1"><img src="@if (!empty($products->getFirstMediaUrl('products'))){{$products->getFirstMediaUrl('products')}}@else{{asset('/uploads/'.session('logo'))}}@endif"
         alt="photo" width="50" height="50"></td> --}}
         {{-- <td> --}}
-        {{-- @if ($product->variation_name != 'Default')
-        <b>{{$product->variation_name}} {{$product->sub_sku}}</b>
+        {{-- @if ($products->variation_name != 'Default')
+        <b>{{$products->variation_name}} {{$products->sub_sku}}</b>
         @else
-        {{$product->product_name}}
+        {{$products->product_name}}
         @endif --}}
 
         {{-- </td> --}}

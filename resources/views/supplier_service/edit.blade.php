@@ -76,7 +76,7 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 7%" class="col-sm-8">@lang( 'lang.image' )</th>
-                                                <th style="width: 25%" class="col-sm-8">@lang( 'lang.products' )</th>
+                                                <th style="width: 25%" class="col-sm-8">@lang( 'lang.products_' )</th>
                                                 <th style="width: 25%" class="col-sm-4">@lang( 'lang.sku' )</th>
                                                 <th style="width: 25%" class="col-sm-4">@lang( 'lang.quantity' )</th>
                                                 <th style="width: 25%" class="col-sm-4">@lang( 'lang.unit' )</th>
@@ -90,7 +90,7 @@
                                         <tbody>
                                             @foreach ($add_stock->add_stock_lines as $product)
                                                 <tr>
-                                                    <td><img src="@if (!empty($product->product->getFirstMediaUrl('product'))) {{ $product->product->getFirstMediaUrl('product') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
+                                                    <td><img src="@if (!empty($product->product->getFirstMediaUrl('products'))) {{ $product->product->getFirstMediaUrl('products') }}@else{{ asset('/uploads/' . session('logo')) }} @endif"
                                                             alt="photo" width="50" height="50"></td>
                                                     <td>
                                                         {{ $product->product->name }}
@@ -377,16 +377,16 @@
                 });
             }
         });
-        $(document).on("click", '#submit-btn-add-product', function(e) {
+        $(document).on("click", '#submit-btn-add-products', function(e) {
             e.preventDefault();
             console.log('click');
             var sku = $('#sku').val();
-            if ($("#product-form-quick-add").valid()) {
+            if ($("#products-form-quick-add").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
                     url: "/product",
-                    data: $("#product-form-quick-add").serialize(),
+                    data: $("#products-form-quick-add").serialize(),
                     success: function(response) {
                         if (response.success) {
                             swal("Success", response.msg, "success");;

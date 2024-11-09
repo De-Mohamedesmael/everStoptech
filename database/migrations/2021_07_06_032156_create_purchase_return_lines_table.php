@@ -17,7 +17,6 @@ class CreatePurchaseReturnLinesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('transaction_id');
             $table->unsignedBigInteger('product_id');
-            $table->unsignedBigInteger('variation_id');
             $table->decimal('quantity', 15, 4);
             $table->decimal('purchase_price', 15, 4);
             $table->decimal('sub_total', 15, 4);

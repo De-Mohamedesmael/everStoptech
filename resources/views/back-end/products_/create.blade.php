@@ -1,0 +1,174 @@
+@extends('layouts.app')
+@section('title', __('lang.add_products'))
+@push('css')
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/products.css') }}">
+@endpush
+
+
+@section('page_title')
+    @lang('lang.add_products')
+@endsection
+
+@section('breadcrumbs')
+    @parent
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif "><a
+            style="text-decoration: none;color: #596fd7" href="{{ route('products.index') }}">/
+            @lang('lang.products_')</a></li>
+    <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif  active" aria-current="page">
+        @lang('lang.add_products')</li>
+@endsection
+
+@section('button')
+    <div class="widgetbar">
+        <a href="{{ route('products.index') }}" class="btn btn-primary">
+            @lang('lang.products_')
+        </a>
+    </div>
+@endsection
+
+@section('content')
+    <div class="animate-in-page">
+        <!-- Start row -->
+        <div class="row d-flex justify-content-center">
+
+            <!-- Start col -->
+            <div class="col-lg-12">
+                <div class="card pt-0 mb-0 p-2">
+                    <div class="row ">
+
+                        <div class="col-md-3 animate__animated animate__bounceInRight" style="animation-delay: 1.1s">
+                            <div class="i-checks">
+                                <input id="clear_all_input_form" name="clear_all_input_form" type="checkbox"
+                                    @if (isset($clear_all_input_form) && $clear_all_input_form == '1') checked @endif class="">
+                                <label for="clear_all_input_form" style="font-size: 0.75rem">
+                                    <strong>
+                                        @lang('lang.clear_all_input_form')
+                                    </strong>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    {!! Form::open([
+                        'route' => 'products.store',
+                        'method' => 'post',
+                        'enctype' => 'multipart/form-data',
+                        'id' => 'add_product_form1',
+                    ]) !!}
+                    <div class="row">
+                        {{-- ++++++++++++++++ stores ++++++++++++++++ --}}
+                        <div class="col-12 d-flex @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
+                            style="position: relative;z-index: 2;">
+
+                            <div class=" mb-2 p-0">
+                                {!! Form::label('store', __('lang.store'), [
+                                    'class' => app()->isLocale('ar') ? 'd-block text-end  mx-2 mb-0' : 'mx-2 mb-0',
+                                ]) !!}
+                                <div class="d-flex justify-content-center align-items-center"
+                                    style="background-color: #dedede;
+                                                         border: none;
+                                        border-radius: 16px;
+                                        color: #373737;
+                                        box-shadow: 0 8px 6px -5px #bbb;
+                                        width: 100%;
+                                        height: 30px;
+                                        flex-wrap: nowrap;">
+                                    <select id="store_id" name="store_id[]" id = 'store_id' class="form-control select2"
+                                        multiple="multiple">
+                                        <option value="">@lang('lang.please_select')</option>
+                                        @foreach ($stores as $store)
+                                            <option value="{{ $store->id }}">
+                                                {{ $store->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    <button type="button"
+                                        class=" add-button d-flex justify-content-center align-items-center"
+                                        id="add_new_store" data-toggle="modal" data-target="#createStoreModal">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+
+                                @error('store_id')
+                                    <label class="text-danger validation-error error-msg">{{ $message }}</label>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 product_raws">
+                            @for ($i = 0; $i < 3; $i++)
+                                @include('products.partials.product_row', ['key' => $i])
+                            @endfor
+                            <input type="hidden" id="raw_product_index" value="2" />
+                        </div>
+                        <div class="col-md-12 mb-3 d-flex justify-content-end">
+                            <button class="btn btn btn-primary add_product_row" type="button">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                        </div>
+                        <div class="col-md-6">
+                            <button type="submit" class="btn btn-primary">@lang('lang.save')</button>
+                        </div>
+                        <div class="col-md-6">
+                            <input type="hidden" value="0" class="add_stock_val" name="add_stock_val" />
+                            <button type="submit" class="btn btn-primary add_stock">@lang('lang.add-stock')</button>
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="view_modal no-print"></div>
+    @include('products.partials.add_store_modal')
+    @include('store.create', ['quick_add' => $quick_add])
+    @include('units.create', ['quick_add' => $quick_add])
+    @include('brands.create', ['quick_add' => $quick_add])
+    @include('categories.create_modal', ['quick_add' => 1])
+    @include('products-tax.create', ['quick_add' => 1])
+@endsection
+@push('javascripts')
+    <link rel="stylesheet" href="//fastly.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
+    <script src="{{ asset('js/products/products.js') }}"></script>
+    <script src="{{ asset('css/crop/crop-multi-image.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\ProductRequest', '#add_product_form1') !!}
+    <script>
+        $(document).ready(function() {
+            // Counter to keep track of the number of rows
+            var rowCount = 1;
+
+            // Event handler for the Add Product button
+            $('#addProductRow').click(function() {
+                // Clone the products section and update IDs and names
+                var clonedSection = $('#products-section').clone();
+
+                // Update IDs and names to make them unique
+                clonedSection.find('[id]').each(function() {
+                    var newId = $(this).attr('id') + '_' + rowCount;
+                    $(this).attr('id', newId);
+                });
+
+                clonedSection.find('[name]').each(function() {
+                    var newName = $(this).attr('name') + '[]';
+                    $(this).attr('name', newName);
+                });
+
+                // Append the cloned section to the page
+                $('#products-section').after(clonedSection);
+
+                // Increment the row count
+                rowCount++;
+            });
+        });
+        $(document).on('click', '.add_stock', function(e) {
+            e.preventDefault();
+            var add_stock_val = parseInt($('.add_stock_val').val());
+            $('.add_stock_val').val(1);
+            $(document).off('click', '.add_stock');
+            $('.add_stock').submit();
+        });
+    </script>
+@endpush

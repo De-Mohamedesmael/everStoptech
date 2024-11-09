@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('lang.product'))
+@section('title', __('lang.products'))
 
 @section('style')
     <link rel="stylesheet" type="text/css" href="{{ url('front/css/supplier.css') }}">
@@ -19,7 +19,7 @@
 
                     {!! Form::open([
                         'url' => action('ProductController@store'),
-                        'id' => 'product-form',
+                        'id' => 'products-form',
                         'method' => 'POST',
                         'class' => '',
                         'enctype' => 'multipart/form-data',
@@ -271,7 +271,7 @@
             });
         }
     </script>
-    <script src="{{ asset('js/product.js') }}"></script>
+    <script src="{{ asset('js/products.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function() {
             $('#discount_customer_types').selectpicker('selectAll');

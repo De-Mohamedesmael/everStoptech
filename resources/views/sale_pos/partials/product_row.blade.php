@@ -48,8 +48,8 @@
                 </small> --}}
 
                 {{-- <small>
-                    @if ($product->batch_number)
-                        <br>{{ $product->batch_number }}
+                    @if ($products->batch_number)
+                        <br>{{ $products->batch_number }}
                     @endif
                 </small> --}}
 
@@ -92,7 +92,7 @@
                 <!-- value is percentage or fixed value from coupon data -->
                 <input type="hidden" name="transaction_sell_line[{{ $loop->index + $index }}][coupon_discount_amount]"
                     class="coupon_discount_amount" value="0">
-                <!-- after calculation actual discounted amount for row product row -->
+                <!-- after calculation actual discounted amount for row products row -->
                 <input type="hidden"
                     name="transaction_sell_line[{{ $loop->index + $index }}][promotion_purchase_condition]"
                     class="promotion_purchase_condition"
@@ -158,9 +158,9 @@
                     <input type="number" class="form-control quantity  qty numkey input-number" step="any"
                         autocomplete="off" style="width: 50px;"
                         @isset($check_unit) @if ($check_unit->name == 'قطعه' || $check_unit->name == 'Piece') oninput="this.value = Math.round(this.value);" @endif @endisset
-                        id="quantity" @if (!$product->is_service) max="{{ $product->qty_available }}" @endif
+                        id="quantity" @if (!$products->is_service) max="{{ $products->qty_available }}" @endif
                         name="transaction_sell_line[{{ $loop->index + $index }}][quantity]" required
-                        value="@if (!empty($edit_quantity)) {{ $edit_quantity }}@else @if (isset($product->quantity)){{ preg_match('/\.\d*[1-9]+/', (string) $product->quantity) ? $product->quantity : @num_format($product->quantity) }}@else{{ 1 }} @endif @endif"> --}}
+                        value="@if (!empty($edit_quantity)) {{ $edit_quantity }}@else @if (isset($products->quantity)){{ preg_match('/\.\d*[1-9]+/', (string) $products->quantity) ? $products->quantity : @num_format($products->quantity) }}@else{{ 1 }} @endif @endif"> --}}
 
 
                     <span class="input-group-btn">

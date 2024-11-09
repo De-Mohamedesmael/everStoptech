@@ -213,7 +213,7 @@
                                                     <tr>
                                                         <th
                                                             style="width: @if (session('system_mode') != 'restaurant') 17% @else 20% @endif; font-size: 12px !important;">
-                                                            @lang('lang.product')</th>
+                                                            @lang('lang.products')</th>
                                                         <th
                                                             style="width: @if (session('system_mode') != 'restaurant') 17% @else 20% @endif; font-size: 12px !important;">
                                                             @lang('lang.quantity')</th>
@@ -484,7 +484,7 @@
 
                     {!! Form::close() !!}
                 </div>
-                <!-- product list -->
+                <!-- products list -->
                 <div class="@if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket') col-md-5 @else col-md-6 @endif">
                     <!-- navbar-->
                     <header class="header">

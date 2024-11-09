@@ -31,7 +31,7 @@ class CreateExpiryProductNotification extends Command
      *
      * @var string
      */
-    protected $description = 'create expiry notification for products';
+    protected $description = 'create expiry notification for products_';
 
     /**
      * Create a new command instance.

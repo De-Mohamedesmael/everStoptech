@@ -40,7 +40,7 @@
                     @endphp
                     @foreach ($products as $product)
                         @include('product_classification_tree.partials.product_inner_part', [
-                            'product' => $product,
+                            'products' => $product,
                         ])
 
                         @php

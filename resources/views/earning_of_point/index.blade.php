@@ -35,7 +35,7 @@
                                     <th>@lang('lang.name')</th>
                                     <th>@lang('lang.stores')</th>
                                     <th>@lang('lang.customer_types')</th>
-                                    <th>@lang('lang.products')</th>
+                                    <th>@lang('lang.products_')</th>
                                     <th>@lang('lang.points_on_per_amount_sale')</th>
                                     <th>@lang('lang.start_date')</th>
                                     <th>@lang('lang.expiry_date')</th>

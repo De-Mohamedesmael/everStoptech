@@ -89,8 +89,8 @@ class ProductImport implements ToCollection, WithHeadingRow, WithValidation
                 'brand_id' => !empty($brand) ? $brand->id : null,
                 'sku' => $row['sku'] ?? $this->productUtil->generateSku($row['product_name']),
                 'multiple_units' => !empty($unit) ? [(string)$unit->id] : [],
-                'multiple_colors' => !empty($color) ? [(string)$color->id] : [],
-                'multiple_sizes' => !empty($size) ? [(string)$size->id] : [],
+                'color_id' => !empty($color) ? [(string)$color->id] : [],
+                'size_id' => !empty($size) ? [(string)$size->id] : [],
                 'multiple_grades' => !empty($grade) ? [(string)$grade->id] : [],
                 'is_service' => !empty($row['is_service']) ? 1 : 0,
                 'product_details' => $row['product_details'],
@@ -130,7 +130,7 @@ class ProductImport implements ToCollection, WithHeadingRow, WithValidation
         return [
             'product_name' => 'required',
             'class' => 'required',
-            'sku' => 'sometimes|unique:products',
+            'sku' => 'sometimes|unique:products_',
             'sell_price' => 'required|numeric',
             'purchase_price' => 'required|numeric',
         ];

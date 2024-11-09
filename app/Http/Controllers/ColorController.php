@@ -192,7 +192,8 @@ class ColorController extends Controller
 
     public function getDropdown()
     {
-        $color = Color::orderBy('name', 'asc')->pluck('name', 'id');
+        $color = Color::orderBy('name', 'asc')
+            ->pluck('name', 'id');
         $color_dp = $this->commonUtil->createDropdownHtml($color, 'Please Select');
 
         return $color_dp;

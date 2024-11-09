@@ -36,7 +36,7 @@
                                     <th>@lang('lang.start_date')</th>
                                     <th>@lang('lang.expiry_date')</th>
                                     <th>@lang('lang.purchase_condition')</th>
-                                    <th>@lang('lang.products')</th>
+                                    <th>@lang('lang.products_')</th>
                                     <th>@lang('lang.product_condition')</th>
                                     <th>@lang('lang.created_by')</th>
                                     <th>@lang('lang.date_and_time')</th>

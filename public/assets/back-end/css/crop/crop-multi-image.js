@@ -164,7 +164,7 @@ $(".file-input__label").on("click", function() {
                 images.push(container[0].children[i].children[0].src);
                 var newInput = $("<input>")
                     .attr("type", "hidden")
-                    .attr("name", "products[" + key + "][image]")
+                    .attr("name", "products_[" + key + "][image]")
                     .val(container[0].children[i].children[0].src);
                 $("#cropped_images" + key).append(newInput);
             }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', __('lang.add_sale'))
 @section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/product.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url('front/css/products.css') }}">
 @endsection
 @section('content')
     <section class="forms py-0">
@@ -116,7 +116,7 @@
                                         <thead>
                                             <tr>
                                                 <th>#</th>
-                                                <th style="width: 20%">{{ __('lang.product') }}</th>
+                                                <th style="width: 20%">{{ __('lang.products') }}</th>
                                                 <th style="width: 15%">{{ __('lang.quantity') }}</th>
                                                 <th style="width: 10%">{{ __('lang.price') }}</th>
                                                 <th style="width: 10%">{{ __('lang.discount') }}</th>

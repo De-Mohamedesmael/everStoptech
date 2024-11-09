@@ -179,10 +179,10 @@ class SalesPromotionController extends Controller
             $data['discount_type'] = !empty($request->discount_type) ? $request->discount_type : 'fixed';
             $data['actual_sell_price'] = !empty($request->actual_sell_price) ? $this->productUtil->num_uf($request->actual_sell_price) : 0;
             $data['purchase_condition_amount'] = !empty($request->purchase_condition_amount) ? $this->productUtil->num_uf($request->purchase_condition_amount) : 0;
-            $data['product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_variation_id); //product ids to get the discount
-            $data['condition_product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_condition_variation_id); //product ids condition to get the discount
+            $data['product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_variation_id); //products ids to get the discount
+            $data['condition_product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_condition_variation_id); //products ids condition to get the discount
             $data['pct_data'] = $request->product_variation_id ?? [];
-            $data['pci_data'] = $request->product_condition_variation_id ?? []; //product condition items
+            $data['pci_data'] = $request->product_condition_variation_id ?? []; //products condition items
             $data['package_promotion_qty'] = $request->package_promotion_qty ?? []; //package promotion qty condition
             DB::beginTransaction();
 
@@ -342,10 +342,10 @@ class SalesPromotionController extends Controller
             $data['discount_type'] = !empty($request->discount_type) ? $request->discount_type : 'fixed';
             $data['actual_sell_price'] = !empty($request->actual_sell_price) ? $this->productUtil->num_uf($request->actual_sell_price) : 0;
             $data['purchase_condition_amount'] = !empty($request->purchase_condition_amount) ? $this->productUtil->num_uf($request->purchase_condition_amount) : 0;
-            $data['product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_variation_id); //product ids to get the discount
-            $data['condition_product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_condition_variation_id); //product ids condition to get the discount
+            $data['product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_variation_id); //products ids to get the discount
+            $data['condition_product_ids'] = $this->productUtil->extractProductVariationIdsfromProductTree($product_condition_variation_id); //products ids condition to get the discount
             $data['pct_data'] = $request->product_variation_id ?? [];
-            $data['pci_data'] = $request->product_condition_variation_id ?? []; //product condition items
+            $data['pci_data'] = $request->product_condition_variation_id ?? []; //products condition items
             $data['package_promotion_qty'] = $request->package_promotion_qty ?? []; //package promotion qty condition
 
             DB::beginTransaction();
@@ -395,7 +395,7 @@ class SalesPromotionController extends Controller
     }
 
     /**
-     * get product details
+     * get products details
      *
      * @param int $id
      * @return void
@@ -424,7 +424,7 @@ class SalesPromotionController extends Controller
 
     }
     /**
-     * get product details
+     * get products details
      *
      * @param int $id
      * @return void
