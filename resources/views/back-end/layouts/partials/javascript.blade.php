@@ -379,7 +379,7 @@ for (var i = 0; i < dollarCells.length; i++) {
             contentType: "html",
             success: function(result) {
                 if (result.success) {
-                    Swal.fire("Success", response.msg, "success");
+                    Swal.fire("Success", result.msg, "success");
                 }
             },
         });

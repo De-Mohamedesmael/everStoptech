@@ -693,7 +693,7 @@ class ProductController extends Controller
     public function create()
     {
         if (!auth()->user()->can('product_module.products.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
@@ -751,7 +751,7 @@ class ProductController extends Controller
     {
 
         if (!auth()->user()->can('product_module.products.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $this->validate(
             $request,
@@ -872,7 +872,7 @@ class ProductController extends Controller
     public function show($id)
     {
         if (!auth()->user()->can('product_module.products.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $product = Product::find($id);
@@ -906,47 +906,37 @@ class ProductController extends Controller
     public function edit($id)
     {
         if (!auth()->user()->can('product_module.products.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
-        $product = Product::with('variations')->findOrFail($id);
-
-        $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
-        $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
-        $sub_categories = Category::whereNotNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
+        $product = Product::findOrFail($id);
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
-        $units = Unit::where('is_raw_material_unit', 0)->orderBy('name', 'asc')->pluck('name', 'id','base_unit_multiplier');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
         $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
-        $grades = Grade::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes = Tax::where('type', 'product_tax')->orderBy('name', 'asc')->pluck('name', 'id');
         $customers = Customer::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = CustomerType::pluck('name', 'id');
-        $stores  = Store::all();
+        $stores_select  = Store::getDropdown();
 
-        $raw_materials  = Product::where('is_raw_material', 1)->orderBy('name', 'asc')->pluck('name', 'id');
-        $raw_material_units  = Unit::orderBy('name', 'asc')->pluck('name', 'id');
         $suppliers = Supplier::pluck('name', 'id');
-        $units_js=$units->pluck('base_unit_multiplier', 'id');
+        $stores_selected=$product->stores()->pluck( 'store_id')->toarray();
+        $category_id_selected =$product->categories()->pluck( 'categories.id')->toarray();
         return view('back-end.products.edit')->with(compact(
-            'raw_materials',
-            'raw_material_units',
+
             'product',
-            'product_classes',
             'categories',
-            'sub_categories',
+            'stores_select',
+            'stores_selected',
+            'category_id_selected',
             'brands',
-            'units',
             'colors',
             'sizes',
-            'grades',
             'taxes',
             'customers',
             'customer_types',
             'discount_customer_types',
-            'stores',
-            'suppliers',
-            'units_js'
+            'suppliers'
         ));
     }
 
@@ -961,7 +951,7 @@ class ProductController extends Controller
     {
 
         if (!auth()->user()->can('product_module.products.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $this->validate(
@@ -1158,7 +1148,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         if (!auth()->user()->can('product_module.products.delete')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         try {
             DB::beginTransaction();
@@ -1183,38 +1173,6 @@ class ProductController extends Controller
         }
 
         return $output;
-    }
-
-    public function getVariationRow()
-    {
-
-        $row_id = request()->row_id;
-        //'base_unit_multiplier'
-        $units = Unit::orderBy('name', 'asc');
-        $units_js=$units->pluck('base_unit_multiplier', 'id');
-        $units = $units->pluck('name', 'id');
-        $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
-        $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
-        $grades = Grade::orderBy('name', 'asc')->pluck('name', 'id');
-        $stores = Store::all();
-        $name = request()->name;
-        $purchase_price = request()->purchase_price;
-        $sell_price = request()->sell_price;
-        $is_service = request()->is_service;
-
-        return view('back-end.products.partial.variation_row')->with(compact(
-            'units',
-            'colors',
-            'sizes',
-            'grades',
-            'stores',
-            'row_id',
-            'name',
-            'purchase_price',
-            'sell_price',
-            'units_js',
-            'is_service'
-        ));
     }
 
     public function getProducts()
@@ -1499,7 +1457,7 @@ class ProductController extends Controller
     }
     public function multiDeleteRow(Request $request){
         if (!auth()->user()->can('product_module.products.delete')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         try {

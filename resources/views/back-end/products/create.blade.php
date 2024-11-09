@@ -255,7 +255,10 @@
             $('#discount_customer_types').selectpicker('selectAll');
             $('#store_ids').selectpicker('selectAll');
         });
-
+        $(document).on("click", ".remove_row", function () {
+            row_id = $(this).closest("tr").data("row_id");
+            $(this).closest("tr").remove();
+        });
     </script>
 
     <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>

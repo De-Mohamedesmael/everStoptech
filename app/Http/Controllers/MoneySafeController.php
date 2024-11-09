@@ -45,7 +45,7 @@ class MoneySafeController extends Controller
     {
 
         if (!auth()->user()->can('safe_module.money_safe.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $exchange_rate_currencies = $this->commonUtil->getExchangeRateCurrencies(true);
@@ -179,7 +179,7 @@ class MoneySafeController extends Controller
     public function create()
     {
         if (!auth()->user()->can('safe_module.money_safe.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $money_safes = MoneySafe::orderBy('name', 'asc')->pluck('name', 'id');
@@ -204,7 +204,7 @@ class MoneySafeController extends Controller
     public function store(Request $request)
     {
         if (!auth()->user()->can('safe_module.money_safe.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $validator = Validator::make($request->all(), [
@@ -274,7 +274,7 @@ class MoneySafeController extends Controller
     public function edit($id)
     {
         if (!auth()->user()->can('safe_module.money_safe.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
 
@@ -303,7 +303,7 @@ class MoneySafeController extends Controller
     public function update(Request $request, $id)
     {
         if (!auth()->user()->can('safe_module.money_safe.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $validator = Validator::make($request->all(), [
@@ -355,7 +355,7 @@ class MoneySafeController extends Controller
     public function destroy($id)
     {
         if (!auth()->user()->can('safe_module.money_safe.delete')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         try {
             MoneySafe::find($id)->delete();

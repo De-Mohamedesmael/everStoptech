@@ -150,7 +150,7 @@ class MoneySafeTransferController extends Controller
     public function postAddMoneyToSafe($id, Request $request)
     {
         if (!auth()->user()->can('safe_module.add_money_to_safe.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $validator = Validator::make($request->all(), [
@@ -241,7 +241,7 @@ class MoneySafeTransferController extends Controller
     public function postTakeMoneyFromSafe($id, Request $request)
     {
         if (!auth()->user()->can('safe_module.take_money_from_safe.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $validator = Validator::make($request->all(), [
@@ -308,7 +308,7 @@ class MoneySafeTransferController extends Controller
     public function getStatement($id, Request $request)
     {
         if (!auth()->user()->can('safe_module.statement.create_and_edit') || !auth()->user()->can('safe_module.statement.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
 

@@ -340,7 +340,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         if (!auth()->user()->can('hr_management.employee.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $validated = $request->validate([
@@ -567,7 +567,7 @@ class EmployeeController extends Controller
     public function update(Request $request, $id)
     {
         if (!auth()->user()->can('hr_management.employee.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $validated = $request->validate([
             'email' => 'required|email|max:255',
@@ -683,7 +683,7 @@ class EmployeeController extends Controller
     {
 
         if (!auth()->user()->can('hr_management.employee.delete')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         if (request()->ajax()) {

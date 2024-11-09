@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('back-end.layouts.app')
 @section('title', __('lang.products'))
 @section('styles')
     <style>
@@ -198,9 +198,6 @@
             }
         }
     </style>
-@section('style')
-    <link rel="stylesheet" type="text/css" href="{{ url('front/css/supplier.css') }}">
-@endsection
 @endsection
 @section('content')
 <section class="forms py-0">
@@ -233,20 +230,7 @@
                     </div>
 
                     <div class="col-12 d-flex  flex-row justify-content-between align-items-center">
-                        <div class="col-md-3 px-0 d-flex justify-content-center">
-                            <div class="i-checks">
-                                <input id="is_service" name="is_service" type="checkbox"
-                                    @if (!empty($product->is_service)) checked @endif value="1"
-                                    class="form-control-custom">
-                                <label for="is_service"><strong>
-                                        @if (session('system_mode') == 'restaurant')
-                                            @lang('lang.or_add_new_product')
-                                        @else
-                                            @lang('lang.add_new_service')
-                                        @endif
-                                    </strong></label>
-                            </div>
-                        </div>
+
                         <div class="col-md-1 px-0 d-flex justify-content-center">
                             <div class="i-checks">
                                 <input id="active" name="active" type="checkbox"
@@ -267,7 +251,7 @@
                                     </strong></label>
                             </div>
                         </div>
-                        <div class="col-md-1 px-0 d-flex justify-content-center">
+                        <div class="col-md-2 px-0 d-flex justify-content-center">
                             <div class="i-checks">
                                 <input id="weighing_scale_barcode" name="weighing_scale_barcode" type="checkbox"
                                     @if (!empty($product->weighing_scale_barcode)) checked @endif value="1"
@@ -301,145 +285,65 @@
                 <div class="card mb-3">
                     <div class="card-body p-2">
                         <div class="row @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
-                            <div class="col-md-4 supplier_div @if (empty($product->is_service)) hide @endif px-5">
-                                <div class="form-group ">
-                                    {!! Form::label('supplier_id', __('lang.supplier'), [
+
+                            <div class="col-md-4 px-5">
+                                <div class="form-group">
+                                    {!! Form::label('store_ids', __('lang.store'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
-                                    <div class="input-group my-group select-button-group">
-                                        {!! Form::select('supplier_id', $suppliers, !empty($product->supplier) ? $product->supplier->id : false, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'style' => 'width: 80%',
-                                            'placeholder' => __('lang.please_select'),
-                                        ]) !!}
-                                        <span class="input-group-btn">
-                                            @can('supplier_module.supplier.create_and_edit')
-                                                <button type="button" class="btn-modal btn-flat select-button"
-                                                    data-href="{{ action('SupplierController@create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                            @endcan
-                                        </span>
-                                    </div>
+                                    {!! Form::select('store_ids[]', $stores_select, array_keys($stores_selected), [
+                                        'class' => ' selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'style' => 'width: 80%',
+                                        'multiple',
+                                       'data-actions-box' => 'true',
+                                        'id' => 'store_ids',
+                                    ]) !!}
                                 </div>
                             </div>
 
+
                             <div class="col-md-4 px-5">
-                                @if (session('system_mode') == 'restaurant')
-                                    {!! Form::label('product_class_id', __('lang.category') . ' *', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                @else
-                                    {!! Form::label('product_class_id', __('lang.class') . ' *', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                @endif
-                                <div class="input-group my-group  select-button-group">
-                                    {!! Form::select('product_class_id', $product_classes, $product->product_class_id, [
-                                        'class' => 'selectpicker form-control',
+                                {!! Form::label('category_id', __('lang.category') . ' *', [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+
+
+                                    {!! Form::select('category_id[]', $categories,  array_keys($category_id_selected), [
+                                        'class' => 'clear_input_form selectpicker form-control',
                                         'data-live-search' => 'true',
+                                        'id' => 'category_id',
+                                         'multiple',
+                                       'data-actions-box' => 'true',
                                         'style' => 'width: 80%',
-                                        'placeholder' => __('lang.please_select'),
-                                        'required',
                                     ]) !!}
                                     <span class="input-group-btn">
-                                        @can('product_module.product_class.create_and_edit')
-                                            <button type="button" class="btn-modal btn-flat select-button"
-                                                data-href="{{ action('ProductClassController@create') }}?quick_add=1"
-                                                data-container=".view_modal"><i class="fa fa-plus"></i></button>
+                            @can('product_module.category.create_and_edit')
+                                            <button class="btn-modal btn-flat select-button "
+                                                    data-href="{{ action('CategoryController@create') }}?quick_add=1&type=category"
+                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
                                         @endcan
-                                    </span>
+                        </span>
                                 </div>
                                 <div class="error-msg text-red"></div>
                             </div>
 
-                            @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
-                                <div class="col-md-4  px-5">
-                                    {!! Form::label('category_id', __('lang.category') . ' *', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    <div class="input-group my-group  select-button-group">
-                                        <input type="hidden" data-category_id="{{ $product->category_id }}"
-                                            id="category_value_id" />
-                                        {!! Form::select('category_id', $categories, $product->category_id, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'style' => 'width: 80%',
-                                            'placeholder' => __('lang.please_select'),
-                                        ]) !!}
-                                        <span class="input-group-btn">
-                                            @can('product_module.category.create_and_edit')
-                                                <button type="button" class="btn-modal btn-flat select-button "
-                                                    data-href="{{ action('CategoryController@create') }}?quick_add=1&type=category"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                            @endcan
-                                        </span>
-                                    </div>
-                                    <div class="error-msg text-red"></div>
-                                </div>
-
-                                <div class="col-md-4 px-5">
-                                    {!! Form::label('sub_category_id', __('lang.sub_category') . ' *', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    <div class="input-group my-group select-button-group">
-                                        <input type="hidden" data-sub_category_id="{{ $product->sub_category_id }}"
-                                            id="sub_category_id_data" />
-                                        {!! Form::select('sub_category_id', $sub_categories, $product->sub_category_id, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'style' => 'width: 80%',
-                                            'placeholder' => __('lang.please_select'),
-                                        ]) !!}
-                                        <span class="input-group-btn">
-                                            @can('product_module.sub_category.create_and_edit')
-                                                <button type="button" class="btn-modal btn-flat select-button"
-                                                    data-href="{{ action('CategoryController@create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                            @endcan
-                                        </span>
-                                    </div>
-                                    <div class="error-msg text-red"></div>
-                                </div>
-                                <div class="col-md-4  px-5">
-                                    {!! Form::label('brand_id', __('lang.brand') . ' *', [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    <div class="input-group my-group  select-button-group">
-                                        {!! Form::select('brand_id', $brands, $product->brand_id, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'style' => 'width: 80%',
-                                            'placeholder' => __('lang.please_select'),
-                                            'required',
-                                        ]) !!}
-                                        <span class="input-group-btn">
-                                            @can('product_module.brand.create_and_edit')
-                                                <button type="button" class="btn-modal select-button btn-flat"
-                                                    data-href="{{ action('BrandController@create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                            @endcan
-                                        </span>
-                                    </div>
-                                    <div class="error-msg text-red"></div>
-                                </div>
-                            @endif
-                            <div class="col-md-4  px-5">
+                            <div class="col-md-4 px-5">
                                 <div class="form-group">
                                     {!! Form::label('name', __('lang.name') . ' *', [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
                                     <div class="input-group my-group select-button-group">
                                         {!! Form::text('name', $product->name, [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                            'class' => 'form-control clear_input_form modal-input app()->isLocale("ar") ? text-end : text-start',
                                             'required',
-                                            'placeholder' => 'mada',
+                                            'placeholder' => __('lang.name'),
                                         ]) !!}
                                         <span class="input-group-btn">
-                                            <button type="button" class="select-button btn-flat translation_btn"
-                                                type="button" data-type="product"><i
-                                                    class="dripicons-web"></i></button>
-                                        </span>
+                            <button class="select-button btn-flat translation_btn" type="button"
+                                    data-type="product"><i class="dripicons-web"></i></button>
+                        </span>
                                     </div>
                                 </div>
                                 @include('layouts.partials.translation_inputs', [
@@ -448,31 +352,96 @@
                                     'type' => 'products',
                                 ])
                             </div>
-                            <div class="col-md-4 px-5">
+                            <div class="col-md-3 px-5">
                                 <div class="form-group">
-                                    {!! Form::label('sku', __('lang.sku') . ' *', [
+                                    {!! Form::label('sku', __('lang.sku'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
                                     {!! Form::text('sku', $product->sku, [
                                         'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                        'required',
+                                        'id' => 'sku',
                                         'placeholder' => __('lang.sku'),
                                     ]) !!}
                                 </div>
                             </div>
-                            @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
-                                <div class="col-md-4 px-5">
-                                    <div class="form-group">
-                                        {!! Form::label('alert_quantity', __('lang.alert_quantity') . ' *', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text('alert_quantity', $product->alert_quantity, [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            'placeholder' => __('lang.alert_quantity'),
-                                        ]) !!}
-                                    </div>
+                            <div class="col-md-3 px-5">
+                                <div class="form-group">
+                                    {!! Form::label('alert_quantity', __('lang.alert_quantity'), [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    {!! Form::text('alert_quantity', !empty($product) ? @num_format($product->alert_quantity) : 3, [
+                                        'class' => 'clear_input_form form-control modal-input app()->isLocale("ar") ? text-end : text-start',
+                                        'placeholder' => __('lang.alert_quantity'),
+                                    ]) !!}
                                 </div>
-                            @endif
+                            </div>
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('color_id', __('lang.color'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+                                    {!! Form::select(
+                                        'color_id',
+                                        $colors,
+                                         $product->color_id,
+                                        [
+                                            'class' => 'clear_input_form selectpicker form-control',
+                                            'data-live-search' => 'true',
+                                            'style' => 'width: 80%',
+                                            'placeholder' => __('lang.please_select'),
+                                        ],
+                                    ) !!}
+                                    <span class="input-group-btn">
+                                @can('product_module.color.create_and_edit')
+                                            <button class="btn-modal select-button btn-flat"
+                                                    data-href="{{ action('ColorController@create') }}?quick_add=1"
+                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
+                                        @endcan
+                            </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('size_id', __('lang.size'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+                                    {!! Form::select('size_id', $sizes,  $product->size_id , [
+                                        'class' => 'clear_input_form selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'style' => 'width: 80%',
+                                        'placeholder' => __('lang.please_select'),
+                                    ]) !!}
+                                    <span class="input-group-btn">
+                            @can('product_module.size.create_and_edit')
+                                            <button class="btn-modal select-button btn-flat"
+                                                    data-href="{{ action('SizeController@create') }}?quick_add=1"
+                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
+                                        @endcan
+                        </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 px-5">
+                                {!! Form::label('brand_id', __('lang.brand'), [
+                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                ]) !!}
+                                <div class="input-group my-group select-button-group">
+                                    {!! Form::select('brand_id', $brands,  $product->brand_id, [
+                                        'class' => 'clear_input_form selectpicker form-control',
+                                        'data-live-search' => 'true',
+                                        'style' => 'width: 80%',
+                                        'placeholder' => __('lang.please_select'),
+                                        'required',
+                                    ]) !!}
+                                    <span class="input-group-btn">
+                            @can('product_module.brand.create_and_edit')
+                                            <button class="btn-modal select-button btn-flat"
+                                                    data-href="{{ action('BrandController@create') }}?quick_add=1"
+                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
+                                        @endcan
+                        </span>
+                                </div>
+                                <div class="error-msg text-red"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -527,70 +496,45 @@
                         <span class="section-header-pill"></span>
                     </button>
                 </div>
-                <div class="collapse" id="productOtherDetailsCollapse">
+                <div  class="collapse" id="productOtherDetailsCollapse">
                     <div class="card mb-3">
                         <div class="card-body p-2">
                             <div
                                 class="row  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
-                                @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
-                                    <div class="col-md-4 px-5">
-                                        {!! Form::label('multiple_units', __('lang.unit'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        <div class="input-group my-group select-button-group">
-                                            {!! Form::select('multiple_units[]', $units, $product->multiple_units, [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'disabled' => $product->type == 'variable' ? true : false,
-                                                'style' => 'width: 80%',
-                                                'multiple',
-                                                'id' => 'multiple_units',
-                                            ]) !!}
-                                            <span class="input-group-btn">
-                                                @can('product_module.unit.create_and_edit')
-                                                    <button type="button" class="btn-modal select-button btn-flat"
-                                                        data-href="{{ action('UnitController@create') }}?quick_add=1"
-                                                        data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                                @endcan
-                                            </span>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-4 px-5">
-                                        {!! Form::label('color_id', __('lang.color'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                <div class="col-md-4 px-5">
+                                    {!! Form::label('color_id', __('lang.color'), [
+                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
+                                    ]) !!}
+                                    <div class="input-group my-group select-button-group">
+                                        {!! Form::select('color_id', $colors, $product->color_id, [
+                                            'class' => 'selectpicker form-control',
+                                            'data-live-search' => 'true',
+                                            'disabled' => false,
+                                            'style' => 'width: 80%',
+                                            'id' => 'color_id',
                                         ]) !!}
-                                        <div class="input-group my-group select-button-group">
-                                            {!! Form::select('color_id[]', $colors, $product->color_id, [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'disabled' => false,
-                                                'style' => 'width: 80%',
-                                                'multiple',
-                                                'id' => 'color_id',
-                                            ]) !!}
-                                            <span class="input-group-btn">
-                                                @can('product_module.color.create_and_edit')
-                                                    <button type="button" class="btn-modal select-button btn-flat"
-                                                        data-href="{{ action('ColorController@create') }}?quick_add=1"
-                                                        data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                                @endcan
-                                            </span>
-                                        </div>
+                                        <span class="input-group-btn">
+                                            @can('product_module.color.create_and_edit')
+                                                <button type="button" class="btn-modal select-button btn-flat"
+                                                    data-href="{{ action('ColorController@create') }}?quick_add=1"
+                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
+                                            @endcan
+                                        </span>
                                     </div>
-                                @endif
+                                </div>
+
                                 <div class="col-md-4 px-5">
                                     {!! Form::label('size_id', __('lang.size'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
                                     <div class="input-group my-group select-button-group">
-                                        {!! Form::select('size_id[]', $sizes, $product->size_id, [
+                                        {!! Form::select('size_id', $sizes, $product->size_id, [
                                             'class' => 'selectpicker form-control',
                                             'data-live-search' => 'true',
                                             'disabled' => $product->type == 'variable' ? true : false,
                                             'style' => 'width: 80%',
-                                            'multiple',
                                             'id' => 'size_id',
                                         ]) !!}
                                         <span class="input-group-btn">
@@ -602,30 +546,6 @@
                                         </span>
                                     </div>
                                 </div>
-                                @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket')
-                                    <div class="col-md-4 px-5">
-                                        {!! Form::label('multiple_grades', __('lang.grade'), [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        <div class="input-group my-group select-button-group">
-                                            {!! Form::select('multiple_grades[]', $grades, $product->multiple_grades, [
-                                                'class' => 'selectpicker form-control',
-                                                'data-live-search' => 'true',
-                                                'disabled' => $product->type == 'variable' ? true : false,
-                                                'style' => 'width: 80%',
-                                                'multiple',
-                                                'id' => 'multiple_grades',
-                                            ]) !!}
-                                            <span class="input-group-btn">
-                                                @can('product_module.grade.create_and_edit')
-                                                    <button type="button" class="btn-modal select-button btn-flat"
-                                                        data-href="{{ action('GradeController@create') }}?quick_add=1"
-                                                        data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                                @endcan
-                                            </span>
-                                        </div>
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     </div>
@@ -647,114 +567,6 @@
                 </div>
 
 
-                <div class="collapse" id="productDetailsCollapse">
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <button type="button" class="translation_textarea_btn btn btn-sm"><i
-                                    class="dripicons-web"></i></button>
-                            <textarea name="product_details" id="product_details" class="form-control" rows="3">{{ $product->product_details }}</textarea>
-                        </div>
-                        <div class="col-md-4">
-                            @include('layouts.partials.translation_textarea', [
-                                'attribute' => 'product_details',
-                                'translations' => $product->translations,
-                            ])
-                        </div>
-                    </div>
-                </div>
-
-
-                @if (session('system_mode') == 'restaurant' || session('system_mode') == 'garments' || session('system_mode') == 'pos')
-
-                    <div
-                        class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                        <button class="text-decoration-none toggle-button mb-0" type="button"
-                            data-bs-toggle="collapse" data-bs-target="#addPrimaryMaterialCollapse"
-                            aria-expanded="false" aria-controls="addPrimaryMaterialCollapse">
-                            <i class="fas fa-arrow-down"></i>
-                            @lang('lang.add_primary_materials')
-                            <span class="section-header-pill"></span>
-                        </button>
-                    </div>
-
-
-                    <div class="collapse" id="addPrimaryMaterialCollapse">
-                        <div class="card mb-3">
-                            <div class="card-body p-2">
-                                <div class="col-12 d-flex flex-row justify-content-between">
-
-                                    <div class="col-md-4">
-                                        <div class="i-checks">
-                                            <input id="automatic_consumption" name="automatic_consumption"
-                                                type="checkbox" @if (!empty($product) && $product->automatic_consumption == 1) checked @endif
-                                                value="1" class="form-control-custom">
-                                            <label
-                                                for="automatic_consumption"><strong>@lang('lang.automatic_consumption')</strong></label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="i-checks">
-                                            <input id="price_based_on_raw_material" name="price_based_on_raw_material"
-                                                type="checkbox" @if ($product->price_based_on_raw_material == 1) checked @endif
-                                                value="1" class="form-control-custom">
-                                            <label
-                                                for="price_based_on_raw_material"><strong>@lang('lang.price_based_on_raw_material')</strong></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                {{--    <div class="col-md-4">
-                                        <div class="i-checks">
-                                            <input id="buy_from_supplier" name="buy_from_supplier" type="checkbox"
-                                                @if ($products->buy_from_supplier == 1) checked @endif value="1"
-                                                class="form-control-custom">
-                                            <label for="buy_from_supplier"><strong>@lang('lang.buy_from_supplier')</strong></label>
-                                        </div>
-                                    </div> --}}
-                                <div class="col-md-12">
-                                    <table class="table  mb-1" id="consumption_table">
-                                        <thead>
-                                            <tr>
-                                                <th class="py-2 text-center" style="width: 30%;">@lang('lang.raw_materials')
-                                                </th>
-                                                <th class="py-2 text-center" style="width: 30%;">@lang('lang.used_amount')
-                                                </th>
-                                                <th class="py-2 text-center" style="width: 30%;">@lang('lang.unit')
-                                                </th>
-                                                <th class="py-2 text-center" style="width: 30%;">@lang('lang.cost')
-                                                </th>
-                                                <th class="py-2 text-center" style="width: 10%;"></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @php
-                                                $first_variation = $product->variations->first();
-                                                $consumption_products = App\Models\ConsumptionProduct::where(
-                                                    'variation_id',
-                                                    $first_variation->id,
-                                                )->get();
-                                            @endphp
-                                            @foreach ($consumption_products as $consumption_product)
-                                                @include('product.partial.raw_material_row', [
-                                                    'row_id' => $loop->index,
-                                                    'consumption_product' => $consumption_product,
-                                                ])
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                    <div class="d-flex justify-content-center">
-                                        <button class="btn btn-main px-5 py-1 add_raw_material_row"
-                                            type="button">@lang('lang.add_new')</button>
-                                    </div>
-                                    <input type="hidden" name="raw_material_row_index" id="raw_material_row_index"
-                                        value="@if (!empty($consumption_products) && $consumption_products->count() > 0) {{ $consumption_products->count() }}@else{{ 0 }} @endif">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-
-
-
 
                 <div
                     class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
@@ -767,7 +579,7 @@
                     </button>
                 </div>
 
-                <div class="collapse" id="discountInfoCollapse">
+                <div class="collapse"   id="discountInfoCollapse">
                     <div class="card mb-3">
                         <div class="card-body p-2">
                             <div class="col-md-12">
@@ -833,7 +645,7 @@
                         <span class="section-header-pill"></span>
                     </button>
                 </div>
-                <div class="collapse" id="moreInfoCollapse">
+                <div class="collapse"  id="moreInfoCollapse">
                     <div class="card mb-3">
                         <div class="card-body p-2">
                             <div
@@ -868,45 +680,6 @@
                                         {!! Form::text('other_cost', @num_format($product->other_cost), [
                                             'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
                                             'placeholder' => __('lang.other_cost'),
-                                        ]) !!}
-                                    </div>
-                                </div>
-                                @can('product_module.purchase_price.create_and_edit')
-                                    <div
-                                        class="col-md-3 px-5 supplier_div @if (empty($product->is_service)) hide @endif">
-                                        <div class="form-group">
-                                            {!! Form::label(
-                                                'purchase_price',
-                                                session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket'
-                                                    ? __('lang.purchase_price')
-                                                    : __('lang.cost') . ' *',
-                                                [
-                                                    'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                                ],
-                                            ) !!}
-                                            {!! Form::text('purchase_price', @num_format($product->purchase_price), [
-                                                'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                                'placeholder' =>
-                                                    session('system_mode') == 'pos' ||
-                                                    session('system_mode') == 'garments' ||
-                                                    session('system_mode') == 'supermarket'
-                                                        ? __('lang.purchase_price')
-                                                        : __('lang.cost'),
-                                                'required',
-                                            ]) !!}
-                                        </div>
-                                    </div>
-                                @endcan
-                                <div
-                                    class="col-md-3 px-5 supplier_div @if (empty($product->is_service)) hide @endif">
-                                    <div class="form-group">
-                                        {!! Form::label('sell_price', __('lang.sell_price') . ' *', [
-                                            'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                        ]) !!}
-                                        {!! Form::text('sell_price', @num_format($product->sell_price), [
-                                            'class' => 'form-control modal-input app()->isLocale("ar") ? text-end : text-start',
-                                            'placeholder' => __('lang.sell_price'),
-                                            'required',
                                         ]) !!}
                                     </div>
                                 </div>
@@ -982,128 +755,7 @@
 
                 <div class="clearfix"></div>
 
-                <div
-                    class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                    <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#pricesFromDifferentStoresCollapse" aria-expanded="false"
-                        aria-controls="pricesFromDifferentStoresCollapse">
-                        <i class="fas fa-arrow-down"></i>
-                        @lang('lang.prices_from_different_stores')
-                        <span class="section-header-pill"></span>
-                    </button>
-                </div>
 
-
-                <div class="collapse" id="pricesFromDifferentStoresCollapse">
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <div class="col-md-12">
-                                <div class="i-checks">
-                                    <input id="different_prices_for_stores" name="different_prices_for_stores"
-                                        @if ($product->different_prices_for_stores) checked @endif type="checkbox"
-                                        value="1" class="form-control-custom">
-                                    <label
-                                        for="different_prices_for_stores"><strong>@lang('lang.different_prices_for_stores')</strong></label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 different_prices_for_stores_div">
-                                <table class="table mb-1">
-                                    <thead>
-                                        <tr>
-                                            <th class="py-2 text-center px-1">
-                                                @lang('lang.store')
-                                            </th>
-                                            <th class="py-2 text-center px-1">
-                                                @lang('lang.price')
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($product->product_stores as $product_store)
-                                            @if (!empty($product_store->store))
-                                                <tr>
-                                                    <td
-                                                        class="py-2 px-1 d-flex justify-content-center align-items-center">
-                                                        {{ $product_store->store->name }}</td>
-                                                    <td class="py-2 px-1 text-center"><input type="text"
-                                                            class="form-control modal-input m-auto @if (app()->isLocale('ar')) text-end @else  text-start @endif store_prices"
-                                                            style="width: 25% !important"
-                                                            name="product_stores[{{ $product_store->store_id }}][price]"
-                                                            value="{{ $product_store->price }}"></td>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div
-                    class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                    <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#varientCollapse" aria-expanded="false" aria-controls="varientCollapse">
-                        <i class="fas fa-arrow-down"></i>
-                        @lang('lang.has_varient')
-                        <span class="section-header-pill"></span>
-                    </button>
-                </div>
-
-
-                <div class="collapse" id="varientCollapse">
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <div class="col-md-12">
-                                <div class="i-checks">
-                                    <input id="this_product_have_variant" name="this_product_have_variant"
-                                        type="checkbox" @if ($product->type == 'variable') checked @endif
-                                        value="1" class="form-control-custom">
-                                    <label for="this_product_have_variant"><strong>@lang('lang.this_product_have_variant')</strong></label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-12 this_product_have_variant_div" style="overflow: auto">
-                                <table class="table mb-1" id="variation_table">
-                                    <thead>
-                                        <tr>
-                                            <th class="py-2 text-center px-1">@lang('lang.name')</th>
-                                            <th class="py-2 text-center px-1">@lang('lang.sku')</th>
-                                            <th class="py-2 text-center px-1">@lang('lang.color')</th>
-                                            <th class="py-2 text-center px-1">@lang('lang.size')</th>
-                                            <th class="py-2 text-center px-1">@lang('lang.grade')</th>
-                                            <th class="py-2 text-center px-1">@lang('lang.unit')</th>
-                                            <th class="py-2 text-center px-1">@lang('lang.number_vs_base_unit')</th>
-                                            {{-- @if (empty($products->is_service)) hide @endif --}}
-                                            <th class="supplier_div @if (empty($is_service)) hide @endif">
-                                                @lang('lang.purchase_price')</th>
-                                            <th class="supplier_div @if (empty($is_service)) hide @endif">
-                                                @lang('lang.sell_price')</th>
-                                            <th class="py-2 text-center px-1"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($product->variations as $item)
-                                            @include('product.partial.edit_variation_row', [
-                                                'row_id' => $loop->index,
-                                                'item' => $item,
-                                                'is_service' => $product->is_service,
-                                            ])
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                                <div class="d-flex justify-content-center">
-                                    <button type="button"
-                                        class="btn btn-main px-5 py-1  add_row ">@lang('lang.add_new')</button>
-                                </div>
-                            </div>
-                            <input type="hidden" name="row_id" id="row_id"
-                                value="{{ $product->variations->count() }}">
-                        </div>
-                    </div>
-                </div>
                 <div id="cropped_edit_product_images"></div>
                 <div class="row my-2 justify-content-center align-items-center">
                     <div class="col-md-4">
@@ -1150,44 +802,8 @@
 <script src="{{ asset('front/js/bootstrap.min.js') }}"></script>
 
 <script>
-    // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-    $('#productDetailsCollapse').on('show.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-up' when the content is expanded
-        $('button[data-bs-target="#productDetailsCollapse"] i').removeClass('fa-arrow-down').addClass(
-            'fa-arrow-up');
-    });
 
-    $('#productDetailsCollapse').on('hide.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-down' when the content is collapsed
-        $('button[data-bs-target="#productDetailsCollapse"] i').removeClass('fa-arrow-up').addClass(
-            'fa-arrow-down');
-    });
 
-    // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-    $('#productOtherDetailsCollapse').on('show.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-up' when the content is expanded
-        $('button[data-bs-target="#productOtherDetailsCollapse"] i').removeClass('fa-arrow-down').addClass(
-            'fa-arrow-up');
-    });
-
-    $('#productOtherDetailsCollapse').on('hide.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-down' when the content is collapsed
-        $('button[data-bs-target="#productOtherDetailsCollapse"] i').removeClass('fa-arrow-up').addClass(
-            'fa-arrow-down');
-    });
-
-    // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-    $('#addPrimaryMaterialCollapse').on('show.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-up' when the content is expanded
-        $('button[data-bs-target="#addPrimaryMaterialCollapse"] i').removeClass('fa-arrow-down').addClass(
-            'fa-arrow-up');
-    });
-
-    $('#addPrimaryMaterialCollapse').on('hide.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-down' when the content is collapsed
-        $('button[data-bs-target="#addPrimaryMaterialCollapse"] i').removeClass('fa-arrow-up').addClass(
-            'fa-arrow-down');
-    });
 
     // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
     $('#discountInfoCollapse').on('show.bs.collapse', function() {
@@ -1215,33 +831,6 @@
             'fa-arrow-down');
     });
 
-    // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-    $('#pricesFromDifferentStoresCollapse').on('show.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-up' when the content is expanded
-        $('button[data-bs-target="#pricesFromDifferentStoresCollapse"] i').removeClass('fa-arrow-down')
-            .addClass(
-                'fa-arrow-up');
-    });
-
-    $('#pricesFromDifferentStoresCollapse').on('hide.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-down' when the content is collapsed
-        $('button[data-bs-target="#pricesFromDifferentStoresCollapse"] i').removeClass('fa-arrow-up').addClass(
-            'fa-arrow-down');
-    });
-
-    // Add an event listener for the 'show.bs.collapse' and 'hide.bs.collapse' events
-    $('#varientCollapse').on('show.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-up' when the content is expanded
-        $('button[data-bs-target="#varientCollapse"] i').removeClass('fa-arrow-down')
-            .addClass(
-                'fa-arrow-up');
-    });
-
-    $('#varientCollapse').on('hide.bs.collapse', function() {
-        // Change the arrow icon to 'chevron-down' when the content is collapsed
-        $('button[data-bs-target="#varientCollapse"] i').removeClass('fa-arrow-up').addClass(
-            'fa-arrow-down');
-    });
 </script>
 <script type="text/javascript">
     $(document).ready(function() {

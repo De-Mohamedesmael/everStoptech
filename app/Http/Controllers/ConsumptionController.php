@@ -57,7 +57,7 @@ class ConsumptionController extends Controller
     public function index(Request $request)
     {
         if (!auth()->user()->can('raw_material_module.consumption.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         if (request()->ajax()) {
@@ -228,7 +228,7 @@ class ConsumptionController extends Controller
     public function create()
     {
         if (!auth()->user()->can('raw_material_module.consumption.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $raw_materials = Product::where('is_raw_material', 1)->active()->pluck('name', 'id');
@@ -301,7 +301,7 @@ class ConsumptionController extends Controller
     public function show($id)
     {
         if (!auth()->user()->can('raw_material_module.consumption.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $raw_materials = Product::where('is_raw_material', 1)->active()->pluck('name', 'id');
@@ -347,7 +347,7 @@ class ConsumptionController extends Controller
     public function edit($id)
     {
         if (!auth()->user()->can('raw_material_module.consumption.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $raw_materials = Product::where('is_raw_material', 1)->active()->pluck('name', 'id');

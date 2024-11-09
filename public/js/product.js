@@ -198,24 +198,7 @@ $(document).on("submit", "form#quick_add_category_form", function (e) {
         },
     });
 });
-$(document).ready(function() {
-    var category_id=$('#category_value_id').attr('data-category_id');
-    $.ajax({
-        method: "get",
-        url:
-            "/category/get-dropdown?type=category",
-        data: {},
-        contentType: "html",
-        success: function (result) {
-            console.log(result)
-            $("#category_id").empty().append(result).change();
-            $("#category_id").selectpicker("refresh");
-            if (category_id) {
-                $("#category_id").selectpicker("val", category_id);
-            }
-        },
-    });
-})
+
 
 
 var brand_id = null;
@@ -420,14 +403,12 @@ $(document).on("change", "#sku", function () {
     }
 
 });
-$(document).on("change", "#name , #category_id", function () {
+$(document).on("change", "#name", function () {
     checkName();
 });
 
 function checkName() {
     let name = $("#name").val();
-    let category_id = $("#category_id").val();
-
     let system_mode = $("#system_mode").val();
     if (system_mode != "garments") {
         $.ajax({
@@ -435,7 +416,6 @@ function checkName() {
             url: "/products/check-name",
             data: {
                 name: name,
-                category_id: category_id,
             },
             success: function (result) {
                 if (!result.success) {

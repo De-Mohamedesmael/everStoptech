@@ -124,4 +124,8 @@ class Product extends Model implements HasMedia
     {
         return $this->hasMany(ProductDiscount::class,'product_id','id');
     }
+    public function stores()
+    {
+        return $this->hasMany(ProductStore::class,'product_id','id');
+    }
 }

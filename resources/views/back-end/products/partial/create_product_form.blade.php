@@ -14,16 +14,6 @@
     </div>
 
     <div class="col-12 d-flex  flex-row justify-content-between align-items-center">
-{{--        <div class="col-md-3 px-0 d-flex justify-content-center">--}}
-{{--            <div class="i-checks">--}}
-{{--                <input id="is_service" name="is_service" type="checkbox"--}}
-{{--                @if(!empty($recent_product) && $recent_product->is_service == 1) checked @endif--}}
-{{--                    class="form-control-custom">--}}
-{{--                <label for="is_service"><strong>--}}
-{{--                            @lang('lang.add_new_service')--}}
-{{--                    </strong></label>--}}
-{{--            </div>--}}
-{{--        </div>--}}
         <div class="col-md-1 px-0 d-flex justify-content-center">
             <div class="i-checks">
                 <input id="active" name="active" type="checkbox" checked value="1" class="form-control-custom">
@@ -91,26 +81,28 @@
                         'data-live-search' => 'true',
                         'style' => 'width: 80%',
                         'multiple',
+                       'data-actions-box' => 'true',
                         'id' => 'store_ids',
                     ]) !!}
                 </div>
             </div>
 
 
-                <div class="col-md-4 px-5">
+            <div class="col-md-4 px-5">
                     {!! Form::label('category_id', __('lang.category') . ' *', [
                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                     ]) !!}
                     <div class="input-group my-group select-button-group">
                         <input type="hidden"
                             id="category_value_id" />
+
                         {!! Form::select('category_id[]', $categories, false, [
                             'class' => 'clear_input_form selectpicker form-control',
                             'data-live-search' => 'true',
                             'id' => 'category_id',
                              'multiple',
+                           'data-actions-box' => 'true',
                             'style' => 'width: 80%',
-                            'placeholder' => __('lang.please_select'),
                         ]) !!}
                         <span class="input-group-btn">
                             @can('product_module.category.create_and_edit')
@@ -286,7 +278,6 @@
                             <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_type')</th>
                             <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount')</th>
                             <th class="py-2 text-center" style="width: 25%;">@lang('lang.discount_category')</th>
-                            <th class="py-2 text-center" style="width: 5%;"></th>
                             <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_start_date')</th>
                             <th class="py-2 text-center" style="width: 15%;">@lang('lang.discount_end_date')</th>
                             <th class="py-2 text-center" style="width: 20%;">@lang('lang.customer_type') <i

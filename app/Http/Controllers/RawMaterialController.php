@@ -63,7 +63,7 @@ class RawMaterialController extends Controller
     public function index(Request $request)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         if (request()->ajax()) {
@@ -253,7 +253,7 @@ class RawMaterialController extends Controller
     public function create()
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
@@ -293,7 +293,7 @@ class RawMaterialController extends Controller
     public function store(Request $request)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $this->validate(
             $request,
@@ -369,7 +369,7 @@ class RawMaterialController extends Controller
     public function show($id)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.view')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
 
         $product = Product::find($id);
@@ -391,7 +391,7 @@ class RawMaterialController extends Controller
     public function edit($id)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $raw_material = Product::findOrFail($id);
 
@@ -435,7 +435,7 @@ class RawMaterialController extends Controller
     public function update(Request $request, $id)
     {
         if (!auth()->user()->can('raw_material_module.raw_material.create_and_edit')) {
-            abort(403, 'Unauthorized action.');
+            abort(403, translate('Unauthorized action.'));
         }
         $this->validate(
             $request,
