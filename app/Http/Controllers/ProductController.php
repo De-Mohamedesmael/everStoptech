@@ -344,18 +344,18 @@ class ProductController extends Controller
                                 data-container=".view_modal" class="btn btn-modal"><i class="fa fa-eye"></i>
                                 ' . __('lang.view') . '</a></li>';
                         }
-//                        if (auth()->user()->can('product_module.products.remove_expiry')) {
-                            $html .=
-                                '<li><a target="_blank" href="' . action('ProductController@get_remove_expiry', $row->id) . '"
-                                 class="btn"><i class="fa fa-hourglass-half"></i>
-                                ' . __('lang.remove_expiry') . '</a></li>';
-//                        }
-//                        if (auth()->user()->can('product_module.products.remove_damage')) {
-                            $html .=
-                                '<li><a target="_blank" href="' . action('ProductController@get_remove_damage', $row->id) . '"
-                                 class="btn"><i class="fa fa-filter"></i>
-                                ' . __('lang.remove_damage') . '</a></li>';
-//                        }
+////                        if (auth()->user()->can('product_module.products.remove_expiry')) {
+//                            $html .=
+//                                '<li><a target="_blank" href="' . action('ProductController@get_remove_expiry', $row->id) . '"
+//                                 class="btn"><i class="fa fa-hourglass-half"></i>
+//                                ' . __('lang.remove_expiry') . '</a></li>';
+////                        }
+////                        if (auth()->user()->can('product_module.products.remove_damage')) {
+//                            $html .=
+//                                '<li><a target="_blank" href="' . action('ProductController@get_remove_damage', $row->id) . '"
+//                                 class="btn"><i class="fa fa-filter"></i>
+//                                ' . __('lang.remove_damage') . '</a></li>';
+////                        }
                         if (auth()->user()->can('product_module.products.create_and_edit')) {
                             $html .=
                                 '<li><a href="' . action('ProductController@edit', $row->id) . '" class="btn"
@@ -839,7 +839,6 @@ class ProductController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -949,7 +948,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         if (!auth()->user()->can('product_module.products.create_and_edit')) {
             abort(403, translate('Unauthorized action.'));
         }
@@ -957,46 +955,28 @@ class ProductController extends Controller
         $this->validate(
             $request,
             ['name' => ['required', 'max:255']],
-            ['purchase_price' => ['required', 'max:25', 'decimal']],
-            ['sell_price' => ['required', 'max:25', 'decimal']],
         );
 
-        // try {
+         try {
             $product_data = [
                 'name' => $request->name,
                 'translations' => !empty($request->translations) ? $request->translations : [],
-                'product_class_id' => $request->product_class_id,
                 'brand_id' => $request->brand_id,
                 'sku' => $request->sku,
-                'multiple_units' => $request->multiple_units,
                 'color_id' => $request->color_id,
                 'size_id' => $request->size_id,
-                'multiple_grades' => $request->multiple_grades,
                 'is_service' => !empty($request->is_service) ? 1 : 0,
                 'product_details' => $request->product_details,
                 'barcode_type' => $request->barcode_type ?? 'C128',
                 'alert_quantity' => $request->alert_quantity,
-                'other_cost' => !empty($request->other_cost) ? $this->commonUtil->num_uf($request->other_cost) : 0,
-                'purchase_price' => $this->commonUtil->num_uf($request->purchase_price),
-                'sell_price' => $this->commonUtil->num_uf($request->sell_price),
                 'tax_id' => $request->tax_id,
                 'tax_method' => $request->tax_method,
-                'discount_type' => null,
-                'discount_customer_types' => null,
-                'discount_customers' => null,
-                'discount' => null,
-                'discount_start_date' => null,
-                'discount_end_date' =>  null,
                 'show_to_customer' => !empty($request->show_to_customer) ? 1 : 0,
                 'show_to_customer_types' => $request->show_to_customer_types,
                 'different_prices_for_stores' => !empty($request->different_prices_for_stores) ? 1 : 0,
-                'this_product_have_variant' => !empty($request->this_product_have_variant) ? 1 : 0,
-                'price_based_on_raw_material' => !empty($request->price_based_on_raw_material) ? 1 : 0,
                 'automatic_consumption' => !empty($request->automatic_consumption) ? 1 : 0,
                 'buy_from_supplier' =>  0,
-                'type' => !empty($request->this_product_have_variant) ? 'variable' : 'single',
                 'active' => !empty($request->active) ? 1 : 0,
-                'have_weight' => !empty($request->have_weight) ? 1 : 0,
                 'edited_by' => Auth::user()->id,
                 'show_at_the_main_pos_page' => !empty($request->show_at_the_main_pos_page) ? 'yes' : 'no',
                 'weighing_scale_barcode' => !empty($request->weighing_scale_barcode) ? 1 : 0,
@@ -1007,53 +987,7 @@ class ProductController extends Controller
             $product = Product::find($id);
             $product->update($product_data);
 
-            $this->productUtil->createOrUpdateVariations($product, $request);
 
-            // $index_discounts=[];
-            // $index_discounts_olds=[];
-            // if($request->discount_type){
-            //     if(count($request->discount_type)>0){
-            //         $index_discounts=array_keys($request->discount_type);
-            //         if($request->discount_ids != null ){
-            //             $index_discounts_olds=array_keys($request->discount_ids);
-            //             ProductDiscount::where('product_id',$products->id)->whereNotIn('id',$request->discount_ids)->delete();
-            //         }else{
-            //             ProductDiscount::where('product_id',$products->id)->delete();
-            //         }
-            //     }
-
-            //     foreach ($index_discounts as $index_discount){
-            //         $discount_customers = $this->getDiscountCustomerFromType($request->get('discount_customer_types_'.$index_discount));
-            //         $data_des=[
-            //             'product_id' => $products->id,
-            //             'discount_type' => $request->discount_type[$index_discount],
-            //             'discount_category' => $request->discount_category[$index_discount],
-            //             'is_discount_permenant'=>!empty($request->is_discount_permenant[$index_discount])? 1 : 0,
-            //             'discount_customer_types' => $request->get('discount_customer_types_'.$index_discount),
-            //             'discount_customers' => $discount_customers,
-            //             'discount' => $this->commonUtil->num_uf($request->discount[$index_discount]),
-            //             'discount_start_date' => !empty($request->discount_start_date[$index_discount]) ? $this->commonUtil->uf_date($request->discount_start_date[$index_discount]) : null,
-            //             'discount_end_date' => !empty($request->discount_end_date[$index_discount]) ? $this->commonUtil->uf_date($request->discount_end_date[$index_discount]) : null
-            //         ];
-
-
-            //         if(in_array($index_discount,$index_discounts_olds)){
-            //             ProductDiscount::where('id',$request->discount_ids[$index_discount])->update($data_des);
-            //         }else{
-            //             ProductDiscount::create($data_des);
-            //         }
-
-
-            //     }
-
-
-
-            // }else{
-            //     ProductDiscount::where('product_id',$products->id)->delete();
-            // }
-
-
-            $index_discounts=[];
             ProductDiscount::where('product_id',$product->id)->delete();
             $index_discounts=[];
             if($request->has('discount_type')){
@@ -1079,23 +1013,14 @@ class ProductController extends Controller
 
                     ProductDiscount::create($data_des);
                 }
-
-
-
-            if (!empty($request->consumption_details)) {
-                $variations = $product->variations()->get();
-                foreach ($variations as $variation) {
-                    $this->productUtil->createOrUpdateRawMaterialToProduct($variation->id, $request->consumption_details);
-                }
-            }
-
-
             //////////////////////////
             if ($request->has("cropImages") && count($request->cropImages) > 0) {
                 // Clear the media collection only once, before the loop
-                $product->clearMediaCollection('products');
 
-                foreach ($this->getCroppedImages($request->cropImages) as $imageData) {
+                foreach ($this->getCroppedImages($request->cropImages) as $key=>$imageData) {
+                    if($key == 0){
+                        $product->clearMediaCollection('products');
+                    }
                     $extention = explode(";", explode("/", $imageData)[1])[0];
                     $image = rand(1, 1500) . "_image." . $extention;
                     $filePath = public_path('uploads/' . $image);
@@ -1104,9 +1029,6 @@ class ProductController extends Controller
                 }
             }
 
-            if (!isset($request->cropImages) || count($request->cropImages) == 0) {
-                $product->clearMediaCollection('products');
-            }
             //////////////////////////////////////
             //////////////////////////////////////
             if (!empty($request->supplier_id)) {
@@ -1117,20 +1039,23 @@ class ProductController extends Controller
             } else {
                 SupplierProduct::where('product_id', $product->id)->delete();
             }
-
+             if ($request->has('category_id')) {
+                 $product->categories()->sync($request->category_id);
+             }
 
             DB::commit();
             $output = [
                 'success' => true,
                 'msg' => __('lang.success')
             ];
-        // } catch (\Exception $e) {
-        //     Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
-        //     $output = [
-        //         'success' => false,
-        //         'msg' => __('lang.something_went_wrong')
-        //     ];
-        // }
+         } catch (\Exception $e) {
+             DB::rollback();
+             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
+             $output = [
+                 'success' => false,
+                 'msg' => __('lang.something_went_wrong')
+             ];
+         }
 
         if ($request->ajax()) {
             return $output;

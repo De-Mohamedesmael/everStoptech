@@ -48,6 +48,14 @@ class Product extends Model implements HasMedia
     {
         return $this->belongsTo(Brand::class)->withDefault(['name' => '']);
     }
+    public function color()
+    {
+        return $this->belongsTo(Color::class)->withDefault(['name' => '']);
+    }
+    public function size()
+    {
+        return $this->belongsTo(Size::class)->withDefault(['name' => '']);
+    }
     public function tax()
     {
         return $this->belongsTo(Tax::class)->withDefault(['name' => '']);
@@ -62,19 +70,8 @@ class Product extends Model implements HasMedia
     {
         return $this->hasMany(AddStockLine::class);
     }
-    public function alert_quantity_unit()
-    {
-        return $this->belongsTo(Unit::class, 'alert_quantity_unit_id');
-    }
 
-    public function colors()
-    {
-        return $this->hasManyThrough(Color::class, Variation::class, 'product_id', 'id', 'id', 'color_id');
-    }
-    public function sizes()
-    {
-        return $this->hasManyThrough(Size::class, Variation::class, 'product_id', 'id', 'id', 'size_id');
-    }
+
 
     public function created_by_user()
     {
