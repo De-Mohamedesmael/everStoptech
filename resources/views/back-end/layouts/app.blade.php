@@ -317,6 +317,9 @@
         a.btn.text-red {
             color: #a30c0c !important;
         }
+        .home-card-deck {
+            margin-bottom: 10px;
+        }
     </style>
     <style>
         .variants {

@@ -114,19 +114,19 @@
                         </a>
                     </div>
                     {{-- ################ الموردين ################ --}}
-                    <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
-                         style="animation-delay: 1.4s">
-                        <a href="{{-- route('suppliers.create') --}}">
-                            <div class="card p-3">
-                                <img class="card-img-top" src="{{ asset('assets/back-end/images/dashboard-icon/inventory.png') }}"
-                                     alt="Card image cap">
-                                <div class="card-body pt-2 p-0 text-center">
-                                    <a class="font-weight-bold text-decoration-none card-title font-16"
-                                       href="{{-- route('suppliers.create') --}}">{{ __('lang.suppliers') }}</a>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
+{{--                    <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"--}}
+{{--                         style="animation-delay: 1.4s">--}}
+{{--                        <a href="--}}{{-- route('suppliers.create') --}}{{--">--}}
+{{--                            <div class="card p-3">--}}
+{{--                                <img class="card-img-top" src="{{ asset('assets/back-end/images/dashboard-icon/inventory.png') }}"--}}
+{{--                                     alt="Card image cap">--}}
+{{--                                <div class="card-body pt-2 p-0 text-center">--}}
+{{--                                    <a class="font-weight-bold text-decoration-none card-title font-16"--}}
+{{--                                       href="--}}{{-- route('suppliers.create') --}}{{--">{{ __('lang.suppliers') }}</a>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </a>--}}
+{{--                    </div>--}}
                     {{-- ################ الاعدادات ################ --}}
                     <div class="card-deck home-card-deck col-6 col-md-4 col-lg-2 animate__animated  animate__bounceIn"
                          style="animation-delay: 1.5s">
