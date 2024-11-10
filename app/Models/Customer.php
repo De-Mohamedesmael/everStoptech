@@ -94,6 +94,7 @@ class Customer extends Model implements HasMedia
     public static function getDropdownGender()
     {
         return[
+            '' => translate('Male'),
             '1' => translate('Male'),
             '2' => translate('Male'),
         ];

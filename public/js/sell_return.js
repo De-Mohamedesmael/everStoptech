@@ -65,7 +65,7 @@ $(document).on("click", ".filter-by", function () {
     if (id && type) {
         $.ajax({
             method: "get",
-            url: "/pos/get-product-items-by-filter/" + id + "/" + type,
+            url: "/pos/get-products-items-by-filter/" + id + "/" + type,
             data: {
                 selling_filter,
                 price_filter,

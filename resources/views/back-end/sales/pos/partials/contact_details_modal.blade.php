@@ -11,7 +11,7 @@
 
                 <button type="button" data-dismiss="modal" aria-label="Close"
                     class="close btn btn-danger d-flex justify-content-center align-items-center rounded-circle text-white"><span
-                        aria-hidden="true"><i class="dripicons-cross"></i></span></button>
+                        aria-hidden="true" style="border-radius: 10px !important;"><i class="dripicons-cross"></i></span></button>
                 <span class="position-absolute modal-border"></span>
             </div>
             <div class="modal-body">
@@ -27,11 +27,11 @@
                         <b>@lang('lang.due_sale_list'):</b> <span class="customer_due_span"></span>
                     </div>
                     <div class="col-md-4">
-                        <b>@lang('lang.points'):</b> <span class="customer_points_span"></span>
+                        <b>@lang('lang.age'):</b> <span class="customer_age_span"></span>
                         <input type="hidden" name="customer_points" class="customer_points" value="0">
                     </div>
                     <div class="col-md-4">
-                        <b>@lang('lang.points_value'):</b> <span class="customer_points_value_span"></span>
+                        <b>@lang('lang.gender'):</b> <span class="customer_gender_span"></span>
                         <input type="hidden" name="customer_points_value" id="customer_points_value"
                             class="customer_points_value" value="0">
                     </div>

@@ -1,13 +1,11 @@
 <div class="row">
 
     <div class="col-md-12 p-1" style="height: 300px;
-    overflow: scroll;">
+    overflow-y: scroll;
+    overflow-x: hidden;
+    ">
         <div class="filter-checkbox card" style="margin: 0px;">
-            {{-- @if (session('system_mode') != 'restaurant')
-            <div class="card-header" style="padding: 5px 20px; color: var(--secondary-color)">
-                <i class="fa fa-filter"></i> @lang('lang.filter')
-            </div>
-            @endif --}}
+
             <div class="card-body" style="padding: 5px 20px">
 
 
@@ -68,20 +66,6 @@
                         </label>
                     </div>
                     {{-- --}}
-
-
-
-
-                    <div class=" ">
-                        <div style="background-color: #E6E6E6;color: black;border-radius: 16px;width: 100%;box-shadow: 5px 8px 4px -5px #bbb inset;"
-                            class="d-flex mb-3 flex-column  px-2 pt-3">
-                            <label class="checkbox-inline filterLabel">
-                                <input type="checkbox" class="sale_promo_filter filterInput"
-                                    value="items_in_sale_promotion">
-                                @lang('lang.items_in_sale_promotion')
-                            </label>
-                        </div>
-                    </div>
 
                     <div style="width: 100%" class=" filter-btn-div">
                         {{-- class="btn-group-custom" --}}
@@ -155,7 +139,6 @@
 
 
                     </div>
-
                     <div class="table-responsive" style="height: 495px">
                         <table id="filter-product-table" class="table no-shadow product-list"
                             style="width: 100%; border: 0px;overflow: scroll">

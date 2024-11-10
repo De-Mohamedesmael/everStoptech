@@ -859,20 +859,17 @@ class SellPosController extends Controller
      */
     public function getProductItemsByFilter(Request $request)
     {
-        $query = Product::leftjoin('variations', 'products.id', 'variations.product_id')
-            ->leftjoin('product_stores', 'variations.id', 'product_stores.variation_id')
-            ->where('products.active', 1)
-            ->where('products.show_at_the_main_pos_page', 'yes')
-            ->where('is_raw_material', 0);
+        $query = Product::leftjoin('product_stores', 'products.id', 'product_stores.product_id')
+            ->where('products.active', 1);
 
-        if (!empty($request->product_class_id)) {
-            $query->where('product_class_id', $request->product_class_id);
+        if(empty($request->category_id) && empty($request->brand_id) && empty($request->sorting_filter) && empty($request->price_filter)&& empty($request->selling_filter) ){
+            $query->where('products.show_at_the_main_pos_page', 'yes');
         }
+
         if (!empty($request->category_id)) {
-            $query->where('category_id', $request->category_id);
-        }
-        if (!empty($request->sub_category_id)) {
-            $query->where('sub_category_id', $request->sub_category_id);
+            $query->wherehas('categories', function ($q) use ($request){
+                $q->where('categories.id',$request->category_id);
+            });
         }
         if (!empty($request->brand_id)) {
             $query->where('brand_id', $request->brand_id);
@@ -905,61 +902,29 @@ class SellPosController extends Controller
                 $query->orderBy('products.name', 'desc');
             }
         }
-        if (!empty($request->expiry_filter)) {
-            $query->leftjoin('add_stock_lines', 'variations.id', 'add_stock_lines.variation_id');
-            if ($request->expiry_filter == 'nearest_expiry') {
-                $query->where(function ($q) {
-                    $q->whereDate('add_stock_lines.expiry_date', '>', Carbon::now());
-                })->orderBy('add_stock_lines.expiry_date', 'asc');
-            }
-            if ($request->expiry_filter == 'longest_expiry') {
-                $query->where(function ($q) {
-                    $q->whereDate('add_stock_lines.expiry_date', '>', Carbon::now());
-                })->orderBy('add_stock_lines.expiry_date', 'desc');
-            }
-        }
-        if (!empty($request->sale_promo_filter)) {
-            if ($request->sale_promo_filter == 'items_in_sale_promotion') {
-                $sales_promotions = SalesPromotion::whereDate('start_date', '<=', date('Y-m-d'))->whereDate('end_date', '>=', date('Y-m-d'))->orWhere('is_discount_permenant', '1')->get();
-                $sp_product_ids = [];
-                foreach ($sales_promotions as $sales_promotion) {
-                    $sp_product_ids = array_merge($sp_product_ids, $sales_promotion->product_ids);
-                }
-                $query->whereIn('products.id',  $sp_product_ids);
 
-                if (session('system_mode') == 'restaurant') {
-                    return view('back-end.sales.pos.partials.promotions')->with(compact('sales_promotions'));
-                }
-            }
-        }
+
         if (!empty($request->store_id)) {
             $query->where('product_stores.store_id', $request->store_id);
         }
 
         $query->addSelect(
             'products.*',
-            'variations.id as variation_id',
-            'variations.name as variation_name',
-            'variations.sub_sku',
             'product_stores.qty_available as qty_available',
             'product_stores.block_qty',
         );
 
-        if (session('system_mode') != 'restaurant') {
-            $query->take(40);
-        }
 
-        $products = $query->groupBy('variations.id')->get();
+        $products = $query->groupBy('products.id')->take(40)->get();
 
         $currency_id = $request->currency_id;
         $currency = Currency::find($currency_id);
         $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
-
         return view('back-end.sales.pos.partials.filtered_products')->with(compact(
             'products',
             'currency',
             'exchange_rate'
-        ));
+        ))->render();
     }
 
     /**
@@ -976,22 +941,14 @@ class SellPosController extends Controller
             if (empty($term)) {
                 return json_encode([]);
             }
-            $query = Product::leftJoin(
-                'variations',
-                'products.id',
-                '=',
-                'variations.product_id'
-            )->leftjoin('product_stores', 'variations.id', 'product_stores.variation_id')
+            $query = Product::leftjoin('product_stores', 'products.id', 'product_stores.product_id')
                 ->where(function ($query) use ($term) {
                     $query->where('products.name', 'like', '%' . $term . '%');
-                    $query->orWhere('variations.name', 'like', '%' . $term . '%');
                     $query->orWhere('sku', 'like', '%' . $term . '%');
-                    $query->orWhere('sub_sku', 'like', '%' . $term . '%');
                 })
-                ->where('is_raw_material', 0)
-                ->whereNull('variations.deleted_at');
-                $produc=$query->select('variations.id')->get();
-                $p_store=$query->select('product_stores.variation_id')->get();
+                ->whereNull('products.deleted_at');
+                $produc=$query->select('products.id')->get();
+                $p_store=$query->select('product_stores.product_id')->get();
                 if($produc == $p_store){
                     if (!empty(request()->store_id)  ) {
                         $query->where('product_stores.store_id', request()->store_id);
@@ -1000,64 +957,40 @@ class SellPosController extends Controller
             $selectRaws = [
                 'products.id as product_id',
                 'products.name',
-                'products.type',
                 'products.is_service',
-                'variations.id as variation_id',
-                'variations.name as variation',
-                'variations.sub_sku as sub_sku',
+                'products.sku as sku',
                 'product_stores.qty_available',
                 'product_stores.block_qty',
                 'add_stock_lines.batch_number',
                 'add_stock_lines.id'
             ];
-            $products = $query->leftjoin('add_stock_lines', 'variations.id', '=', 'add_stock_lines.variation_id')
-                ->select($selectRaws)->groupBy('variation_id', 'add_stock_lines.batch_number')->get();
-
+            $products = $query->leftjoin('add_stock_lines', 'products.id', '=', 'add_stock_lines.product_id')
+                ->select($selectRaws)->groupBy('product_id', 'add_stock_lines.batch_number')->get();
             $products_array = [];
             foreach ($products as $product) {
                 $products_array[$product->product_id]['name'] = $product->name;
-                $products_array[$product->product_id]['sku'] = $product->sub_sku;
-                $products_array[$product->product_id]['type'] = $product->type;
+                $products_array[$product->product_id]['sku'] = $product->sku;
+                $products_array[$product->product_id]['product_id'] = $product->product_id;
                 $products_array[$product->product_id]['is_service'] = $product->is_service;
+                $products_array[$product->product_id]['quantity'] = $product->quantity;
+                $products_array[$product->product_id]['add_stock_lines.id'] = $product->id;
+                $products_array[$product->product_id]['batch_number'] = $product->batch_number;
                 $products_array[$product->product_id]['qty'] = $this->productUtil->num_uf($product->qty_available - $product->block_qty);
-                $products_array[$product->product_id]['variations'][]
-                    = [
-                        'variation_id' => $product->variation_id,
-                        'variation_name' => $product->variation,
-                        'sub_sku' => $product->sub_sku,
-                        'qty' => $product->qty_available,
-                        'batch_number' => $product->batch_number,
-                        'add_stock_lines.id' => $product->id,
-                        'quantity' => $product->quantity,
-                    ];
             }
             $result = [];
             $i = 1;
             // $no_of_records = $products_->count();
             if (!empty($products_array)) {
                 foreach ($products_array as $key => $value) {
-                    $name = $value['name'];
-                    foreach ($value['variations'] as $variation) {
-                        $v = Variation::find($variation['variation_id']);
-                        $text = $name;
-                        if ($value['type'] == 'variable') {
-                            if ($variation['variation_name'] != 'Default') {
-                                $text = $variation['variation_name'];
-                            }
-                            // $text .= $v->size->name ?? '';
-                        }
-                        $i++;
-                        $result[] = [
-                            'id' => $i,
-                            'text' => $text . ' - ' . $variation['sub_sku'],
-                            'product_id' => $key,
-                            'variation_id' => $variation['variation_id'],
-                            'batch_number' => $variation['batch_number'],
-                            'add_stock_lines_id' => $variation['add_stock_lines.id'],
-                            'qty_available' => $variation['qty'],
-                            'is_service' => $value['is_service']
-                        ];
-                    }
+                    $result[] = [
+                        'id' => $i,
+                        'text' => $value['name'] . ' - ' . $value['sku'],
+                        'product_id' => $value['product_id'],
+                        'batch_number' => $value['batch_number'],
+                        'add_stock_lines_id' => $value['add_stock_lines.id'],
+                        'qty_available' => $value['qty'],
+                        'is_service' => $value['is_service']
+                    ];
                     $i++;
                 }
             }
@@ -1076,7 +1009,7 @@ class SellPosController extends Controller
                     'id' => $i,
                     'text' => $sales_promotion->name . ' - ' . $sales_promotion->code,
                     'sale_promotion_id' => $sales_promotion->id,
-                    'variation_id' => null,
+                    'product_id' => null,
                     'qty_available' => null,
                     'is_sale_promotion' => 1
                 ];
@@ -1102,7 +1035,6 @@ class SellPosController extends Controller
             $batch_number_id = $request->input('batch_number_id');
 
             $product_id = $request->input('product_id');
-            $variation_id = $request->input('variation_id');
             $store_pos_id = $request->input('store_pos_id');
             $store_id = $request->input('store_id');
             $customer_id = $request->input('customer_id');

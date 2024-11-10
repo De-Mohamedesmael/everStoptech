@@ -816,7 +816,7 @@ class CustomerController extends Controller
 
     public function getDetailsByTransactionType($customer_id, $type)
     {
-        $query = Customer::join('transactions as t', 'customers.id', 't.customer_id')
+        $query = Customer::leftjoin('transactions as t', 'customers.id', 't.customer_id')
             ->leftjoin('customer_types', 'customers.customer_type_id', 'customer_types.id')
             ->where('customers.id', $customer_id);
         if ($type == 'sell') {
@@ -825,6 +825,8 @@ class CustomerController extends Controller
                 DB::raw("SUM(IF(t.type = 'sell' AND t.status = 'final', (SELECT SUM(IF(is_return = 1,-1*amount,amount)) FROM transaction_payments WHERE transaction_payments.transaction_id=t.id), 0)) as total_paid"),
                 'customers.name',
                 'customers.address',
+                'customers.age',
+                'customers.gender',
                 'customers.deposit_balance',
                 'customers.id as customer_id',
                 'customer_types.name as customer_type'
@@ -832,10 +834,8 @@ class CustomerController extends Controller
         }
 
         $customer_details = $query->first();
-
-        $balance_adjustment = CustomerBalanceAdjustment::where('customer_id', $customer_id)->sum('add_new_balance');
-
         $customer_details->due = $this->getCustomerBalance($customer_id)['balance'];
+        $customer_details->gender = $customer_details->gender_name;
 
         return $customer_details;
     }

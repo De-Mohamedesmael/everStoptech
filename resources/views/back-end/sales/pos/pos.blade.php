@@ -35,7 +35,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                 'id' => 'add_pos_form',
                 ]) !!}
                 <div class="card">
-                    <div class="card-body" style="padding: 0px 10px; !important">
+                    <div class="card-body" style="padding: 0px 10px; !important; margin-bottom: 50px !important;">
                         <input type="hidden" name="default_customer_id" id="default_customer_id"
                             value="@if (!empty($walk_in_customer)) {{ $walk_in_customer->id }} @endif">
                         <input type="hidden" name="row_count" id="row_count" value="0">
@@ -134,52 +134,52 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                     </div>
                                 </div>
 
-                                <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div class="form-group tax mb-2 mb-lg-0 height-responsive d-flex justify-content-center align-items-center"
-                                        style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 6px;
-                                    color: #373737;
-                                                box-shadow: 0 8px 6px -5px #bbb;
+{{--                                <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">--}}
+{{--                                    <div class="form-group tax mb-2 mb-lg-0 height-responsive d-flex justify-content-center align-items-center"--}}
+{{--                                        style="background-color: #e6e6e6 ; border: none;--}}
+{{--                                    border-radius: 6px;--}}
+{{--                                    color: #373737;--}}
+{{--                                                box-shadow: 0 8px 6px -5px #bbb;--}}
 
-                                    width: 100%;
-                                    ">
-                                        <select class="form-control" name="tax_id" id="tax_id"
-                                            style="background-color: transparent">
-                                            <option value="">No Tax</option>
-                                            @foreach ($taxes as $tax)
-                                            <option data-rate="{{ $tax['rate'] }}" @if (!empty($transaction) &&
-                                                $transaction->tax_id == $tax['id']) selected @endif
-                                                value="{{ $tax['id'] }}">
-                                                {{ $tax['name'] }}</option>
-                                            @endforeach
-                                        </select>
+{{--                                    width: 100%;--}}
+{{--                                    ">--}}
+{{--                                        <select class="form-control" name="tax_id" id="tax_id"--}}
+{{--                                            style="background-color: transparent">--}}
+{{--                                            <option value="">No Tax</option>--}}
+{{--                                            @foreach ($taxes as $tax)--}}
+{{--                                            <option data-rate="{{ $tax['rate'] }}" @if (!empty($transaction) &&--}}
+{{--                                                $transaction->tax_id == $tax['id']) selected @endif--}}
+{{--                                                value="{{ $tax['id'] }}">--}}
+{{--                                                {{ $tax['name'] }}</option>--}}
+{{--                                            @endforeach--}}
+{{--                                        </select>--}}
                                         <input type="hidden" name="tax_id_hidden" id="tax_id_hidden" value="">
                                         <input type="hidden" name="tax_method" id="tax_method" value="">
                                         <input type="hidden" name="tax_rate" id="tax_rate" value="0">
                                         <input type="hidden" name="tax_type" id="tax_type" value="">
-                                    </div>
-                                </div>
+{{--                                    </div>--}}
+{{--                                </div>--}}
 
                                 <div class="col-6 col-lg-2 d-flex justify-content-center align-items-center">
-                                    <div class="col-6">
-                                        <button type="button"
-                                            class="btn btn-link btn-sm d-flex justify-content-center align-items-center height-responsive"
-                                            style="background-color: #e6e6e6 ; border: none;
-                                    border-radius: 16px;
-                                    color: #373737;
-                                                box-shadow: 0 8px 6px -5px #bbb;
-                                    padding: 12px;
-                                    width: 100%;
-                                   " data-toggle="modal" data-target="#delivery-cost-modal">
+{{--                                    <div class="col-6">--}}
+{{--                                        <button type="button"--}}
+{{--                                            class="btn btn-link btn-sm d-flex justify-content-center align-items-center height-responsive"--}}
+{{--                                            style="background-color: #e6e6e6 ; border: none;--}}
+{{--                                    border-radius: 16px;--}}
+{{--                                    color: #373737;--}}
+{{--                                                box-shadow: 0 8px 6px -5px #bbb;--}}
+{{--                                    padding: 12px;--}}
+{{--                                    width: 100%;--}}
+{{--                                   " data-toggle="modal" data-target="#delivery-cost-modal">--}}
 
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 640 512">
-                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                                                <path
-                                                    d="M280 32c-13.3 0-24 10.7-24 24s10.7 24 24 24h57.7l16.4 30.3L256 192l-45.3-45.3c-12-12-28.3-18.7-45.3-18.7H64c-17.7 0-32 14.3-32 32v32h96c88.4 0 160 71.6 160 160c0 11-1.1 21.7-3.2 32h70.4c-2.1-10.3-3.2-21-3.2-32c0-52.2 25-98.6 63.7-127.8l15.4 28.6C402.4 276.3 384 312 384 352c0 70.7 57.3 128 128 128s128-57.3 128-128s-57.3-128-128-128c-13.5 0-26.5 2.1-38.7 6L418.2 128H480c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H459.6c-7.5 0-14.7 2.6-20.5 7.4L391.7 78.9l-14-26c-7-12.9-20.5-21-35.2-21H280zM462.7 311.2l28.2 52.2c6.3 11.7 20.9 16 32.5 9.7s16-20.9 9.7-32.5l-28.2-52.2c2.3-.3 4.7-.4 7.1-.4c35.3 0 64 28.7 64 64s-28.7 64-64 64s-64-28.7-64-64c0-15.5 5.5-29.7 14.7-40.8zM187.3 376c-9.5 23.5-32.5 40-59.3 40c-35.3 0-64-28.7-64-64s28.7-64 64-64c26.9 0 49.9 16.5 59.3 40h66.4C242.5 268.8 190.5 224 128 224C57.3 224 0 281.3 0 352s57.3 128 128 128c62.5 0 114.5-44.8 125.8-104H187.3zM128 384a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />
-                                            </svg>
+{{--                                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 640 512">--}}
+{{--                                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->--}}
+{{--                                                <path--}}
+{{--                                                    d="M280 32c-13.3 0-24 10.7-24 24s10.7 24 24 24h57.7l16.4 30.3L256 192l-45.3-45.3c-12-12-28.3-18.7-45.3-18.7H64c-17.7 0-32 14.3-32 32v32h96c88.4 0 160 71.6 160 160c0 11-1.1 21.7-3.2 32h70.4c-2.1-10.3-3.2-21-3.2-32c0-52.2 25-98.6 63.7-127.8l15.4 28.6C402.4 276.3 384 312 384 352c0 70.7 57.3 128 128 128s128-57.3 128-128s-57.3-128-128-128c-13.5 0-26.5 2.1-38.7 6L418.2 128H480c17.7 0 32-14.3 32-32V64c0-17.7-14.3-32-32-32H459.6c-7.5 0-14.7 2.6-20.5 7.4L391.7 78.9l-14-26c-7-12.9-20.5-21-35.2-21H280zM462.7 311.2l28.2 52.2c6.3 11.7 20.9 16 32.5 9.7s16-20.9 9.7-32.5l-28.2-52.2c2.3-.3 4.7-.4 7.1-.4c35.3 0 64 28.7 64 64s-28.7 64-64 64s-64-28.7-64-64c0-15.5 5.5-29.7 14.7-40.8zM187.3 376c-9.5 23.5-32.5 40-59.3 40c-35.3 0-64-28.7-64-64s28.7-64 64-64c26.9 0 49.9 16.5 59.3 40h66.4C242.5 268.8 190.5 224 128 224C57.3 224 0 281.3 0 352s57.3 128 128 128c62.5 0 114.5-44.8 125.8-104H187.3zM128 384a32 32 0 1 0 0-64 32 32 0 1 0 0 64z" />--}}
+{{--                                            </svg>--}}
 
-                                        </button>
-                                    </div>
+{{--                                        </button>--}}
+{{--                                    </div>--}}
                                     <div class="col-6">
                                         <button type="button" id="print_and_draft"
                                             class="btn btn-link btn-sm d-flex justify-content-center align-items-center height-responsive"
@@ -207,8 +207,9 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
 
                             <div style="border-radius: 8px;width: 100%"
                                 class="py-2 d-flex card mb-0 flex-row justify-content-between align-items-start">
-                                <div class="col-6 d-flex flex-column flex-lg-row">
-                                    <div class="col-lg-4 mb-2 mb-lg-0">
+                                <div class="col-12 d-flex flex-column flex-lg-row">
+
+                                    <div class="col-lg-4 mb-2 mb-lg-0 customer-div">
 
                                         <div class="col-12 form-group input-group my-group d-flex flex-row justify-content-center height-responsive"
                                             style="background-color: #e6e6e6 ; border: none;
@@ -257,7 +258,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 mb-2 mb-lg-0">
+                                    <div class="col-lg-2 mb-2 mb-lg-0">
                                         <div style="width: 100%"
                                             class="col-12  p-0 input-group my-group d-flex flex-row justify-content-center height-responsive">
                                             <button type="button" style="background-color: #e6e6e6 ;
@@ -275,29 +276,9 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
 
                                     </div>
 
-                                    <div class="col-lg-4 mb-2 mb-lg-0">
-                                        <div style="width: 100%"
-                                            class="col-12  p-0  input-group my-group d-flex flex-row justify-content-center height-responsive">
-
-                                            <button type="button" style="background-color: #e6e6e6 ;
-                                    border: none;
-                                        border-radius: 16px;
-                                        color: #373737;
-                                        box-shadow: 0 8px 6px -5px #bbb;
-                                        padding: 10px 6px;
-                                        width: 100%;"
-                                                class="height-responsive d-flex justify-content-center align-items-center"
-                                                data-toggle="modal"
-                                                data-target="#non_identifiable_item_modal">@lang('lang.non_identifiable_item')
-                                            </button>
-
-                                        </div>
-                                    </div>
-                                </div>
 
 
-                                <div class="col-6 d-flex flex-column flex-lg-row">
-                                    <div class="col-lg-4 mb-2 mb-lg-0">
+                                    <div class="col-lg-2 mb-2 mb-lg-0">
 
                                         <div class="col-lg-12 mb-0 ml-1 input-group my-group d-flex justify-content-between                     height-responsive text-center"
                                             style="background-color: white; border: none;
@@ -329,7 +310,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-4 mb-2 mb-lg-0">
+                                    <div class="col-lg-2 mb-2 mb-lg-0">
                                         <div class="col-12 p-0 ml-1 input-group my-group d-flex flex-row justify-content-between height-responsive text-center"
                                             style="background-color: white; border: none;
                                  border: 1px solid #bbb;
@@ -339,7 +320,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                     width: 100%;
                                   ">
                                             <label
-                                                class="d-flex justify-content-center justify-content-md-between align-items-center height-responsive"
+                                                class="d-flex justify-content-center justify-content-md-between align-items-center height-responsive te"
                                                 for="customer_balance" style="background-color: var(--secondary-color);
                                                 width: fit-content;
                                                 height: 100%;
@@ -347,38 +328,13 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                                 padding: 10px;
                                                 margin-bottom: 0;
                                                 font-weight: 600;
+                                                color: #fff !important;
                                                 ">@lang('lang.balance'):
                                             </label>
                                             <span style="color: #000; padding-right: 15px"
                                                 class="customer_balance d-flex justify-content-start align-items-center">{{
                                                 @num_format(0) }}</span>
 
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4 mb-2 mb-lg-0">
-                                        <div class="col-12 p-0 ml-1 input-group my-group d-flex flex-row justify-content-between height-responsive text-center"
-                                            style="background-color: white; border: none;
-                                     border: 1px solid #bbb;
-                                    border-radius: 16px;
-                                    color: white;
-                                    box-shadow: 0 8px 6px -5px #bbb ;
-                                    width: 100%">
-                                            <label for="points"
-                                                class="d-flex justify-content-center justify-content-md-between align-items-center height-responsive"
-                                                style="background-color: var(--secondary-color);
-                                                width: fit-content;
-                                                height: 100%;
-                                                border-radius: 16px;
-                                                padding: 10px;
-                                                margin-bottom: 0;
-                                                font-weight: 600;
-                                                ">
-                                                @lang('lang.points'):
-                                            </label>
-                                            <span style="color: #000; padding-right: 15px"
-                                                class="customer_points_span d-flex justify-content-start align-items-center">{{
-                                                @num_format(0) }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -468,30 +424,29 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                         <thead>
                                             <tr style="width: 100%">
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 17% @else 20% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  17%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.products')</th>
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 12% @else 20% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  12%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.quantity')</th>
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 12% @else 15% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  12%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.price')</th>
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 11% @else 15% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  11%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.discount')</th>
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 10% @else 15% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  10%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.category_discount')</th>
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 9% @else 15% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  9%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.sub_total')</th>
-                                                @if (session('system_mode') != 'restaurant')
+
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 9% @else 15% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  9%;  font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.current_stock')</th>
-                                                @endif
                                                 <th class="text-center text-black"
-                                                    style="width: @if (session('system_mode') != 'restaurant') 9% @else 15% @endif; font-size: 11px !important; font-weight: 700;">
+                                                    style="width:  9%; font-size: 11px !important; font-weight: 700;">
                                                     @lang('lang.action')</th>
                                             </tr>
                                         </thead>
@@ -535,21 +490,15 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                                     class="border border-5 px-1 py-2 rounded">0.00</span>
                                             </div>
 
-                                            <div
-                                                class="col-2 flex-column d-flex align-items-center text-center  mb-2 mb-lg-0">
-                                                <span class="totals-title mr-2" style="color: #000;font-weight: 600;">{{
-                                                    __('lang.tax') }}
-                                                </span>
-                                                <span id="tax" class="border border-5 px-1 py-2 rounded">0.00</span>
-                                            </div>
+{{--                                            <div--}}
+{{--                                                class="col-2 flex-column d-flex align-items-center text-center  mb-2 mb-lg-0">--}}
+{{--                                                <span class="totals-title mr-2" style="color: #000;font-weight: 600;">{{--}}
+{{--                                                    __('lang.tax') }}--}}
+{{--                                                </span>--}}
+{{--                                                <span id="tax" class="border border-5 px-1 py-2 rounded">0.00</span>--}}
+{{--                                            </div>--}}
 
-                                            <div
-                                                class="col-2 flex-column d-flex align-items-center text-center  mb-2 mb-lg-0">
-                                                <span class="totals-title mr-2" style="color: #000;font-weight: 600;">{{
-                                                    __('lang.delivery') }}</span>
-                                                <span id="delivery-cost"
-                                                    class="border border-5 px-1 py-2 rounded">0.00</span>
-                                            </div>
+
 
                                         </div>
 
@@ -775,7 +724,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <button style="background-color: #ff0000;" type="button"
+                                            <button style="background-color: #ff0000; color:#fff !important; " type="button"
                                                 class="btn text-white" id="cancel-btn" onclick="return confirmCancel()">
                                                 @lang('lang.cancel')</button>
                                         </div>
@@ -788,13 +737,13 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
 
 
                     <div class="payment-options row table_room_hide"
-                        style=" width: @if (session('system_mode') == 'pos' || session('system_mode') == 'garments' || session('system_mode') == 'supermarket') 100%; @else 50%; @endif">
+                        style=" width:  100%;">
                         <div class="col-md-12 flex-wrap d-flex justify-content-start justify-content-lg-center align-items-center mb-3  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif"
                             style="font-size: 16px;font-weight: 600">
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="cash"
-                                    style="background: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    style="background: var(--secondary-color);color:#fff;display: flex;justify-content: center;gap: 10px;"
                                     type="button" class="btn btn-custom w-75 pos-button payment-btn" data-toggle="modal"
                                     data-target="#add-payment" data-backdrop="static" data-keyboard="false"
                                     id="cash-btn">
@@ -808,18 +757,17 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                             </div>
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
-                                <button data-method="coupon" style="background: var(--secondary-color)" type="button"
+                                <button data-method="coupon" style="background: var(--secondary-color);color:#fff;" type="button"
                                     class="btn  w-75 pos-button btn-custom" data-toggle="modal"
                                     data-target="#coupon_modal" id="coupon-btn"><i class="fa fa-tag"></i>
                                     @lang('lang.coupon')</button>
                             </div>
 
 
-                            @if (session('system_mode') != 'restaurant')
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="paypal"
-                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;font-size: 10px"
+                                    style="background: var(--secondary-color);color:#fff;display: flex;justify-content: center;gap: 10px;font-size: 10px"
                                     type="button" class="btn btn-custom w-75 pos-button  payment-btn"
                                     data-toggle="modal" data-target="#add-payment" data-backdrop="static"
                                     data-keyboard="false" id="paypal-btn">
@@ -831,11 +779,10 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                     @lang('lang.online_payments')
                                 </button>
                             </div>
-                            @endif
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="draft"
-                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    style="background: var(--secondary-color);color:#fff;display: flex;justify-content: center;gap: 10px;"
                                     type="button" data-toggle="modal" data-target="#sale_note_modal"
                                     class="btn  w-75 pos-button btn-custom">
                                     <div style="width: 18px">
@@ -847,7 +794,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                             </div>
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
-                                <button style="background-color: #ff0000;" type="button"
+                                <button style="background-color: #ff0000; color: #fff" type="button"
                                     class="btn  w-75 pos-button btn-custom" id="cancel-btn"
                                     onclick="return confirmCancel()"><i class="fa fa-close"></i>
                                     @lang('lang.cancel')</button>
@@ -858,37 +805,24 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button
-                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    style="background: var(--secondary-color);color:#fff;display: flex;justify-content: center;gap: 10px;"
                                     type="button" class="btn  w-75 pos-button btn-custom" id="recent-transaction-btn">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
                                             src="{{ asset('front/images/icons Png/Icon material-timer.png') }}"
-                                            alt="Pay">
+                                            alt="Pay"
+                                             style="width: 15px !important;">
                                     </div>
                                     @lang('lang.recent_transactions')
                                 </button>
                             </div>
 
-                            <div
-                                class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
-                                <button data-method="online-order"
-                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
-                                    type="button" class="btn w-75 pos-button  btn-custom" id="view-online-order-btn"
-                                    data-href="{{ action('SellPosController@getOnlineOrderTransactions') }}">
-                                    <div style="width: 18px">
-                                        <img class="w-100 h-100"
-                                            src="{{ asset('front/images/icons Png/Icon map-department-store.png') }}"
-                                            alt="Pay">
-                                    </div>
-                                    @lang('lang.online_orders') <span
-                                        class="badge badge-danger online-order-badge">0</span>
-                                </button>
-                            </div>
+
 
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="pay-later"
-                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    style="background: var(--secondary-color);color:#fff;display: flex;justify-content: center;gap: 10px;"
                                     type="button" class="btn  w-75 pos-button btn-custom" id="pay-later-btn">
                                     <div style="width: 18px">
                                         <img class="w-100 h-100"
@@ -901,7 +835,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
                                 <button data-method="draft"
-                                    style="background-color: var(--secondary-color);display: flex;justify-content: center;gap: 10px;"
+                                    style="background: var(--secondary-color);color:#fff;display: flex;justify-content: center;gap: 10px;"
                                     type="button" class="btn  w-75 pos-button  btn-custom" id="view-draft-btn"
                                     data-href="{{ action('SellPosController@getDraftTransactions') }}">
                                     <div style="width: 18px">
@@ -913,45 +847,12 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                             </div>
                             <div
                                 class="col-md-6 col-lg-2 mb-3 mb-lg-1 d-flex justify-content-center align-items-center">
-                                <button data-method="cash" style="background: var(--secondary-color)" type="button"
+                                <button data-method="cash" style="background: var(--secondary-color);color:#fff;" type="button"
                                     class="btn w-75 pos-button btn-custom" id="quick-pay-btn"><i
                                         class="fa fa-money"></i>
                                     @lang('lang.quick_pay')</button>
                             </div>
                         </div>
-                        {{-- <div class="column-5">
-                            <button data-method="card" style="background: #0984e3" type="button"
-                                class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
-                                id="credit-card-btn"><i class="fa fa-credit-card"></i> @lang('lang.card')</button>
-                        </div> --}}
-
-
-                        {{-- <div class="column-5">
-                            <button data-method="cheque" style="background-color: #fd7272" type="button"
-                                class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
-                                id="cheque-btn"><i class="fa fa-money"></i> @lang('lang.cheque')</button>
-                        </div>
-                        <div class="column-5">
-                            <button data-method="bank_transfer" style="background-color: #56962b" type="button"
-                                class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
-                                id="bank-transfer-btn"><i class="fa fa-building-o"></i>
-                                @lang('lang.bank_transfer')</button>
-                        </div> --}}
-
-                        {{-- <div class="column-5">
-                            <button data-method="gift_card" style="background-color: #5f27cd" type="button"
-                                class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
-                                id="gift-card-btn"><i class="fa fa-credit-card-alt"></i>
-                                @lang('lang.gift_card')</button>
-                        </div> --}}
-                        {{-- <div class="column-5">
-                            <button data-method="deposit" style="background-color: #b33771" type="button"
-                                class="btn btn-custom payment-btn" data-toggle="modal" data-target="#add-payment"
-                                id="deposit-btn"><i class="fa fa-university"></i>
-                                @lang('lang.use_the_balance')</button>
-                        </div> --}}
-
-
                     </div>
 
                 </div>
@@ -1190,9 +1091,7 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
-                                    @include('back-end.sales.pos.partials.view_online_order')
-                                </div>
+
                             </div>
 
                             <div class="modal-footer mb-3 d-flex justify-content-center align-content-center gap-3">
@@ -1219,60 +1118,4 @@ $watsapp_numbers = App\Models\System::getProperty('watsapp_numbers');
 @section('javascript')
 <script src="{{ asset('js/onscan.min.js') }}"></script>
 <script src="{{ asset('js/pos.js') }}"></script>
-<script src="{{ asset('js/dining_table.js') }}"></script>
-<script>
-    $(document).ready(function() {
-            $('.online-order-badge').hide();
-        })
-        // Enable pusher logging - don't include this in production
-        // Pusher.logToConsole = true;
-
-        var pusher = new Pusher("{{ env('PUSHER_APP_KEY') }}", {
-            cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
-        });
-
-        var channel = pusher.subscribe('order-channel');
-        channel.bind('new-order', function(data) {
-            if (data) {
-                let badge_count = parseInt($('.online-order-badge').text()) + 1;
-                $('.online-order-badge').text(badge_count);
-                $('.online-order-badge').show();
-                var transaction_id = data.transaction_id;
-                $.ajax({
-                    method: 'get',
-                    url: '/pos/get-transaction-details/' + transaction_id,
-                    data: {},
-                    success: function(result) {
-                        toastr.success(LANG.new_order_placed_invoice_no + ' ' + result.invoice_no);
-                        let notification_number = parseInt($('.notification-number').text());
-                        console.log(notification_number, 'notification-number');
-                        if (!isNaN(notification_number)) {
-                            notification_number = parseInt(notification_number) + 1;
-                        } else {
-                            notification_number = 1;
-                        }
-                        $('.notification-list').empty().append(
-                            `<i class="dripicons-bell"></i><span class="badge badge-danger notification-number">${notification_number}</span>`
-                        );
-                        $('.notifications').prepend(
-                            `<li>
-                                <a class="pending notification_item"
-                                    data-mark-read-action=""
-                                    data-href="{{ url('/') }}/pos/${transaction_id}/edit?status=final">
-                                    <p style="margin:0px"><i class="dripicons-bell"></i> ${LANG.new_order_placed_invoice_no} #
-                                        ${result.invoice_no}</p>
-                                    <span class="text-muted">
-                                        @lang('lang.total'): ${__currency_trans_from_en(result.final_total, false)}
-                                    </span>
-                                </a>
-
-                            </li>`
-                        );
-                        $('.no_new_notification_div').addClass('hide');
-
-                    },
-                });
-            }
-        });
-</script>
 @endsection
