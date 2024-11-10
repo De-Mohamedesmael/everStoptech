@@ -1324,4 +1324,5 @@
   'edit_brand' => 'Edit brand',
   'Wrong Password!' => 'Wrong Password!',
   'Correct Password!' => 'Correct Password!',
+  'gender' => 'Gender',
 );

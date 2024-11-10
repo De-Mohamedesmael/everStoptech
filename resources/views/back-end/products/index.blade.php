@@ -726,7 +726,7 @@
         $(document).on('change', '.show_at_the_main_pos_page', function (e) {
             $.ajax({
                 type: "GET",
-                url: "/product/toggle-appearance-pos/" + $(this).data('id'),
+                url: "/products/toggle-appearance-pos/" + $(this).data('id'),
                 data: {
                     check: $(this).is(":checked") ? 'yes' : 'no'
                 },

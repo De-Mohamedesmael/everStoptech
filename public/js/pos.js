@@ -20,29 +20,15 @@ $(document).ready(function () {
 
 $(document).on("click", "#category-filter", function (e) {
     e.stopPropagation();
-    $("#sub-category-filter").prop("checked", false);
     if ($(this).prop("checked")) {
         $(".filter-window").show("slide", { direction: "right" }, "fast");
         $(".category").show();
         $(".brand").hide();
-        $(".sub_category").hide();
     } else {
         getFilterProductRightSide();
     }
 });
 
-$(document).on("click", "#sub-category-filter", function (e) {
-    e.stopPropagation();
-    $("#category-filter").prop("checked", false);
-    if ($(this).prop("checked")) {
-        $(".filter-window").show("slide", { direction: "right" }, "fast");
-        $(".brand").hide();
-        $(".category").hide();
-        $(".sub_category").show();
-    } else {
-        getFilterProductRightSide();
-    }
-});
 
 $(document).on("click", "#brand-filter", function (e) {
     e.stopPropagation();
@@ -187,43 +173,36 @@ $(document).on("change", "input[name=restaurant_filter]", function () {
 });
 $(document).ready(function () {
     $("#store_id").change();
+    getFilterProductRightSide();
 });
-getFilterProductRightSide();
+
 function getFilterProductRightSide(
     category_id = null,
-    sub_category_id = null,
     brand_id = null,
-    product_class_id = null
 ) {
     var selling_filter = getFilterCheckboxValue("selling_filter");
     var price_filter = getFilterCheckboxValue("price_filter");
-    var expiry_filter = getFilterCheckboxValue("expiry_filter");
-    var sale_promo_filter = getFilterCheckboxValue("sale_promo_filter");
     var sorting_filter = getFilterCheckboxValue("sorting_filter");
     var store_id = $("#store_id").val();
     let currency_id = $("select#received_currency_id").val();
 
     $.ajax({
         method: "get",
-        url: "/pos/get-product-items-by-filter",
+        url: "/pos/get-products-items-by-filter",
         data: {
             selling_filter,
             price_filter,
-            expiry_filter,
-            sale_promo_filter,
             sorting_filter,
             store_id,
             category_id,
-            sub_category_id,
             brand_id,
-            product_class_id,
             currency_id,
         },
         dataType: "html",
         success: function (result) {
-            $("#filter-products-table > tbody").hide();
-            $("#filter-products-table > tbody").empty().append(result);
-            $("#filter-products-table > tbody").show(500);
+            $("#filter-product-table > tbody").hide();
+            $("#filter-product-table > tbody").empty().append(result);
+            $("#filter-product-table > tbody").show(100);
         },
     });
 }
@@ -259,7 +238,6 @@ $(document).ready(function () {
                             0,
                             $("#search_product").val()
                         );
-                        // swal("Product not found");
                     }
                 },
                 focus: function (event, ui) {
@@ -278,25 +256,21 @@ $(document).ready(function () {
                             if(ui.item.batch_number!==null){
                                 get_label_product_row(
                                    ui.item.product_id,
-                                   ui.item.variation_id,
                                    ui.item.add_stock_lines_id
                                );
                            }else{
                                  get_label_product_row(
-                                   ui.item.product_id,
-                                   ui.item.variation_id,
+                                   ui.item.product_id
                                );
                            }
                         } else {
                             out_of_stock_handle(
-                                ui.item.product_id,
-                                ui.item.variation_id
+                                ui.item.product_id
                             );
                         }
                     } else {
                         get_label_product_row(
                             ui.item.product_id,
-                            ui.item.variation_id,
                             ui.item.add_stock_lines_id
                         );
                     }
@@ -333,7 +307,6 @@ $(document).ready(function () {
 
 function get_label_product_row(
     product_id = null,
-    variation_id = null,
     add_stock_lines_id=null,
     edit_quantity = 1,
     edit_row_count = 0,
@@ -349,7 +322,7 @@ function get_label_product_row(
     $("#product_table tbody")
         .find("tr")
         .each(function () {
-            var row_v_id = $(this).find(".variation_id").val();
+            var row_p_id = $(this).find(".variation_id").val();
             var row_batch_number = $(this).find(".batch_number_id").val();
             if(add_stock_lines_id!=null){
                 if (row_v_id == variation_id && row_batch_number ==add_stock_lines_id && !is_added) {
@@ -442,7 +415,11 @@ function get_label_product_row(
             success: function (result) {
 
                 if (!result.success) {
-                    swal("Error", result.msg, "error");
+                     Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                });
                     return;
                 }
 
@@ -452,7 +429,6 @@ function get_label_product_row(
                 check_for_sale_promotion();
                 calculate_sub_totals();
                 reset_row_numbering();
-                getCustomerPointDetails();
             },
         });
     }
@@ -1013,11 +989,14 @@ $(document).on("change", ".sell_price", function () {
     let purchase_price = __read_number($(tr).find(".purchase_price"));
 
     if (sell_price < purchase_price) {
-        swal(LANG.warning, LANG.sell_price_less_than_purchase_price, "warning");
+        Swal.fire({
+            title:LANG.warning,
+            text:LANG.sell_price_less_than_purchase_price,
+            icon:"warning"});
         return;
     }else{
         //change price
-        swal({
+        Swal.fire({
             title: "",
             text: LANG.change_price_permenatly,
             icon: "warning",
@@ -1033,11 +1012,19 @@ $(document).on("change", ".sell_price", function () {
                 url: "/pos/change-selling-price/"+$(this).data('variation_id'),
                 data: {sell_price:sell_price},
                 success: function (response) {
-                    swal("Success", response.msg, "success");
+                     Swal.fire({
+                        title: 'Success',
+                        text: response.msg,
+                        icon: 'success',
+                    })
                 }
             });
             } else {
-                swal("Success", LANG.price_changed_only_for_this_transaction, "success");
+                Swal.fire({
+                    title: "Success",
+                    text:LANG.price_changed_only_for_this_transaction,
+                    icon:"success"
+                });
             }
         });
     }
@@ -1094,7 +1081,11 @@ $(document).on("submit", "form#quick_add_customer_form", function (e) {
         contentType: false,
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                 Swal.fire({
+                    title: 'Success',
+                    text: result.msg,
+                    icon: 'success',
+                });
                 $(".view_modal").modal("hide");
                 var customer_id = result.customer_id;
                 $.ajax({
@@ -1109,7 +1100,11 @@ $(document).on("submit", "form#quick_add_customer_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+                 Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                });
             }
         },
     });
@@ -1125,17 +1120,26 @@ $(document).on("click", ".quick_add_purchase_order", function () {
         data: { store_id: $("#store_id").val() },
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+
+                 Swal.fire({
+                    title: 'Success',
+                    text: result.msg,
+                    icon: 'success',
+                });
                 $(tr).find(".quick_add_purchase_order").remove();
             } else {
-                swal("Error", result.msg, "error");
+                 Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                });
             }
         },
     });
 });
 
 function out_of_stock_handle(product_id, variation_id) {
-    swal({
+    Swal.fire({
         title: LANG.out_of_stock,
         text: "",
         icon: "error",
@@ -1154,9 +1158,17 @@ function out_of_stock_handle(product_id, variation_id) {
                 data: { store_id: $("#store_id").val() },
                 success: function (result) {
                     if (result.success) {
-                        swal("Success", result.msg, "success");
+                         Swal.fire({
+                    title: 'Success',
+                    text: result.msg,
+                    icon: 'success',
+                });
                     } else {
-                        swal("Error", result.msg, "error");
+                         Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                });
                     }
                 },
             });
@@ -1569,7 +1581,11 @@ $(document).ready(function () {
                             if ($("#submit_type").val() === "print") {
                                 pos_print(result.html_content);
                             } else {
-                                swal("success", result.msg, "Success");
+                                 Swal.fire({
+                    title: 'Success',
+                    text: result.msg,
+                    icon: 'success',
+                });
                                 location.reload();
                             }
                             return false;
@@ -1618,11 +1634,11 @@ $(document).ready(function () {
                             "print_and_draft"
                         ) {
                             pos_print(result.html_content);
-                            swal(
-                                "",
-                                LANG.the_order_is_saved_to_draft,
-                                "success"
-                            );
+                            Swal.fire({
+                                title:"",
+                                text:LANG.the_order_is_saved_to_draft,
+                                icon:"success"
+                            });
                         }
 
                         reset_pos_form();
@@ -1790,16 +1806,15 @@ $(document).on("click", "td.filter_product_add", function () {
     let qty_available = parseFloat($(this).data("qty_available"));
     let is_service = parseInt($(this).data("is_service"));
     let product_id = $(this).data("product_id");
-    let variation_id = $(this).data("variation_id");
 
     if (!is_service) {
         if (qty_available > 0) {
-            get_label_product_row(product_id, variation_id);
+            get_label_product_row(product_id);
         } else {
-            out_of_stock_handle(product_id, variation_id);
+            out_of_stock_handle(product_id);
         }
     } else {
-        get_label_product_row(product_id, variation_id);
+        get_label_product_row(product_id);
     }
 });
 
@@ -1983,95 +1998,10 @@ $(document).ready(function () {
                 });
         },
     });
-    online_order_table = $("#online_order_table").DataTable({
-        lengthChange: true,
-        paging: true,
-        info: false,
-        bAutoWidth: false,
-        language: {
-            url: dt_lang_url,
-        },
-        lengthMenu: [
-            [10, 25, 50, 75, 100, 200, 500, -1],
-            [10, 25, 50, 75, 100, 200, 500, "All"],
-        ],
-        dom: "lBfrtip",
-        buttons: buttons,
-        processing: true,
-        serverSide: true,
-        aaSorting: [[0, "desc"]],
-        initComplete: function () {
-            $(this.api().table().container())
-                .find("input")
-                .parent()
-                .wrap("<form>")
-                .parent()
-                .attr("autocomplete", "off");
-        },
-        ajax: {
-            url: "/pos/get-online-order-transactions",
-            data: function (d) {
-                d.start_date = $("#online_order_start_date").val();
-                d.end_date = $("#online_order_end_date").val();
-            },
-        },
-        columnDefs: [
-            {
-                targets: [7],
-                orderable: false,
-                searchable: false,
-            },
-        ],
-        columns: [
-            { data: "transaction_date", name: "transaction_date" },
-            { data: "final_total", name: "final_total" },
-            { data: "customer_type", name: "customer_types.name" },
-            { data: "customer_name", name: "customers.name" },
-            { data: "mobile_number", name: "customers.mobile_number" },
-            { data: "method", name: "transaction_payments.method" },
-            { data: "status", name: "transactions.status" },
-            { data: "deliveryman_name", name: "deliveryman_name" },
-            { data: "action", name: "action" },
-        ],
-        createdRow: function (row, data, dataIndex) {},
-        footerCallback: function (row, data, start, end, display) {
-            var intVal = function (i) {
-                return typeof i === "string"
-                    ? i.replace(/[\$,]/g, "") * 1
-                    : typeof i === "number"
-                    ? i
-                    : 0;
-            };
 
-            this.api()
-                .columns(".sum", { page: "current" })
-                .every(function () {
-                    var column = this;
-                    if (column.data().count()) {
-                        var sum = column.data().reduce(function (a, b) {
-                            a = intVal(a);
-                            if (isNaN(a)) {
-                                a = 0;
-                            }
-
-                            b = intVal(b);
-                            if (isNaN(b)) {
-                                b = 0;
-                            }
-
-                            return a + b;
-                        });
-                        $(column.footer()).html(
-                            __currency_trans_from_en(sum, false)
-                        );
-                    }
-                });
-        },
-    });
 });
 $(document).on("shown.bs.modal", "#contact_details_modal", function () {
     customer_sales_table.ajax.reload();
-    getCustomerPointDetails();
 });
 $(document).on("shown.bs.modal", "#recentTransaction", function () {
     // recent_transaction_table.ajax.reload();
@@ -2085,7 +2015,6 @@ $(document).on("click", "#view-online-order-btn", function () {
     $("#onlineOrderTransaction").modal("show");
     $(".online-order-badge").hide();
     $(".online-order-badge").text(0);
-    online_order_table.ajax.reload();
 });
 $(document).ready(function () {
     $(document).on(
@@ -2095,13 +2024,7 @@ $(document).ready(function () {
             draft_table.ajax.reload();
         }
     );
-    $(document).on(
-        "change",
-        "#online_order_start_date, #online_order_end_date",
-        function () {
-            online_order_table.ajax.reload();
-        }
-    );
+
     $(document).on(
         "change",
         "#rt_start_date, #rt_end_date, #rt_customer_id, #rt_created_by, #rt_method, #rt_deliveryman_id",
@@ -2249,7 +2172,12 @@ function get_recent_transactions() {
 }
 
 $(document).on("change", "#customer_id", function () {
-    let customer_id = $(this).val();
+    getCustomerData();
+    getCustomerBalance();
+});
+function getCustomerData() {
+    let customer_id = $("#customer_id").val();
+
     $.ajax({
         method: "get",
         url:
@@ -2262,7 +2190,9 @@ $(document).on("change", "#customer_id", function () {
             $(".customer_name_span").text(result.name);
             $(".customer_address").text(result.address);
             $(".customer_address_span").text(result.address);
-            $(".delivery_address").text(result.address);
+            $(".customer_age_span").text(result.age);
+            $(".customer_gender_span").text(result.gender);
+            $(".customer_type_name").text(result.customer_type);
 
             $(".customer_due_span").text(
                 __currency_trans_from_en(result.due, false)
@@ -2272,34 +2202,9 @@ $(document).on("change", "#customer_id", function () {
             );
         },
     });
-    getCustomerBalance();
-    getCustomerPointDetails();
-    getCustomerSizes(customer_id);
-});
-
-function getCustomerSizes(customer_id) {
-    $("#size_next").removeClass("hide");
-    $("#size_prev").removeClass("hide");
-    $.ajax({
-        method: "get",
-        url: "/customer-sizes/get-dropdown",
-        data: { customer_id },
-        success: function (result) {
-            $("#customer_size_id").html(result);
-            $("#customer_size_id").val("");
-            $("#customer_size_id").selectpicker("refresh");
-
-            // for edit page
-            if (
-                $("#customer_size_id_hidden").length > 0 &&
-                $("#customer_size_id_hidden").val() != ""
-            ) {
-                $("#customer_size_id").val($("#customer_size_id_hidden").val());
-                $("#customer_size_id").selectpicker("refresh");
-            }
-        },
-    });
 }
+
+
 $(document).on("change", "#customer_size_id", function () {
     $("#customer_size_id_hidden").val($(this).val());
 });
@@ -2378,80 +2283,6 @@ function getCustomerBalance() {
         },
     });
 }
-function getCustomerPointDetails() {
-    let customer_id = $("#customer_id").val();
-    let default_customer_id = $("#default_customer_id").val();
-    var product_array = [];
-    $("#product_table > tbody  > tr").each((i, tr) => {
-        let product_id = __read_number($(tr).find(".product_id"));
-        let sub_total = __read_number($(tr).find(".sub_total"));
-        product_array[i] = { product_id: product_id, sub_total: sub_total };
-    });
-
-    $.ajax({
-        method: "get",
-        url: "/pos/get-customer-details/" + customer_id,
-        data: { store_id: $("#store_id").val(), product_array: product_array },
-        dataType: "json",
-        success: function (result) {
-            $("#customer_address").val(result.customer.address);
-            $(".customer_mobile_span").text(result.customer.mobile_number);
-            $(".customer_name_span").text(result.customer.name);
-            $(".customer_points_span").text(
-                __currency_trans_from_en(result.customer.total_rp, false)
-            );
-            $(".customer_points").val(result.customer.total_rp);
-            $(".customer_points_value_span").text(
-                __currency_trans_from_en(result.rp_value, false)
-            );
-            $(".customer_points_value").val(result.rp_value);
-            $(".customer_total_redeemable_span").text(
-                __currency_trans_from_en(result.total_redeemable, false)
-            );
-            $(".customer_total_redeemable").val(result.total_redeemable);
-            if (parseInt(result.total_redeemable) > 0) {
-                $(".redeem_btn").attr("disabled", false);
-            } else {
-                $(".redeem_btn").attr("disabled", true);
-                $("#is_redeem_points").val(0);
-            }
-            if(result.customer_type_name == "Walk in"){
-                $(".customer_type_name").text(LANG.walk_in_customer);
-            }else{
-                $(".customer_type_name").text(result.customer_type_name);
-            }
-
-            $("#emails").val(result.customer.email);
-            // $(".customer_balance").text(
-            //     __currency_trans_from_en(result.balance, false)
-            // );
-            // $(".customer_balance").removeClass("text-red");
-            // if (result.balance < 0) {
-            //     $(".customer_balance").addClass("text-red");
-            // }
-            // $(".remaining_balance_text").text(
-            //     __currency_trans_from_en(result.balance, false)
-            // );
-            // $(".balance_error_msg").addClass("hide");
-            // $("#remaining_deposit_balance").val(result.balance);
-            // $(".current_deposit_balance").text(
-            //     __currency_trans_from_en(result.balance, false)
-            // );
-            // $("#current_deposit_balance").val(result.balance);
-            let pay_due_url =
-                base_path +
-                "/transaction-payment/get-customer-due/" +
-                result.customer.id;
-            $("#pay_customer_due_btn").data("href", pay_due_url);
-            // if (result.balance < 0) {
-            //     $("#pay_customer_due_btn").attr("disabled", false);
-            // } else {
-            //     $("#pay_customer_due_btn").attr("disabled", true);
-            // }
-            calculate_sub_totals();
-        },
-    });
-}
 
 $(document).on("click", ".redeem_btn", function () {
     $("#is_redeem_points").val(1);
@@ -2496,9 +2327,17 @@ $(document).on("submit", "form#add_payment_form", function (e) {
             data: data,
             success: function (result) {
                 if (result.success) {
-                    swal("Success", result.msg, "success");
+                     Swal.fire({
+                        title: 'Success',
+                        text: result.msg,
+                        icon: 'success',
+                    });
                 } else {
-                    swal("Error", result.msg, "error");
+                     Swal.fire({
+                        title: 'Error',
+                        text: result.msg,
+                        icon: 'error',
+                    });
                 }
                 $(".view_modal").modal("hide");
                 get_recent_transactions();
@@ -2535,7 +2374,7 @@ function pos_print(receipt) {
 
 $(document).on("click", ".remove_draft", function (e) {
     e.preventDefault();
-    swal({
+    Swal.fire({
         title: "Are you sure?",
         text: "Are you sure You Wanna Delete it?",
         icon: "warning",
@@ -2545,7 +2384,7 @@ $(document).on("click", ".remove_draft", function (e) {
             var href = $(this).data("href");
             var data = $(this).serialize();
 
-            swal({
+            Swal.fire({
                 title: "Please Enter Your Password.",
                 content: {
                     element: "input",
@@ -2569,7 +2408,11 @@ $(document).on("click", ".remove_draft", function (e) {
                         dataType: "json",
                         success: (data) => {
                             if (data.success == true) {
-                                swal("Success", "Correct Password!", "success");
+                                Swal.fire({
+                                    title:"Success",
+                                    text:"Correct Password!",
+                                    icon:"success"
+                                });
 
                                 $.ajax({
                                     method: "DELETE",
@@ -2578,19 +2421,28 @@ $(document).on("click", ".remove_draft", function (e) {
                                     data: data,
                                     success: function (result) {
                                         if (result.success == true) {
-                                            swal(
-                                                "Success",
-                                                result.msg,
-                                                "success"
-                                            );
+                                            Swal.fire({
+                                                title:"Success",
+                                                text:result.msg,
+                                                icon:"success"
+                                            });
                                             draft_table.ajax.reload();
                                         } else {
-                                            swal("Error", result.msg, "error");
+                                             Swal.fire({
+                                                title: 'Error',
+                                                text: result.msg,
+                                                icon: 'error',
+                                            });
                                         }
                                     },
                                 });
                             } else {
-                                swal("Failed!", "Wrong Password!", "error");
+
+                                Swal.fire({
+                                    title: 'Failed!',
+                                    text: "Wrong Password!",
+                                    icon: 'error',
+                                })
                             }
                         },
                     });
@@ -2599,76 +2451,11 @@ $(document).on("click", ".remove_draft", function (e) {
         }
     });
 });
-$(document).on("click", ".remove_online_order", function (e) {
-    e.preventDefault();
-    swal({
-        title: "Are you sure?",
-        text: "Are you sure You Wanna Delete it?",
-        icon: "warning",
-    }).then((willDelete) => {
-        if (willDelete) {
-            var check_password = $(this).data("check_password");
-            var href = $(this).data("href");
-            var data = $(this).serialize();
 
-            swal({
-                title: "Please Enter Your Password.",
-                content: {
-                    element: "input",
-                    attributes: {
-                        placeholder: "Type your password",
-                        type: "password",
-                    },
-                },
-                inputAttributes: {
-                    autocapitalize: "off",
-                    autocorrect: "off",
-                },
-            }).then((result) => {
-                if (result) {
-                    $.ajax({
-                        url: check_password,
-                        method: "POST",
-                        data: {
-                            value: result,
-                        },
-                        dataType: "json",
-                        success: (data) => {
-                            if (data.success == true) {
-                                swal("Success", "Correct Password!", "success");
-
-                                $.ajax({
-                                    method: "DELETE",
-                                    url: href,
-                                    dataType: "json",
-                                    data: data,
-                                    success: function (result) {
-                                        if (result.success == true) {
-                                            swal(
-                                                "Success",
-                                                result.msg,
-                                                "success"
-                                            );
-                                            online_order_table.ajax.reload();
-                                        } else {
-                                            swal("Error", result.msg, "error");
-                                        }
-                                    },
-                                });
-                            } else {
-                                swal("Failed!", "Wrong Password!", "error");
-                            }
-                        },
-                    });
-                }
-            });
-        }
-    });
-});
 
 $(document).on("click", "a.draft_cancel", function (e) {
     e.preventDefault();
-    swal({
+    Swal.fire({
         title: "Are you sure?",
         text: "Are you sure You Wanna Cancel it?",
         icon: "warning",
@@ -2677,7 +2464,7 @@ $(document).on("click", "a.draft_cancel", function (e) {
             var check_password = $(this).data("check_password");
             var href = $(this).data("href");
 
-            swal({
+        Swal.fire({
                 title: "Please Enter Your Password.",
                 content: {
                     element: "input",
@@ -2701,7 +2488,11 @@ $(document).on("click", "a.draft_cancel", function (e) {
                         dataType: "json",
                         success: (data) => {
                             if (data.success == true) {
-                                swal("Success", "Correct Password!", "success");
+                                Swal.fire({
+                                    title:"Success",
+                                    text:"Correct Password!",
+                                    icon:"success"
+                                });
 
                                 $.ajax({
                                     method: "GET",
@@ -2710,19 +2501,28 @@ $(document).on("click", "a.draft_cancel", function (e) {
                                     data: data,
                                     success: function (result) {
                                         if (result.success == true) {
-                                            swal(
-                                                "Success",
-                                                result.msg,
-                                                "success"
-                                            );
+                                            Swal.fire({
+                                                title:"Success",
+                                                text:result.msg,
+                                                icon:"success"
+                                            });
+
                                             draft_table.ajax.reload();
                                         } else {
-                                            swal("Error", result.msg, "error");
+                                             Swal.fire({
+                                                title: 'Error',
+                                                text: result.msg,
+                                                icon: 'error',
+                                            });
                                         }
                                     },
                                 });
                             } else {
-                                swal("Failed!", "Wrong Password!", "error");
+                                Swal.fire({
+                                    title: 'Error',
+                                    text: "Wrong Password!",
+                                    icon: 'error',
+                                });
                             }
                         },
                     });
@@ -2732,19 +2532,7 @@ $(document).on("click", "a.draft_cancel", function (e) {
     });
 });
 
-$(document).on("change", "#delivery_cost_paid_by_customer", function () {
-    calculate_sub_totals();
-});
-$(document).on("change", "#delivery_cost_given_to_deliveryman", function () {
-    calculate_sub_totals();
-});
-$(document).on("change", "#delivery_cost", function () {
-    let delivery_cost = __read_number($(this));
-    $("span#delivery-cost").text(
-        __currency_trans_from_en(delivery_cost, false)
-    );
-    calculate_sub_totals();
-});
+
 
 const buttonRight = document.getElementById("slideRight");
 const buttonLeft = document.getElementById("slideLeft");
@@ -2795,7 +2583,6 @@ $(document).ready(function () {
             get_label_product_row(
                 null,
                 null,
-                null,
                 1,
                 0,
                 $("#weighing_scale_barcode").val()
@@ -2832,15 +2619,28 @@ $(document).on("click", "#non_identifiable_submit", function () {
     let quantity = $("#nonid_quantity").val();
 
     if (purchase_price == "") {
-        swal("Error", LANG.please_enter_purchase_price, "error");
+        Swal.fire({
+            title: 'Error',
+            text: LANG.please_enter_purchase_price,
+            icon: 'error',
+        });
         return;
     }
     if (sell_price == "") {
-        swal("Error", LANG.please_enter_sell_price, "error");
+        Swal.fire({
+            title: 'Error',
+            text: LANG.please_enter_sell_price,
+            icon: 'error',
+        });
+
         return;
     }
     if (quantity == "") {
-        swal("Error", LANG.please_enter_quantity, "error");
+        Swal.fire({
+            title: 'Error',
+            text: LANG.please_enter_quantity,
+            icon: 'error',
+        });
         return;
     }
 
@@ -2865,7 +2665,11 @@ $(document).on("click", "#non_identifiable_submit", function () {
         },
         success: function (result) {
             if (!result.success) {
-                swal("Error", result.msg, "error");
+                 Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                });
                 return;
             }
             $("table#product_table tbody").prepend(result.html_content);
@@ -2880,82 +2684,7 @@ $(document).on("click", "#non_identifiable_submit", function () {
         },
     });
 });
-$(document).ready(function () {
-    let customer_size_id = $("#customer_size_id_hidden").val();
-    get_customer_size_details(customer_size_id);
-});
-$(document).on("change", "#customer_size_id", function () {
-    var customer_size_id = $("#customer_size_id").val();
-    get_customer_size_details(customer_size_id);
-});
-function get_customer_size_details(customer_size_id) {
-    let system_mode = $("#system_mode").val();
-    if (system_mode == "garments") {
-        $.ajax({
-            method: "GET",
-            url:
-                "/customer-sizes/get-customer-size-details-form/" +
-                customer_size_id,
-            data: {
-                transaction_id: $("#transaction_id").val(),
-            },
-            success: function (result) {
-                if (!result.success) {
-                    swal("Error", result.msg, "error");
-                    return;
-                } else {
-                    $("#customer_size_detail_section").html(
-                        result.html_content
-                    );
-                }
-            },
-        });
-    }
-}
-$(document).on("click", "#size_next", function () {
-    let next_item_value = $("#customer_size_id option:selected").next().val();
-    if (next_item_value) {
-        $("#customer_size_id").selectpicker("val", next_item_value);
-        $("#customer_size_id").change();
-    }
-});
-$(document).on("click", "#size_prev", function () {
-    let prev_item_value = $("#customer_size_id option:selected").prev().val();
-    if (prev_item_value) {
-        $("#customer_size_id").selectpicker("val", prev_item_value);
-        $("#customer_size_id").change();
-    }
-});
 
-$(document).on("change", ".cm_size", function () {
-    let row = $(this).closest("tr");
-    let cm_size = __read_number(row.find(".cm_size"));
-    let inches_size = cm_size * 0.393701;
-
-    __write_number(row.find(".inches_size"), inches_size);
-
-    let name = $(this).data("name");
-    show_value(row, name);
-});
-$(document).on("change", ".inches_size", function () {
-    let row = $(this).closest("tr");
-    let inches_size = __read_number(row.find(".inches_size"));
-    let cm_size = inches_size * 2.54;
-
-    __write_number(row.find(".cm_size"), cm_size);
-
-    let name = $(this).data("name");
-    show_value(row, name);
-});
-
-function show_value(row, name) {
-    let cm_size = __read_number(row.find(".cm_size"));
-
-    $("." + name + "_span").text(cm_size);
-}
-$(document).on("click", ".add_size_btn", function () {
-    $(".add_size_div").removeClass("hide");
-});
 $(document).on("click", "#submit-btn-add-products", function (e) {
     e.preventDefault();
     var sku = $("#sku").val();
@@ -2967,7 +2696,11 @@ $(document).on("click", "#submit-btn-add-products", function (e) {
             data: $("#products-form-quick-add").serialize(),
             success: function (response) {
                 if (response.success) {
-                    swal("Success", response.msg, "success");
+                     Swal.fire({
+                    title: 'Success',
+                    text: response.msg,
+                    icon: 'success',
+                })
                     $("#search_product").val(sku);
                     $("input#search_product").autocomplete("search");
                     $(".view_modal").modal("hide");
@@ -2975,7 +2708,11 @@ $(document).on("click", "#submit-btn-add-products", function (e) {
             },
             error: function (response) {
                 if (!response.success) {
-                    swal("Error", response.msg, "error");
+                    Swal.fire({
+                        title: 'Error',
+                        text: response.msg,
+                        icon: 'error',
+                    });
                 }
             },
         });
@@ -3004,7 +2741,6 @@ function get_sale_promotion_products(sale_promotion_id) {
             result.forEach((data, index) => {
                 get_label_product_row(
                     data.product_id,
-                    data.variation_id,
                     null,
                     data.qty,
                     index
@@ -3076,9 +2812,17 @@ $(document).on("click", "#update_customer_address", function () {
         data: { address },
         success: function (result) {
             if (result.success) {
-                swal("Success", result.msg, "success");
+                 Swal.fire({
+                    title: 'Success',
+                    text: result.msg,
+                    icon: 'success',
+                });
             } else {
-                swal("Error", result.msg, "error");
+                 Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                });
             }
         },
     });

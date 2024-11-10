@@ -55,6 +55,26 @@
             /* Dark Gray for Text */
             --accent-color: #e57373;
             /* Soft Muted Red */
+
+        }
+
+
+
+        .ui-menu-item-wrapper.ui-state-active{
+            background-color: var(--tertiary-color) !important;
+            color: #fff !important;
+        }
+
+        .ui-menu.ui-widget.ui-widget-content.ui-autocomplete.ui-front li.ui-menu-item{
+            color: var(--tertiary-color) !important;
+            opacity:1 !important;
+        }
+        .ui-state-disabled, .ui-widget-content .ui-state-disabled, .ui-widget-header .ui-state-disabled{
+            opacity:1 !important;
+        }
+        .modal {
+            --bs-modal-width:80% !important;
+            /* max modal width */
         }
         div#ui-datepicker-div{
             width: revert;

@@ -20,7 +20,10 @@ nav.navbar {
 .font-responsive {
     font-size: 10px;
 }
-
+.bootstrap-select .dropdown-toggle:focus, .btn-light:not(:disabled):not(.disabled).active:focus, .btn-light:not(:disabled):not(.disabled):active:focus, .show>.btn-light.dropdown-toggle:focus {
+    box-shadow: none !important;
+    outline: none !important;
+}
 @media (min-width:992px) {
     .height-responsive {
         height: 45px;
@@ -234,4 +237,10 @@ nav.navbar {
 .select_product_button:hover {
     background-color: var(--secondary-color);
     color: white;
+}
+
+.customer-div .dropdown.bootstrap-select {
+    width: 86% !important;
+    margin: auto 3%;
+    padding: 0 !important;
 }
