@@ -214,7 +214,7 @@
 
                 {!! Form::open([
                     'url' => action('ProductController@update', $product->id),
-                    'id' => 'products-edit-form',
+                    'id' => 'product-edit-form',
                     'method' => 'PUT',
                     'class' => '',
                     'enctype' => 'multipart/form-data',
@@ -291,7 +291,7 @@
                                     {!! Form::label('store_ids', __('lang.store'), [
                                         'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
                                     ]) !!}
-                                    {!! Form::select('store_ids[]', $stores_select, array_keys($stores_selected), [
+                                    {!! Form::select('store_ids[]', $stores_select, array_values($stores_selected), [
                                         'class' => ' selectpicker form-control',
                                         'data-live-search' => 'true',
                                         'style' => 'width: 80%',
@@ -310,7 +310,7 @@
                                 <div class="input-group my-group select-button-group">
 
 
-                                    {!! Form::select('category_id[]', $categories,  array_keys($category_id_selected), [
+                                    {!! Form::select('category_id[]', $categories,  array_values($category_id_selected), [
                                         'class' => 'clear_input_form selectpicker form-control',
                                         'data-live-search' => 'true',
                                         'id' => 'category_id',
@@ -486,85 +486,9 @@
                     </div>
                 </div>
 
-                <div
-                    class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                    <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#productOtherDetailsCollapse" aria-expanded="false"
-                        aria-controls="productOtherDetailsCollapse">
-                        <i class="fas fa-arrow-down"></i>
-                        @lang('lang.other_details')
-                        <span class="section-header-pill"></span>
-                    </button>
-                </div>
-                <div  class="collapse" id="productOtherDetailsCollapse">
-                    <div class="card mb-3">
-                        <div class="card-body p-2">
-                            <div
-                                class="row  @if (app()->isLocale('ar')) flex-row-reverse @else flex-row @endif">
 
 
-                                <div class="col-md-4 px-5">
-                                    {!! Form::label('color_id', __('lang.color'), [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    <div class="input-group my-group select-button-group">
-                                        {!! Form::select('color_id', $colors, $product->color_id, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'disabled' => false,
-                                            'style' => 'width: 80%',
-                                            'id' => 'color_id',
-                                        ]) !!}
-                                        <span class="input-group-btn">
-                                            @can('product_module.color.create_and_edit')
-                                                <button type="button" class="btn-modal select-button btn-flat"
-                                                    data-href="{{ action('ColorController@create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                            @endcan
-                                        </span>
-                                    </div>
-                                </div>
 
-                                <div class="col-md-4 px-5">
-                                    {!! Form::label('size_id', __('lang.size'), [
-                                        'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
-                                    ]) !!}
-                                    <div class="input-group my-group select-button-group">
-                                        {!! Form::select('size_id', $sizes, $product->size_id, [
-                                            'class' => 'selectpicker form-control',
-                                            'data-live-search' => 'true',
-                                            'disabled' => $product->type == 'variable' ? true : false,
-                                            'style' => 'width: 80%',
-                                            'id' => 'size_id',
-                                        ]) !!}
-                                        <span class="input-group-btn">
-                                            @can('product_module.size.create_and_edit')
-                                                <button type="button" class="btn-modal select-button btn-flat"
-                                                    data-href="{{ action('SizeController@create') }}?quick_add=1"
-                                                    data-container=".view_modal"><i class="fa fa-plus"></i></button>
-                                            @endcan
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div
-                    class="d-flex my-2  @if (app()->isLocale('ar')) justify-content-end @else justify-content-start @endif">
-                    <button class="text-decoration-none toggle-button mb-0" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#productDetailsCollapse" aria-expanded="false"
-                        aria-controls="productDetailsCollapse">
-                        <i class="fas fa-arrow-down"></i>
-                        @if (session('system_mode') == 'restaurant')
-                            {{ __('lang.recipe') }}
-                        @else
-                            @lang('lang.product_details')
-                        @endif
-                        <span class="section-header-pill"></span>
-                    </button>
-                </div>
 
 
 
@@ -607,7 +531,7 @@
                                             $index_old = 0;
                                         @endphp
 
-                                        {{-- @if ($products->discount)
+                                        {{-- @if ($product->discount)
                                             @php
                                             $index_old=1;
                                             @endphp
@@ -672,7 +596,7 @@
                                         </div>
                                     </div>
                                 @endif
-                                <div class="col-md- 3 px-5">
+                                <div class="col-md-3 px-5">
                                     <div class="form-group">
                                         {!! Form::label('other_cost', __('lang.other_cost'), [
                                             'class' => 'form-label d-block mb-1 app()->isLocale("ar") ? text-end : text-start',
@@ -845,15 +769,19 @@
         getEditProductImages()
         e.preventDefault();
         setTimeout(() => {
-            if ($("#products-edit-form").valid()) {
+            if ($("#product-edit-form").valid()) {
                 tinyMCE.triggerSave();
                 $.ajax({
                     type: "POST",
-                    url: $("#products-edit-form").attr("action"),
-                    data: $("#products-edit-form").serialize(),
+                    url: $("#product-edit-form").attr("action"),
+                    data: $("#product-edit-form").serialize(),
                     success: function(response) {
                         if (response.success) {
-                            swal("Success", response.msg, "success");
+                            Swal.fire({
+                                title: 'Success',
+                                text: response.msg,
+                                icon: 'success',
+                            });
                             setTimeout(() => {
                                 window.close()
                             }, 1000);
@@ -861,7 +789,11 @@
                     },
                     error: function(response) {
                         if (!response.success) {
-                            swal("Error", response.msg, "error");
+                            Swal.fire({
+                                title: 'Error',
+                                text: response.msg,
+                                icon: 'error',
+                            });
                         }
                     },
                 });
@@ -869,9 +801,9 @@
         });
     });
     @if ($product)
-        {{-- document.getElementById("cropBtn{{ $products->id }}").addEventListener('click', () => { --}}
+        {{-- document.getElementById("cropBtn{{ $product->id }}").addEventListener('click', () => { --}}
         {{--    setTimeout(() => { --}}
-        {{--        launchEditProductCropTool(document.getElementById("img{{ $products->id }}")); --}}
+        {{--        launchEditProductCropTool(document.getElementById("img{{ $product->id }}")); --}}
         {{--    }, 500); --}}
         {{-- }); --}}
         document.getElementById("deleteBtn{{ $product->id }}").addEventListener('click', () => {
@@ -898,12 +830,12 @@
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.5/croppie.min.js"></script>
 <script>
-    var fileEditProductInput = document.querySelector('#file-products-edit-products');
-    var previewEditProductContainer = document.querySelector('.preview-edit-products-container');
-    var croppieEditProductModal = document.querySelector('#croppie-edit-products-modal');
-    var croppieEditProductContainer = document.querySelector('#croppie-edit-products-container');
-    var croppieEditProductCancelBtn = document.querySelector('#croppie-edit-products-cancel-btn');
-    var croppieEditProductSubmitBtn = document.querySelector('#croppie-edit-products-submit-btn');
+    var fileEditProductInput = document.querySelector('#file-product-edit-product');
+    var previewEditProductContainer = document.querySelector('.preview-edit-product-container');
+    var croppieEditProductModal = document.querySelector('#croppie-edit-product-modal');
+    var croppieEditProductContainer = document.querySelector('#croppie-edit-product-container');
+    var croppieEditProductCancelBtn = document.querySelector('#croppie-edit-product-cancel-btn');
+    var croppieEditProductSubmitBtn = document.querySelector('#croppie-edit-product-submit-btn');
 
     // let currentFiles = [];
     fileEditProductInput.addEventListener('change', () => {
@@ -928,7 +860,8 @@
                     deleteBtn.classList.add('delete-btn');
                     deleteBtn.innerHTML = '<i style="font-size: 20px;" class="fas fa-trash"></i>';
                     deleteBtn.addEventListener('click', () => {
-                        swal({
+
+                        Swal.fire({
                             title: "Delete",
                             text: "Are you sure you want to delete this image ?",
                             icon: "warning",
@@ -1025,7 +958,7 @@
 
     function getEditProductImages() {
         setTimeout(() => {
-            const container = document.querySelectorAll('.preview-edit-products-container');
+            const container = document.querySelectorAll('.preview-edit-product-container');
             let images = [];
             $("#cropped_edit_product_images").empty();
             for (let i = 0; i < container[0].children.length; i++) {

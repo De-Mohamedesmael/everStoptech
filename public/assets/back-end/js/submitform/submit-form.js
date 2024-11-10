@@ -4,51 +4,51 @@ $(".btn-add-modal").click(function (e) {
     console.log(key);
 });
 //brand form
-$("#create-brand-btn").click(function (e) {
-    e.preventDefault();
-    setTimeout(() => {
-        $("#brand-form").submit();
-        $("#quick_add_brand_form").submit();
-    }, 500)
-});
-$(document).on("submit", "form#quick_add_brand_form", function (e) {
-    e.preventDefault();
-    var data = $(this).serialize();
-    console.log(key);
-    $.ajax({
-        method: "post",
-        url: $(this).attr("action"),
-        dataType: "json",
-        data: data,
-        success: function (result) {
-            if (result.success) {
-                Swal.fire("Success", result.msg, "success");
-                $("#createBrandModal").modal("hide");
-                var brand_id = result.id;
-                $.ajax({
-                    method: "get",
-                    url: "/brand/get-dropdown",
-                    data: {},
-                    contactType: "html",
-                    success: function (data_html) {
-                        if (typeof key !== 'undefined' && key !== null) {
-                            $("#brand_id" + key).empty().append(data_html);
-                            $(".brand").empty().append(data_html);
-                            $("#brand_id" + key).val(brand_id).trigger();
-                        }
-                        else {
-                            $("#brand_id").empty().append(data_html);
-                            $("#brand_id").val(brand_id).trigger();
-                        }
-                    },
-                });
-            } else {
-                Swal.fire("Error", result.msg, "error");
-            }
-        },
-    });
-});
-//brand form
+// $("#create-brand-btn").click(function (e) {
+//     e.preventDefault();
+//     setTimeout(() => {
+//         $("#brand-form").submit();
+//         $("#quick_add_brand_form").submit();
+//     }, 500)
+// });
+// $(document).on("submit", "form#quick_add_brand_form", function (e) {
+//     e.preventDefault();
+//     var data = $(this).serialize();
+//     console.log(key);
+//     $.ajax({
+//         method: "post",
+//         url: $(this).attr("action"),
+//         dataType: "json",
+//         data: data,
+//         success: function (result) {
+//             if (result.success) {
+//                 Swal.fire("Success", result.msg, "success");
+//                 $("#createBrandModal").modal("hide");
+//                 var brand_id = result.id;
+//                 $.ajax({
+//                     method: "get",
+//                     url: "/brand/get-dropdown",
+//                     data: {},
+//                     contactType: "html",
+//                     success: function (data_html) {
+//                         if (typeof key !== 'undefined' && key !== null) {
+//                             $("#brand_id" + key).empty().append(data_html);
+//                             $(".brand").empty().append(data_html);
+//                             $("#brand_id" + key).val(brand_id).trigger();
+//                         }
+//                         else {
+//                             $("#brand_id").empty().append(data_html);
+//                             $("#brand_id").val(brand_id).trigger();
+//                         }
+//                     },
+//                 });
+//             } else {
+//                 Swal.fire("Error", result.msg, "error");
+//             }
+//         },
+//     });
+// });
+// //brand form
 //unit form
 var raw_index = 0;
 var type = "";

@@ -41,6 +41,7 @@ class DatabaseSeeder extends Seeder
         $employee_data = [
             'admin_id' => $admin->id,
             'employee_name' => $admin->name,
+            'store_id' => ["1"],
             'date_of_start_working' => Carbon::now(),
             'date_of_birth' => '1995-02-03',
             'annual_leave_per_year' => '10',

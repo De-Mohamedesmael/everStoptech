@@ -72,7 +72,7 @@ class CashRegisterController extends Controller
         $is_pos = request()->is_pos;
         $admins = Admin::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return view('cash_register.create')->with(compact('is_pos', 'admins'));
+        return view('back-end.sales.cash_register.create')->with(compact('is_pos', 'admins'));
     }
 
     /**

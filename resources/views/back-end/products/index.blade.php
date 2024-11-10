@@ -97,7 +97,7 @@
                             <th>@lang('lang.size')</th>
                             <th class="sum">@lang('lang.current_stock')</th>
                             <th class="sum">@lang('lang.current_stock_value')</th>
-                            <th>@lang('lang.expiry_date')</th>
+{{--                            <th>@lang('lang.expiry_date')</th>--}}
                             <th>@lang('lang.manufacturing_date')</th>
                             <th>@lang('lang.discount')</th>
                             @can('product_module.purchase_price.view')
@@ -426,7 +426,7 @@
                     },
                     {
                         data: 'default_sell_price',
-                        name: 'variations.default_sell_price'
+                        name: 'default_sell_price'
                     },
                     {
                         data: 'tax',
@@ -459,10 +459,10 @@
                         name: 'current_stock_value',
                         searchable: false
                     },
-                    {
-                        data: 'exp_date',
-                        name: 'add_stock_lines.expiry_date'
-                    },
+                    // {
+                    //     data: 'exp_date',
+                    //     name: 'add_stock_lines.expiry_date'
+                    // },
                     {
                         data: 'manufacturing_date',
                         name: 'add_stock_lines.manufacturing_date'

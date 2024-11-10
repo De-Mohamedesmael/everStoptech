@@ -70,7 +70,11 @@ $("#submit-btn").on("click", function (e) {
         success: function (result) {
           console.log(result.success);
           if (!result.success) {
-            swal("Error", result.msg, "error");
+          Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
           } else {
             submitForm();
           }
@@ -193,7 +197,11 @@ $(document).on("submit", "form#quick_add_category_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+                Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
             }
         },
     });
@@ -203,6 +211,7 @@ $(document).on("submit", "form#quick_add_category_form", function (e) {
 
 var brand_id = null;
 $(document).on("submit", "form#quick_add_brand_form", function (e) {
+    console.log('dddd');
     e.preventDefault();
     var data = new FormData(this);
     $.ajax({
@@ -214,16 +223,20 @@ $(document).on("submit", "form#quick_add_brand_form", function (e) {
         contentType: false,
         success: function (result) {
             if (result.success) {
+                $("#editModal").modal("hide");
                 Swal.fire({
                     title: 'Success',
                     text: result.msg,
                     icon: 'success',
                 });
-                $("#editModal").modal("hide");
                 brand_id = result.brand_id;
-                get_brand_dropdown();
+                get_brand_dropdown(brand_id);
             } else {
-                swal("Error", result.msg, "error");
+              Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
             }
         },
     });
@@ -275,7 +288,11 @@ $(document).on("submit", "form#quick_add_tax_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+              Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
             }
         },
     });
@@ -317,7 +334,11 @@ $(document).on("submit", "form#quick_add_color_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+              Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
             }
         },
     });
@@ -362,7 +383,11 @@ $(document).on("submit", "form#quick_add_size_form", function (e) {
                     },
                 });
             } else {
-                swal("Error", result.msg, "error");
+              Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
             }
         },
     });
@@ -395,7 +420,11 @@ $(document).on("change", "#sku", function () {
             data: {},
             success: function (result) {
                 if (!result.success) {
-                    swal("Error", result.msg, "error");
+                  Swal.fire({
+                    title: 'Error',
+                    text: result.msg,
+                    icon: 'error',
+                })
                     $("#sku").val("");
                 }
             },

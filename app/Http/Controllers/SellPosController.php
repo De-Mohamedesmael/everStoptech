@@ -90,7 +90,7 @@ class SellPosController extends Controller
         $sales = Transaction::where('type', 'sell')->get();
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
 
-        return view('sale_pos.index')->with(compact(
+        return view('back-end.sales.pos.index')->with(compact(
             'sales',
             'payment_types'
         ));
@@ -110,7 +110,7 @@ class SellPosController extends Controller
         // Check if the last execution date is not today
         if (!$lastExecutionDate || $lastExecutionDate < $currentDate) {
             // Call the function or perform the desired task
-            $this->notificationUtil->checkExpiary();
+//            $this->notificationUtil->checkExpiary();
             $this->notificationUtil->quantityAlert();
             // Store the current date as the last execution date
             Cache::put('last_execution_date', $currentDate, 1440); // 1440 minutes = 1 day
@@ -121,8 +121,7 @@ class SellPosController extends Controller
             return redirect()->to('/cash-register/create?is_pos=1');
         }
 
-        $categories = Category::whereNull('parent_id')->groupBy('categories.id')->get();
-        $sub_categories = Category::whereNotNull('parent_id')->groupBy('categories.id')->get();
+        $categories = Category::groupBy('categories.id')->get();
         $brands = Brand::all();
         $store_pos = StorePos::where('admin_id', Auth::user()->id)->first();
         $customers = Customer::getCustomerArrayWithMobile();
@@ -132,16 +131,13 @@ class SellPosController extends Controller
         $deliverymen = Employee::getDropdownByJobType('Deliveryman');
         $tac = TermsAndCondition::getDropdownInvoice();
         $walk_in_customer = Customer::where('is_default', 1)->first();
-        $product_classes = ProductClass::orderBy('sort', 'asc')->select('name', 'id')->get();
         $stores = Store::getDropdown();
         $store_poses = [];
         $weighing_scale_setting = System::getProperty('weighing_scale_setting') ?  json_decode(System::getProperty('weighing_scale_setting'), true) : [];
         $languages = System::getLanguageDropdown();
         $service_fees = ServiceFee::pluck('name', 'id');
-        $delivery_zones = DeliveryZone::pluck('name', 'id');
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
         $employees = Employee::getCommissionEmployeeDropdown();
-        $delivery_men = Employee::getDropdownByJobType('Deliveryman');
 
         if (empty($store_pos)) {
             $output = [
@@ -152,11 +148,10 @@ class SellPosController extends Controller
             return redirect()->to('/home')->with('status', $output);
         }
 
-        return view('sale_pos.pos')->with(compact(
+        return view('back-end.sales.pos.pos')->with(compact(
             'categories',
             'walk_in_customer',
             'deliverymen',
-            'sub_categories',
             'tac',
             'brands',
             'store_pos',
@@ -165,14 +160,11 @@ class SellPosController extends Controller
             'store_poses',
             'cashiers',
             'taxes',
-            'product_classes',
             'payment_types',
             'weighing_scale_setting',
             'languages',
             'service_fees',
-            'delivery_zones',
             'employees',
-            'delivery_men',
             'exchange_rate_currencies',
         ));
     }
@@ -182,7 +174,7 @@ class SellPosController extends Controller
         $index = request()->index ?? 0;
         $payment_types = $this->commonUtil->getPaymentTypeArrayForPos();
 
-        return view('sale_pos.partials.payment_row')->with(compact(
+        return view('back-end.sales.pos.partials.payment_row')->with(compact(
             'index',
             'payment_types'
         ));
@@ -635,7 +627,7 @@ class SellPosController extends Controller
         $employees = Employee::getCommissionEmployeeDropdown();
         $delivery_men = Employee::getDropdownByJobType('Deliveryman');
 
-        return view('sale_pos.edit')->with(compact(
+        return view('back-end.sales.pos.edit')->with(compact(
             'transaction',
             'categories',
             'walk_in_customer',
@@ -936,7 +928,7 @@ class SellPosController extends Controller
                 $query->whereIn('products.id',  $sp_product_ids);
 
                 if (session('system_mode') == 'restaurant') {
-                    return view('sale_pos.partials.promotions')->with(compact('sales_promotions'));
+                    return view('back-end.sales.pos.partials.promotions')->with(compact('sales_promotions'));
                 }
             }
         }
@@ -963,7 +955,7 @@ class SellPosController extends Controller
         $currency = Currency::find($currency_id);
         $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
 
-        return view('sale_pos.partials.filtered_products')->with(compact(
+        return view('back-end.sales.pos.partials.filtered_products')->with(compact(
             'products',
             'currency',
             'exchange_rate'
@@ -1171,7 +1163,7 @@ class SellPosController extends Controller
                 $product_all_discounts_categories = $this->productUtil->getProductAllDiscountCategories($product_id);
                 // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
                 $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
-                $html_content =  view('sale_pos.partials.product_row')
+                $html_content =  view('back-end.sales.pos.partials.product_row')
                     ->with(compact(
                         'products',
                         'index',
@@ -1237,7 +1229,7 @@ class SellPosController extends Controller
         //                $product_discount_details = $this->productUtil->getProductDiscountDetails($product_id, $customer_id);
         //                // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
         //                $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
-        //                $html_content =  view('sale_pos.partials.product_row')
+        //                $html_content =  view('back-end.sales.pospartials.product_row')
         //                    ->with(compact('products_', 'index', 'sale_promotion_details', 'product_discount_details', 'edit_quantity', 'is_direct_sale', 'dining_table_id', 'exchange_rate'))->render();
         //
         //                $output['success'] = true;
@@ -1312,7 +1304,7 @@ class SellPosController extends Controller
             $product_discount_details = $this->productUtil->getProductDiscountDetails($product_id, $customer_id);
             // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
             $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
-            $html_content =  view('sale_pos.partials.product_row')
+            $html_content =  view('back-end.sales.pos.partials.product_row')
                 ->with(compact('products', 'is_unidentifable_product', 'index', 'sale_promotion_details', 'product_discount_details', 'edit_quantity', 'dining_table_id', 'exchange_rate'))->render();
 
             $output['success'] = true;

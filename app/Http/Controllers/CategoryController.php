@@ -246,7 +246,7 @@ class CategoryController extends Controller
     {
 
         $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
-        $categories_dp = $this->commonUtil->createDropdownHtml($categories, __('lang.please_select'));
+        $categories_dp = $this->commonUtil->createDropdownHtml($categories);
 
         return $categories_dp;
     }

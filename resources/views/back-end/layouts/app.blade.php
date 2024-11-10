@@ -466,6 +466,9 @@
                 color: hsl(48, 100%, 67%);
             }
         }
+        .home-card-deck {
+            margin: 5px 0;
+        }
     </style>
     @yield('styles')
     @stack('style')

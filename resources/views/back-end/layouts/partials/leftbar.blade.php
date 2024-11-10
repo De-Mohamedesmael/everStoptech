@@ -22,25 +22,26 @@
                     height="45px">
             </a>
         </div>
-        <div class="profilename">
-            <a href="{{-- route('invoices.create') --}}">
-                <img src="{{ asset('assets/back-end/images/topbar/cash-machine.png') }}" class="img-fluid" alt="notifications"
-                    width="45px" height="45px">
-            </a>
-        </div>
-{{--        @php--}}
-{{--        $cash_register = App\Models\CashRegister::where('admin_id', Auth::user()->id)--}}
-{{--        ->where('status', 'open')--}}
-{{--        ->first();--}}
-{{--        @endphp--}}
-        <div class="profilename {{-- empty($cash_register) ? 'd-none' : '' --}}">
-            <a>
-                <span style="background-color: transparent;width:45px;height:45px;cursor: pointer;" id="power_off_btn">
-                    <img src="{{ asset('assets/back-end/images/power-button.svg') }}" class="img-fluid w-100 h-100" alt="power-off">
-                </span>
-            </a>
-        </div>
-
+        @can('sale.pos.create_and_edit')
+            <div class="profilename">
+                <a href="{{ action('SellPosController@create') }}">
+                    <img src="{{ asset('assets/back-end/images/topbar/cash-machine.png') }}" class="img-fluid" alt="notifications"
+                        width="45px" height="45px">
+                </a>
+            </div>
+            @php
+            $cash_register = App\Models\CashRegister::where('admin_id', auth('admin')->user()->id)
+            ->where('status', 'open')
+            ->first();
+            @endphp
+            <div class="profilename  empty($cash_register) ? 'd-none' : '' ">
+                <a>
+                    <span style="background-color: transparent;width:45px;height:45px;cursor: pointer;" id="power_off_btn">
+                        <img src="{{ asset('assets/back-end/images/power-button.svg') }}" class="img-fluid w-100 h-100" alt="power-off">
+                    </span>
+                </a>
+            </div>
+        @endcan
 
         {{-- +++++++++++++++++ Notification +++++++++++++++++ --}}
         @include('back-end.layouts.partials.notification_list')

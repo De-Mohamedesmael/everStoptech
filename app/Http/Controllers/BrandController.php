@@ -230,17 +230,10 @@ class BrandController extends Controller
 
     public function getDropdown()
     {
-        if (!empty(request()->sub_category_id)) {
-            $brand = Brand::where('category_id', request()->sub_category_id)->orderBy('name', 'asc')->pluck('name', 'id');
-        } else if (!empty(request()->category_id)) {
-            $brand = Brand::where('category_id', request()->category_id)->orderBy('name', 'asc')->pluck('name', 'id');
-        } else {
-            $brand = Brand::orderBy('name', 'asc')->pluck('name', 'id');
-        }
 
-        $brand_dp = $this->commonUtil->createDropdownHtml($brand, 'Please Select');
+        $brand = Brand::orderBy('name', 'asc')->pluck('name', 'id');
 
-        return $brand_dp;
+        return $this->commonUtil->createDropdownHtml($brand, 'Please Select');
     }
 
 

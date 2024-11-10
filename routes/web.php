@@ -84,7 +84,6 @@ Route::group(['middleware' => ['auth:admin', 'SetSessionData', 'language', 'time
     Route::resource('products-class', ProductClassController::class);
     Route::get('category/get-sub-category-dropdown', 'CategoryController@getSubCategoryDropdown');
     Route::get('category/get-dropdown', 'CategoryController@getDropdown');
-    Route::get('sub-category', 'CategoryController@getSubCategories');
     Route::resource('category', CategoryController::class);
     Route::get('brand/get-dropdown', 'BrandController@getDropdown');
     Route::resource('brand', BrandController::class);
