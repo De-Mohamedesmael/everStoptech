@@ -205,7 +205,7 @@
                                 <h3>@lang('lang.user_rights')</h3>
                             </div>
                             <div class="col-md-12">
-                                @include('employee.partial.permission')
+                                @include('back-end.Hr.employees.partial.permission')
                             </div>
                         </div>
 
