@@ -231,7 +231,7 @@
                                     </div>
                                 </div>
 
-                                @include('back-end.Products.add_stock.partials.payment_form')
+                                @include('back-end.products.add_stock.partials.payment_form')
 
                                 <div class="col-md-3 px-5 due_amount_div hide">
                                     <label for="due_amount"
