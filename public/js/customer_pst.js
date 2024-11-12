@@ -129,7 +129,7 @@ function getProductRows(array) {
     $.ajax({
         async: false,
         method: "get",
-        url: "/sales-promotion/get-product-details-rows",
+        url: "/sales-promotion/get-products-details-rows",
         data: {
             store_ids: $("#store_ids").val(),
             type: $("#type").val(),

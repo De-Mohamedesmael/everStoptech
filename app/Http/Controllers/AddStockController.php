@@ -237,7 +237,7 @@ class AddStockController extends Controller
         $stores = Store::getDropdown();
         $status_array = $this->commonUtil->getPurchaseOrderStatusArray();
 
-        return view('add_stock.index')->with(compact(
+        return view('back-end.products.add_stock.index')->with(compact(
             'admins',
             'products',
             'suppliers',
@@ -249,27 +249,17 @@ class AddStockController extends Controller
     public function create()
     {
         $suppliers = Supplier::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-
         $po_nos = Transaction::where('type', 'purchase_order')->where('status', '!=', 'received')->pluck('po_no', 'id');
         $status_array = $this->commonUtil->getPurchaseOrderStatusArray();
         $payment_status_array = $this->commonUtil->getPaymentStatusArray();
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
         $payment_types = $payment_type_array;
         $taxes = Tax::pluck('name', 'id');
-
-        $variation_id = request()->get('variation_id');
         $product_id = request()->get('product_id');
-
-        $is_raw_material = request()->segment(1) == 'raw-material' ? true : false;
-
-        $product_classes = ProductClass::orderBy('name', 'asc')->pluck('name', 'id');
-        $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
-        $sub_categories = Category::whereNotNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
-        $units = Unit::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
         $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
-        $grades = Grade::orderBy('name', 'asc')->pluck('name', 'id');
         $taxes_array = Tax::orderBy('name', 'asc')->pluck('name', 'id');
         $customer_types = CustomerType::orderBy('name', 'asc')->pluck('name', 'id');
         $discount_customer_types = Customer::getCustomerTreeArray();
@@ -278,27 +268,21 @@ class AddStockController extends Controller
         $stores  = Store::getDropdown();
         $admins = Admin::pluck('name', 'id');
 
-        return view('add_stock.create')->with(compact(
-            'is_raw_material',
+        return view('back-end.products.add_stock.create')->with(compact(
             'suppliers',
             'status_array',
             'payment_status_array',
             'payment_type_array',
             'stores',
-            'variation_id',
             'product_id',
             'po_nos',
             'taxes',
-            'product_classes',
             'payment_types',
             'payment_status_array',
             'categories',
-            'sub_categories',
             'brands',
-            'units',
             'colors',
             'sizes',
-            'grades',
             'taxes_array',
             'customer_types',
             'exchange_rate_currencies',
@@ -443,7 +427,7 @@ class AddStockController extends Controller
         $taxes = Tax::pluck('name', 'id');
         $admins = Admin::pluck('name', 'id');
 
-        return view('add_stock.show')->with(compact(
+        return view('back-end.products.add_stock.show')->with(compact(
             'add_stock',
             'supplier',
             'payment_type_array',
@@ -480,7 +464,7 @@ class AddStockController extends Controller
         $stores  = Store::getDropdown();
         $admins = Admin::pluck('name', 'id');
 
-        return view('add_stock.edit')->with(compact(
+        return view('back-end.products.add_stock.edit')->with(compact(
             'add_stock',
             'suppliers',
             'status_array',
@@ -727,15 +711,14 @@ class AddStockController extends Controller
             $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
 
             $product_id = $request->input('product_id');
-            $variation_id = $request->input('variation_id');
             $store_id = $request->input('store_id');
             $qty = $request->qty?$request->qty:0;
             $is_batch = $request->is_batch;
             if (!empty($product_id)) {
                 $index = $request->input('row_count');
-                $products = $this->productUtil->getDetailsFromProduct($product_id, $variation_id, $store_id);
+                $products = $this->productUtil->getDetailsFromProduct($product_id, $store_id);
 
-                return view('add_stock.partials.product_row')
+                return view('back-end.products.add_stock.partials.product_row')
                     ->with(compact('products', 'index', 'currency', 'exchange_rate','qty','is_batch'));
             }
         }
@@ -753,30 +736,12 @@ class AddStockController extends Controller
             if (!empty($product_selected)) {
                 $index = $request->input('row_count');
                 $products = $this->productUtil->getMultipleDetailsFromProduct($product_selected, $store_id);
-                return view('add_stock.partials.product_row')
+                return view('back-end.products.add_stock.partials.product_row')
                     ->with(compact('products', 'index', 'currency', 'exchange_rate'));
             }
         }
     }
-    // public function addProductBatchRow(Request $request)
-    // {
-    //     if ($request->ajax()) {
-    //         $currency_id = $request->currency_id;
-    //         $currency = Currency::find($currency_id);
-    //         $exchange_rate = $this->commonUtil->getExchangeRateByCurrency($currency_id, $request->store_id);
 
-    //         $product_id = $request->input('product_id');
-    //         $variation_id = $request->input('variation_id');
-    //         $store_id = $request->input('store_id');
-    //         if (!empty($product_id)) {
-    //             $index = $request->input('row_count');
-    //             $products = $this->productUtil->getDetailsFromProduct($product_id, $variation_id, $store_id);
-
-    //             return view('add_stock.partials.product_batch_row')
-    //                 ->with(compact('products', 'index', 'currency', 'exchange_rate'));
-    //         }
-    //     }
-    // }
 
     public function addProductBatchRow(Request $request)
     {
@@ -793,7 +758,7 @@ class AddStockController extends Controller
             // if (!empty($product_id)) {
                  $row_count = $request->input('index');
                 $products = $this->productUtil->getDetailsFromProduct($product_id, $variation_id, $store_id);
-                return view('add_stock.partials.batch_row')
+                return view('back-end.products.add_stock.partials.batch_row')
                     ->with(compact('products','row_count','exchange_rate','batch_count'));
 
         }
@@ -802,7 +767,7 @@ class AddStockController extends Controller
     {
         $purchase_order = Transaction::find($id);
 
-        return view('add_stock.partials.purchase_order_details')->with(compact(
+        return view('back-end.products.add_stock.partials.purchase_order_details')->with(compact(
             'purchase_order'
         ));
     }
@@ -811,14 +776,16 @@ class AddStockController extends Controller
     {
         $suppliers = Supplier::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
         $stores = Store::getDropdown();
-        $po_nos = Transaction::where('type', 'purchase_order')->where('status', '!=', 'received')->pluck('po_no', 'id');
+        $po_nos = Transaction::where('type', 'purchase_order')
+            ->where('status', '!=', 'received')
+            ->pluck('po_no', 'id');
         $status_array = $this->commonUtil->getPurchaseOrderStatusArray();
         $payment_status_array = $this->commonUtil->getPaymentStatusArray();
         $payment_type_array = $this->commonUtil->getPaymentTypeArray();
         $exchange_rate_currencies = $this->commonUtil->getCurrenciesExchangeRateArray(true);
         $admins = Admin::pluck('name', 'id');
 
-        return view('add_stock.import')->with(compact(
+        return view('back-end.products.add_stock.import')->with(compact(
             'suppliers',
             'status_array',
             'payment_status_array',

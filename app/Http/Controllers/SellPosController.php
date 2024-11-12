@@ -1053,13 +1053,11 @@ class SellPosController extends Controller
             }
             //Check for weighing scale barcode
             $weighing_barcode = request()->get('weighing_scale_barcode');
-            if (empty($variation_id) && !empty($weighing_barcode)) {
-
+            if (!empty($weighing_barcode)) {
                 $product_details = $this->__parseWeighingBarcode($weighing_barcode);
 
                 if ($product_details['success']) {
                     $product_id = $product_details['product_id'];
-                    $variation_id = $product_details['variation_id'];
                     $quantity = $product_details['qty'];
                     $edit_quantity = $quantity;
                 } else {
@@ -1070,7 +1068,7 @@ class SellPosController extends Controller
             }
             if (!empty($product_id)) {
                 $index = $request->input('row_count');
-                $products = $this->productUtil->getDetailsFromProductByStore($product_id, $variation_id, $store_id, $batch_number_id);
+                $products = $this->productUtil->getDetailsFromProductByStore($product_id, $store_id, $batch_number_id);
                 $System = System::where('key', 'weight_product' . $store_pos_id)->first();
                 if (!$System) {
                     System::Create([
@@ -1091,7 +1089,6 @@ class SellPosController extends Controller
                 //                dd($edit_quantity);
 
 
-                $product_discount_details = $this->productUtil->getProductDiscountDetails($product_id, $customer_id);
                 $product_all_discounts_categories = $this->productUtil->getProductAllDiscountCategories($product_id);
                 // $sale_promotion_details = $this->productUtil->getSalesPromotionDetail($product_id, $store_id, $customer_id, $added_products);
                 $sale_promotion_details = null; //changed, now in pos.js check_for_sale_promotion method
@@ -1100,7 +1097,6 @@ class SellPosController extends Controller
                         'products',
                         'index',
                         'sale_promotion_details',
-                        'product_discount_details',
                         'product_all_discounts_categories',
                         'edit_quantity',
                         'is_direct_sale',

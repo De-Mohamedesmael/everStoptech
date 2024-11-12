@@ -11,11 +11,11 @@
 @section('breadcrumbs')
     @parent
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerController@index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ action('CustomerController@index') }}">/
             {{translate('customers')}}</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active"><a
-            style="text-decoration: none;color: #1565c0" href="{{ action('CustomerTypeController@index') }}">/
+            style="text-decoration: none;color: #476762" href="{{ action('CustomerTypeController@index') }}">/
             {{translate('customer_types')}}</a>
     </li>
     <li class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">

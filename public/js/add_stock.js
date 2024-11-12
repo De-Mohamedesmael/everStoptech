@@ -93,7 +93,7 @@ $(document).on("click", "#addBatch", function () {
     }
     $.ajax({
         method: "GET",
-        url: "/add-stock/add-product-batch-row",
+        url: "/add-stock/add-products-batch-row",
         dataType: "html",
         data: {
             product_id: $product.id,
@@ -157,9 +157,12 @@ function getCurrencyDropDown() {
         data: { store_id: store_id },
         success: function (result) {
             $("#paying_currency_id").html(result);
-            $("#paying_currency_id").val(default_currency_id);
             $("#paying_currency_id").change();
             $("#paying_currency_id").selectpicker("refresh");
+            $("#paying_currency_id").selectpicker(
+                "val",
+                [default_currency_id]
+            );
         },
     });
 }
@@ -218,7 +221,7 @@ function get_label_multipe_product_row(product_selected) {
         $("#row_count").val(row_count + product_selected.length);
         $.ajax({
             method: "GET",
-            url: "/add-stock/add-multiple-product-row",
+            url: "/add-stock/add-multiple-products-row",
             dataType: "html",
             async: false,
             data: {
@@ -273,7 +276,7 @@ function get_label_product_row(product_id, variation_id,is_batch=false) {
         $("#row_count").val(row_count + 1);
         $.ajax({
             method: "GET",
-            url: "/add-stock/add-product-row",
+            url: "/add-stock/add-products-row",
             dataType: "html",
             async: false,
             data: {
@@ -540,14 +543,13 @@ function    checkAddStock(){
 $(document).on('click', '#submit-edit-save', function(e) {
     // e.preventDefault();
     let data=checkAddStock();
-    console.log(data)
     if (data[0]=="1" && data[3]!="3") {
 
         let title = '';
         let check = '';
         if(data[4] != ''){
             title = LANG.purchase_price_more_than_sell_price;
-                   swal({
+                   Swal.fire({
                 title: title,
                 text: LANG.continue,
                 icon: "warning",
@@ -589,24 +591,8 @@ $(document).on('click', '#submit-edit-save', function(e) {
                 title = LANG.purchase_price_equal_to_zero;
             }
 
-            // swal({
-            //         title: title,
-            //         text: LANG.continue,
-            //         icon: "warning",
-            //         buttons: true,
-            //         dangerMode: true,
-            //         showCancelButton: true,
-            //         confirmButtonText: 'Save',
-            //     })
-            //     .then((isConfirm) => {
-            //         if (isConfirm) {
-            //             $('form#add_stock_form').valid();
-            //             $('form#add_stock_form').submit();
-            //         } else {
                         $(this).find('.purchase_price_submit').val('0');
                         $(this).find('.selling_price_submit').val('0')
-            //         }
-            //     });
             swal("warning", title, "warning");
         }
 
@@ -619,14 +605,12 @@ $(document).on('click', '#submit-edit-save', function(e) {
 $(document).on('click', '#submit-save', function(e) {
     e.preventDefault();
     let data=checkAddStock();
-    console.log(data)
     if (data[0]=="1" && data[3]!="3") {
-
         let title = '';
         let check = '';
         if(data[4] != ''){
             title = LANG.purchase_price_more_than_sell_price;
-                   swal({
+           Swal.fire({
                 title: title,
                 text: LANG.continue,
                 icon: "warning",
@@ -648,30 +632,14 @@ $(document).on('click', '#submit-save', function(e) {
                         check = 'no'
                     }
 
-                    // swal({
-                    //         title: title,
-                    //         text: LANG.continue,
-                    //         icon: "warning",
-                    //         buttons: true,
-                    //         dangerMode: true,
-                    //         showCancelButton: true,
-                    //         confirmButtonText: 'Save',
-                    //     })
-                    //     .then((isConfirm) => {
-                    //         if (isConfirm) {
-                    //             $('form#add_stock_form').valid();
-                    //             $('form#add_stock_form').submit();
-                    //         } else {
 
-                    //         }
-                    //     });
                     if(check != ''){
                         $(this).find('.purchase_price_submit').val('0');
                         $(this).find('.selling_price_submit').val('0')
                         swal("warning", title, "warning");
                     }else{
-                        $('form#add_stock_form').valid();
-                        $('form#add_stock_form').submit();
+                        $('form#add_stock_product_form').valid();
+                        $('form#add_stock_product_form').submit();
                     }
                 } else { $(this).find('.purchase_price_submit').val('0');
                     $(this).find('.selling_price_submit').val('0')
@@ -686,31 +654,17 @@ $(document).on('click', '#submit-save', function(e) {
                 title = LANG.purchase_price_equal_to_zero;
             }
 
-            // swal({
-            //         title: title,
-            //         text: LANG.continue,
-            //         icon: "warning",
-            //         buttons: true,
-            //         dangerMode: true,
-            //         showCancelButton: true,
-            //         confirmButtonText: 'Save',
-            //     })
-            //     .then((isConfirm) => {
-            //         if (isConfirm) {
-            //             $('form#add_stock_form').valid();
-            //             $('form#add_stock_form').submit();
-            //         } else {
+
                         $(this).find('.purchase_price_submit').val('0');
                         $(this).find('.selling_price_submit').val('0')
-            //         }
-            //     });
-            swal("warning", title, "warning");
+
+            Swal.fire({title:"warning",text: title, icon:"warning"});
         }
 
     } else if(data[0]=="2") {
-        if ($('form#add_stock_form').length) {
-            $('form#add_stock_form').valid();
-            $('form#add_stock_form').submit();
+        if ($('form#add_stock_product_form').length) {
+            $('form#add_stock_product_form').valid();
+            $('form#add_stock_product_form').submit()
         }else if ($('form#edit_stock_form').length) {
             $('form#edit_stock_form').valid();
             $('form#edit_stock_form').submit();

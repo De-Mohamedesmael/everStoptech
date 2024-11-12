@@ -45,7 +45,7 @@ function get_label_product_row(product_id, variation_id) {
         var row_count = $("table#product_table tbody tr").length;
         $.ajax({
             method: "GET",
-            url: "/purchase-return/add-product-row",
+            url: "/purchase-return/add-products-row",
             dataType: "html",
             data: {
                 product_id: product_id,

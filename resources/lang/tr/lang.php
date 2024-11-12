@@ -1144,4 +1144,10 @@
   'categories_count' => 'Kategoriler Sayısı',
   'quick_pay' => 'hızlı ödeme',
   'Cashier' => 'Cashier',
+  'stocks' => 'Stocks',
+  'Wrong Password!' => 'Wrong Password!',
+  'Male' => 'Male',
+  'gender' => 'Gender',
+  'Correct Password!' => 'Correct Password!',
+  'product_stock' => 'Product stock',
 );

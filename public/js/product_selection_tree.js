@@ -145,7 +145,7 @@ function getProductRows(array, product_array_old_ids= null) {
     $.ajax({
         async: false,
         method: "get",
-        url: "/sales-promotion/get-product-details-rows",
+        url: "/sales-promotion/get-products-details-rows",
         data: {
             store_ids: $("#store_ids").val(),
             type: $("#type").val(),
@@ -200,7 +200,7 @@ $(document).on("click", "#button_product_condition_tree", function () {
         $.ajax({
             async: false,
             method: "get",
-            url: "/sales-promotion/get-product-condition-tree",
+            url: "/sales-promotion/get-products-condition-tree",
             data: {
                 sales_promotion_id:sales_promotion_id
             },
@@ -226,7 +226,7 @@ $(document).on("click", "#button_product_selection_tree", function () {
         $.ajax({
             async: false,
             method: "get",
-            url: "/sales-promotion/get-product-selection-tree",
+            url: "/sales-promotion/get-products-selection-tree",
             data: {
                 sales_promotion_id:sales_promotion_id
             },

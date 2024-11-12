@@ -48,7 +48,7 @@
         /* Light Blue */
         --secondary-color: #84ceed;
         /* Bright Blue */
-        --tertiary-color: #1565c0;
+        --tertiary-color: #476762;
         /* Dark Blue */
         --complementary-color-1: #5bb9b0;
         /* Muted Blue-Green */

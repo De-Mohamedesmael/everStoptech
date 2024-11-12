@@ -23,7 +23,7 @@
     <style>
         button.btn.table-btns.buttons-collection.dropdown-toggle.buttons-colvis
         ,.btn-group>.btn-group:not(:last-child)>.btn, .btn-group>.btn.dropdown-toggle-split:first-child, .btn-group>.btn:not(:last-child):not(.dropdown-toggle) {
-            background: #1565c0;
+            background: #3e5d58;
         }
         .dt-buttons.btn-group {
             direction: ltr;
@@ -39,13 +39,13 @@
     </style>
     <style>
         :root {
-            --primary-color: #adbff8;
+            --primary-color: rgba(69, 147, 134, 0.38);
             /* Light Blue */
-            --secondary-color: #2d5cfe;
+            --secondary-color: #578981;
             /* Bright Blue */
-            --tertiary-color: #1565c0;
+            --tertiary-color: #3e5d58;
             /* Dark Blue */
-            --complementary-color-1: #576ec5;
+            --complementary-color-1: #1f675c;
             /* Muted Blue-Green */
             --complementary-color-2: #a5d6a7;
             /* Light Muted Blue-Green */
@@ -79,6 +79,9 @@
         div#ui-datepicker-div{
             width: revert;
         }
+        div#select_products_modal .modal-dialog {
+            max-width: 90% !important;
+        }
         .card {
             border-radius: 5px;
             border: none;
@@ -86,8 +89,8 @@
             box-shadow: 0 0 35px 0 rgba(154, 161, 171, 0.15);
         }
         .btn.btn-main {
-            background-color: #1565c0;
-            border-color: #1565c0;
+            background-color: #3e5d58;
+            border-color: #3e5d58;
             color: #fff;
         }
         div.ui-datepicker {
@@ -174,7 +177,7 @@
 
         .toggle-button:hover {
             color: black !important;
-            background-color: #c0e4fe;
+            background-color: rgba(69, 147, 134, 0.38);;
         }
 
         .select-button {
@@ -323,16 +326,16 @@
             }
         }
         .table-responsive .table a.btn.btn-modal {
-            color: #1565c0;
-            background: #1565c021;
-            border: 1px solid #1565c06b;
+            color: #3e5d58;
+            background: #3e5d5821;
+            border: 1px solid #3e5d586b;
         }
         table .btn-group  button.dropdown-toggle {
-            background-color: #1565c0 !important;
+            background-color: #3e5d58 !important;
             color: white !important;
         }
         span.category_name {
-            color: #1565c0 !important;
+            color: #3e5d58 !important;
         }
         a.btn.text-red {
             color: #a30c0c !important;
@@ -696,7 +699,7 @@
                                     @section('breadcrumbs')
                                         <li
                                             class="breadcrumb-item @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif ">
-                                            <a style="text-decoration: none;color: #1565c0" href="{{ url('/') }}">/
+                                            <a style="text-decoration: none;color: #3e5d58" href="{{ url('/') }}">/
                                                 @lang('lang.dashboard')</a>
                                         </li>
                                     @show

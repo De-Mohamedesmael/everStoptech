@@ -74,7 +74,7 @@
 
 .toggle-button:hover {
     color: black !important;
-    background-color: #c0e4fe;
+    background-color: rgba(69, 147, 134, 0.38);;
 }
 
 .select-button {

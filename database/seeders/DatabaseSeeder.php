@@ -12,6 +12,7 @@ use App\Models\MoneySafe;
 use App\Models\ProductClass;
 use App\Models\Store;
 use App\Models\StorePos;
+use App\Models\Supplier;
 use App\Models\System;
 use App\Models\Unit;
 use App\Models\Admin;
@@ -107,7 +108,10 @@ class DatabaseSeeder extends Seeder
             'name' => 'Retailer',
             'created_by' => 1,
         ]);
-
+        Supplier::created([
+            'name'=>'Supplier test',
+            'created_by'=>1,
+        ]);
         $store = Store::create([
             'name' => 'Default Store',
             'location' => '',

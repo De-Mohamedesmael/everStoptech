@@ -12,15 +12,13 @@
 
     </style>
 @endsection
-@section('page_title')
-    {{__('lang.products')}}
-@endsection
+
 
 @section('breadcrumbs')
     @parent
 
     <li class="breadcrumb-item  @if (app()->isLocale('ar')) mr-2 @else ml-2 @endif active" aria-current="page">
-        @lang('lang.products')</li>
+       @if(isset($page))  {{translate($page)}}@else @lang('lang.products') @endif </li>
 @endsection
 
 @section('button')

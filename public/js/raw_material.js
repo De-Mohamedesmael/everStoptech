@@ -3,7 +3,7 @@ $(document).on("click", ".add_product_row", function () {
     $("#row_id").val(row_id + 1);
     $.ajax({
         method: "GET",
-        url: "/raw-material/add-product-row",
+        url: "/raw-material/add-products-row",
         data: { row_id: row_id },
         success: function (result) {
             $("#consumption_table tbody").prepend(result);

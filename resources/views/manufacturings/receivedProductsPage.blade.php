@@ -223,7 +223,7 @@
                 $("#row_count").val(row_count + 1);
                 $.ajax({
                     method: "GET",
-                    url: "/manufacturing/add-product-to-stock",
+                    url: "/manufacturing/add-products-to-stock",
                     dataType: "html",
                     async: false,
                     data: {
