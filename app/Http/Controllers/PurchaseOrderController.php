@@ -346,38 +346,23 @@ class PurchaseOrderController extends Controller
                 return json_encode([]);
             }
 
-            $q = Product::leftJoin(
-                'variations',
-                'products.id',
-                '=',
-                'variations.product_id'
-            )->leftjoin('product_stores', 'variations.id', 'product_stores.variation_id')
+            $q = Product::leftjoin('product_stores', 'products.id', 'product_stores.product_id')
                 ->where(function ($query) use ($term) {
                     $query->where('products.name', 'like', '%' . $term . '%');
-                    $query->orWhere('variations.name', 'like', '%' . $term . '%');
                     $query->orWhere('sku', 'like', '%' . $term . '%');
-                    $query->orWhere('sub_sku', 'like', '%' . $term . '%');
                 })
-                ->whereNull('variations.deleted_at')
+                ->whereNull('products.deleted_at')
                 ->where('is_service', 0)
                 ->select(
                     'products.*',
                     'products.id as product_id',
-                    // 'products.sku as sku',
-                    'variations.id as variation_id',
-                    'variations.name as variation',
-                    'variations.sub_sku as sub_sku'
                 );
 
             if (!empty(request()->store_id)) {
                 $q->where('product_stores.store_id', request()->store_id);
             }
-            if (!empty(request()->is_raw_material)) {
-                $q->where('products.is_raw_material', 1);
-            } else {
-                $q->where('products.is_raw_material', 0);
-            }
-            $products = $q->groupBy('variation_id')->get();
+
+            $products = $q->groupBy('product_id')->get();
 
             $products_array = [];
             foreach ($products as $product) {
@@ -385,12 +370,7 @@ class PurchaseOrderController extends Controller
                 $products_array[$product->product_id]['sku'] = $product->sub_sku;
                 $products_array[$product->product_id]['type'] = $product->type;
                 $products_array[$product->product_id]['image'] = !empty($product->getFirstMediaUrl('products')) ? $product->getFirstMediaUrl('products') : asset('/uploads/' . session('logo'));
-                $products_array[$product->product_id]['variations'][]
-                    = [
-                        'variation_id' => $product->variation_id,
-                        'variation_name' => $product->variation,
-                        'sub_sku' => $product->sub_sku
-                    ];
+
             }
 
             $result = [];
@@ -398,31 +378,13 @@ class PurchaseOrderController extends Controller
             $no_of_records = $products->count();
             if (!empty($products_array)) {
                 foreach ($products_array as $key => $value) {
-                    // if ($no_of_records > 1 && $value['type'] != 'single') {
-                    //     $result[] = [
-                    //         'id' => $i,
-                    //         'text' => $value['name'] . ' - ' . $value['sku'],
-                    //         'variation_id' => 0,
-                    //         'product_id' => $key
-                    //     ];
-                    // }
-                    $name = $value['name'];
-                    foreach ($value['variations'] as $variation) {
-                        $text = $name;
-                        if ($value['type'] == 'variable') {
-                            if ($variation['variation_name'] != 'Default') {
-                                $text = $text . ' (' . $variation['variation_name'] . ')';
-                            }
-                        }
-                        $i++;
+
                         $result[] = [
                             'id' => $i,
-                            'text' => $text . ' - ' . $variation['sub_sku'],
+                            'text' => $value['name'] . ' - ' . $value['sku'],
                             'product_id' => $key,
-                            'variation_id' => $variation['variation_id'],
                             'image' => $value['image'],
                         ];
-                    }
                     $i++;
                 }
             }

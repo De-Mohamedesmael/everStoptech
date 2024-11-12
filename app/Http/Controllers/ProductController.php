@@ -69,8 +69,7 @@ class ProductController extends Controller
      */
     public function getProductStocks(Request $request)
     {
-        $categories = Category::whereNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
-        $sub_categories = Category::whereNotNull('parent_id')->orderBy('name', 'asc')->pluck('name', 'id');
+        $categories = Category::orderBy('name', 'asc')->pluck('name', 'id');
         $brands = Brand::orderBy('name', 'asc')->pluck('name', 'id');
         $colors = Color::orderBy('name', 'asc')->pluck('name', 'id');
         $sizes = Size::orderBy('name', 'asc')->pluck('name', 'id');
@@ -86,7 +85,6 @@ class ProductController extends Controller
         return view('back-end.products.index')->with(compact(
             'admins',
             'categories',
-            'sub_categories',
             'brands',
             'colors',
             'sizes',
@@ -827,6 +825,8 @@ class ProductController extends Controller
             }
 
 
+
+
             if ($request->has('category_id')){
                 $product->categories()->attach($request->category_id);
             }
@@ -839,6 +839,7 @@ class ProductController extends Controller
             ];
         } catch (\Exception $e) {
             DB::rollBack();
+//            dd($e);
             Log::emergency('File: ' . $e->getFile() . 'Line: ' . $e->getLine() . 'Message: ' . $e->getMessage());
             $output = [
                 'success' => false,
@@ -995,9 +996,11 @@ class ProductController extends Controller
                     $index_discounts=array_keys($request->discount_type);
                 }
             }
+             if ($request->has('store_ids')){
+                 $this->productUtil->createOrUpdateProductStore($product, $request);
+             }
 
-
-                foreach ($index_discounts as $index_discount){
+             foreach ($index_discounts as $index_discount){
                     $discount_customers = $this->getDiscountCustomerFromType($request->get('discount_customer_types_'.$index_discount));
                     $data_des=[
                         'product_id' => $product->id,

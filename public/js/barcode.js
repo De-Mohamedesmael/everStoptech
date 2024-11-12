@@ -77,7 +77,7 @@ function get_label_product_row(product_id, variation_id) {
         $("#row_count").val(row_count + 1);
         $.ajax({
             method: "GET",
-            url: "/barcode/add-product-row",
+            url: "/barcode/add-products-row",
             dataType: "html",
             data: {
                 product_id: product_id,

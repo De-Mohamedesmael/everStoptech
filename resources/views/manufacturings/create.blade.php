@@ -205,7 +205,7 @@
                 $("#row_count").val(row_count + 1);
                 $.ajax({
                     method: "GET",
-                    url: "/manufacturing/add-product-row",
+                    url: "/manufacturing/add-products-row",
                     dataType: "html",
                     async: false,
                     data: {

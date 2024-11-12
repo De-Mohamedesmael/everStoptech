@@ -3,6 +3,12 @@
 @section('styles')
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url('front/css/pos-modals.css') }}">
+    <style>
+        .input-group-btn button.btn {
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+    </style>
 @endsection
 
 @section('content')

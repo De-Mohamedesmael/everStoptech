@@ -39,7 +39,7 @@ input::placeholder {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #1565c0;
+    background: #476762;
 }
 
 .select2-selection {
@@ -222,7 +222,7 @@ select.form-control {
     width: fit-content;
     justify-content: center;
     align-items: center;
-    background-color: #1565c0;
+    background-color: #476762;
     color: white;
     box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
 }
@@ -236,7 +236,7 @@ select.form-control {
     width: fit-content;
     justify-content: center;
     align-items: center;
-    background-color: #1565c0;
+    background-color: #476762;
     color: white;
     box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--bs-accordion-border-color);
 }
@@ -336,16 +336,16 @@ select.form-control {
 }
 
 .btn-primary {
-    background-color: #1565c0;
-    border-color: #1565c0;
+    background-color: #476762;
+    border-color: #476762;
 }
 
 .bg-primary {
-    background-color: #1565c0;
+    background-color: #476762;
 }
 
 .text-primary {
-    color: #1565c0;
+    color: #476762;
 }
 
 .select2-search__field {
@@ -439,7 +439,7 @@ select.form-control {
 }
 
 .btn-indigo {
-    background-color: #1565c0;
+    background-color: #476762;
 }
 
 .breadcrumbbar .breadcrumb-item+.breadcrumb-item::before {
@@ -588,7 +588,7 @@ body {
     top: 30%;
     left: 70%;
     right: 0;
-    background-color: #2d5cfe;
+    background-color: #476762;
     animation: moveLoading 1.5s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite forwards;
 }
 
@@ -742,7 +742,7 @@ body {
 
 .card-deck .card:hover {
     transform: scale(1.05);
-    background-color: #1565c0;
+    background-color: #476762;
     color: white;
 }
 
@@ -820,7 +820,7 @@ th {
     text-align: center;
     border: 1px solid white !important;
     color: #fff !important;
-    background-color: #1565c0 !important;
+    background-color: #476762 !important;
     text-transform: uppercase;
 }
 
@@ -919,7 +919,7 @@ thead tr {
     position: absolute;
     width: 3px;
     height: 0;
-    background-color: #1565c0;
+    background-color: #476762;
     top: 0;
     left: 0px;
     transition: 0.5s;
@@ -930,9 +930,9 @@ thead tr {
 }
 
 .btn-primary:hover {
-    background-color: #1565c0;
-    outline: #1565c0;
-    border-color: #1565c0;
+    background-color: #476762;
+    outline: #476762;
+    border-color: #476762;
     box-shadow: 2px 2px 3px 1px #7489e8 !important;
 }
 
@@ -958,7 +958,7 @@ thead tr {
     position: absolute;
     width: 3px;
     height: 0;
-    background-color: #1565c0;
+    background-color: #476762;
     top: 0;
     right: 0px;
     transition: 0.5s;
@@ -1030,7 +1030,7 @@ button.btn.table-btns.dropdown-toggle::after {
 }
 .dropdown-menu .dropdown-item {
     padding: 0.5rem 1.5rem;
-    color: #1565c0;
+    color: #476762;
     transition: 0.4s;
     font-size: 12px;
     position: relative;
@@ -1060,7 +1060,7 @@ button.btn.table-btns.dropdown-toggle::after {
     position: absolute;
     width: 3px;
     height: 0;
-    background-color: #1565c0;
+    background-color: #476762;
     top: 0;
     left: 0px;
     transition: 0.5s;
@@ -1103,7 +1103,7 @@ button.btn.table-btns.dropdown-toggle::after {
     position: fixed;
     bottom: 20px;
     left: 15px;
-    background-color: #1565c0;
+    background-color: #476762;
     color: #fff;
     border: none;
     border-radius: 5px;

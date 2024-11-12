@@ -1325,4 +1325,6 @@
   'Wrong Password!' => 'Wrong Password!',
   'Correct Password!' => 'Correct Password!',
   'gender' => 'Gender',
+  'stocks' => 'Stocks',
+  'product_stock' => 'Product stock',
 );

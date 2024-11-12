@@ -807,7 +807,7 @@
         function getProductRowsCondition(array) {
             $.ajax({
                 method: "get",
-                url: "/sales-promotion/get-product-condition-rows",
+                url: "/sales-promotion/get-products-condition-rows",
                 data: {
                     store_ids: $("#store_ids").val(),
                     type: $("#type").val(),

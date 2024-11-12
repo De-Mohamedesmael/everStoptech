@@ -192,46 +192,28 @@ class ProductUtil extends Util
     }
 
     //create or update products stores data
-    public function createOrUpdateProductStore($product, $variation, $request, $variant_stores = [])
+    public function createOrUpdateProductStore($product, $request)
     {
         $stores = Store::all();
         $product_stores = $request->product_stores;
         if($request->has('store_ids')){
             $stores = Store::wherein('id',$request->store_ids)->get();
         }
-        //veriation is default
-        if ($variation->name == 'Default') {
             foreach ($stores as $store) {
                 ProductStore::updateOrcreate(
                     [
                         'product_id' => $product->id,
-
                         'store_id' => $store->id
                     ],
                     [
                         'product_id' => $product->id,
-
                         'store_id' => $store->id,
                         'qty' => 0,
-                        'price' => !empty($product_stores[$store->id]['price']) ? $product_stores[$store->id]['price'] : $product->sell_price // if variation is default save the different price for store else save the default sell price
+                        'price' => !empty($product_stores[$store->id]['price']) ? $product_stores[$store->id]['price'] : $product->sell_price
                     ]
                 );
             }
-        } else {
-            foreach ($stores as $store) {
-                ProductStore::updateOrcreate([
-                    'product_id' => $product->id,
 
-                    'store_id' => $store->id
-                ], [
-                    'product_id' => $product->id,
-
-                    'store_id' => $store->id,
-                    'qty' => 0,
-                    'price' => !empty($variant_stores[$store->id]['price']) ? $variant_stores[$store->id]['price'] : $variation->default_sell_price //if other then default variation save the variation price
-                ]);
-            }
-        }
     }
 
     /**
@@ -365,30 +347,22 @@ class ProductUtil extends Util
      *
      * @return Obj
      */
-    public function getDetailsFromProduct($product_id, $variation_id = null, $store_id = null)
+    public function getDetailsFromProduct($product_id, $store_id = null)
     {
-        $product = Product::leftjoin('variations as v', 'products.id', '=', 'v.product_id')
-            ->leftjoin('product_stores', 'v.id', '=', 'product_stores.variation_id')
-            ->whereNull('v.deleted_at');
+        $product = Product::leftjoin('product_stores', 'products.id', '=', 'product_stores.product_id')
+            ->whereNull('products.deleted_at');
 
-        if (!is_null($variation_id) && $variation_id !== '0') {
-            $product->where('v.id', $variation_id);
-        }
+
         if (!is_null($store_id) && $store_id !== '0') {
             $product->where('product_stores.store_id', $store_id);
         }
-        $product->where('products.id', $product_id)->groupBy('v.id');
+        $product->where('products.id', $product_id)->groupBy('products.id');
 
         $products = $product->select(
             'products.*',
             'products.id as product_id',
             'products.name as product_name',
             'product_stores.qty_available',
-            'v.id as variation_id',
-            'v.name as variation_name',
-            'v.default_purchase_price',
-            'v.default_sell_price',
-            'v.sub_sku'
         )
             ->get();
 
@@ -398,28 +372,22 @@ class ProductUtil extends Util
     {
         $products=[];
         foreach($product_selected as $p_selected){
-            $query = Product::leftjoin('variations as v', 'products.id', '=', 'v.product_id')
-            ->leftjoin('product_stores', 'v.id', '=', 'product_stores.variation_id')
-            ->whereNull('v.deleted_at');
+            $query = Product::leftjoin('product_stores', 'products.id', '=', 'product_stores.product_id')
+            ->whereNull('products.deleted_at');
 
-            if (!is_null($p_selected['variation_id']) && $p_selected['variation_id'] !== '0') {
-                $query->where('v.id', $p_selected['variation_id']);
-            }
             if (!is_null($store_id) && $store_id !== '0') {
                 $query->where('product_stores.store_id', $store_id);
             }
-            $query->where('products.id', $p_selected['product_id'])->groupBy('v.id');
+            $query->where('products.id', $p_selected['product_id'])->groupBy('products.id');
 
             $product = $query->select(
                 'products.*',
                 'products.id as product_id',
                 'products.name as product_name',
                 'product_stores.qty_available',
-                'v.id as variation_id',
-                'v.name as variation_name',
-                'v.default_purchase_price',
-                'v.default_sell_price',
-                'v.sub_sku',
+                'products.purchase_price',
+                'products.sell_price',
+                'products.sku',
                 DB::raw("'{$p_selected['qty']}' as qty")
             )
             ->first();
@@ -481,18 +449,14 @@ class ProductUtil extends Util
      */
     public function getDetailsFromProductByStore($product_id, $variation_id = null, $store_id = null,$batch_number_id=null)
     {
-        $product = Product::
-        leftjoin('variations as v', 'products.id', '=', 'v.product_id')
-        ->leftjoin('taxes', 'products.tax_id', '=', 'taxes.id')
-        ->leftjoin('product_stores', 'v.id', '=', 'product_stores.variation_id');
+        $product = Product::leftjoin('taxes', 'products.tax_id', '=', 'taxes.id')
+        ->leftjoin('product_stores', 'products.id', '=', 'product_stores.product_id');
         if (!is_null($batch_number_id) && $batch_number_id !== '0') {
             $product->leftjoin('add_stock_lines', 'products.id', '=', 'add_stock_lines.product_id');
             $product->where('add_stock_lines.id', $batch_number_id);
         }
-        $product->whereNull('v.deleted_at');
-        if (!is_null($variation_id) && $variation_id !== '0') {
-            $product->where('v.id', $variation_id);
-        }
+        $product->whereNull('products.deleted_at');
+
         if (!is_null($store_id) && $store_id !== '0') {
             $product->where('product_stores.store_id', $store_id);
         }
@@ -507,17 +471,15 @@ class ProductUtil extends Util
         'product_stores.qty_available',
         'products.sell_price',
         'taxes.rate as tax_rate',
-        'v.id as variation_id',
-        'v.name as variation_name',
-        'v.default_purchase_price',
-        'v.default_sell_price',
-        'v.sub_sku'];
+        'products.purchase_price',
+        'products.sell_price',
+        'products.sku'];
         if (!is_null($batch_number_id) && $batch_number_id !== '0') {
             array_push($selectRaws,'add_stock_lines.batch_number');
             array_push($selectRaws,'add_stock_lines.id as stock_id');
         }
-        $products = $product->select($selectRaws);
-        $products=$product->groupBy('v.id')->get();
+        $product->select($selectRaws);
+        $products=$product->groupBy('products.id')->get();
         return $products;
 }
 
@@ -537,19 +499,10 @@ class ProductUtil extends Util
         }
         if (!empty($customer_type_id)) {
 
-            $product = Product::whereJsonContains('discount_customer_types', $customer_type_id)
-                ->where('id', $product_id)
-                ->where('discount', '>',0)
-                ->select(
-                    'products.discount_type',
-                    'products.discount',
-                    'products.discount_start_date',
-                    'products.discount_end_date',
-                )
+            $product = Product::where('id', $product_id)
                 ->first();
             if(!$product){
-                $product = ProductDiscount::whereJsonContains('discount_customer_types', $customer_type_id)
-                    ->where('product_id', $product_id)
+                $product = ProductDiscount::where('product_id', $product_id)
                     ->select(
                         'id',
                         'discount_type',
@@ -1084,22 +1037,17 @@ class ProductUtil extends Util
                 $other_expenses_per_line = !empty($transaction->other_expenses) ? ($transaction->other_expenses * $all_cost_percentage /100) : 0;
                 $all_cost_ratio = $this->num_uf( $other_payments_per_line +$other_expenses_per_line - $discount_amount_per_line );
             }
-            $number_vs_base_unit=Variation::find($line['variation_id'])->number_vs_base_unit==0?1:Variation::find($line['variation_id'])->number_vs_base_unit;
-            if(isset($line['product_id'] ) && isset($line['variation_id']) ){
+            if(isset($line['product_id'] )){
             if (!empty($line['add_stock_line_id'])) {
                 $add_stock = AddStockLine::find($line['add_stock_line_id']);
                 $add_stock->product_id = $line['product_id'];
-                $add_stock->variation_id = $line['variation_id'];
                 $old_qty = $add_stock->quantity;
-                $add_stock->quantity = $line['bounce_qty'] > 0 ?  $number_vs_base_unit*($this->num_uf($line['quantity'])+$line['bounce_qty']): $this->num_uf($line['quantity']);
-                $add_stock->purchase_price = $line['bounce_qty'] > 0 ? $line['bounce_purchase_price']:$this->num_uf($line['purchase_price']);
+                $add_stock->quantity = $this->num_uf($line['quantity']);
+                $add_stock->purchase_price = $this->num_uf($line['purchase_price']);
                 $add_stock->final_cost = $this->num_uf($line['final_cost']);
                 $add_stock->sub_total = $this->num_uf($line['sub_total']);
                 $add_stock->batch_number = $line['batch_number'];
                 $add_stock->manufacturing_date = !empty($line['manufacturing_date']) ? $this->uf_date($line['manufacturing_date']) : null;
-                $add_stock->expiry_date = !empty($line['expiry_date']) ? $this->uf_date($line['expiry_date']) : null;
-                $add_stock->expiry_warning = $line['expiry_warning'];
-                $add_stock->convert_status_expire = $line['convert_status_expire'];
                 $add_stock->sell_price = $line['selling_price'];
                 $add_stock->bounce_qty = $line['bounce_qty'];
                 $add_stock->profit_bounce = $line['bounce_profit'];
@@ -1120,9 +1068,8 @@ class ProductUtil extends Util
                 $add_stock_data = [
                     'transaction_id' => $transaction->id,
                     'product_id' => $line['product_id'],
-                    'variation_id' => $line['variation_id'],
-                    'quantity' => $line['bounce_qty'] > 0 ? $number_vs_base_unit *($this->num_uf($line['quantity'])+$line['bounce_qty']): $this->num_uf($line['quantity']),
-                    'purchase_price' => $line['bounce_qty'] > 0 ? $line['bounce_purchase_price'] : $this->num_uf($line['purchase_price']),
+                    'quantity' => $this->num_uf($line['quantity']),
+                    'purchase_price' => $this->num_uf($line['purchase_price']),
                     'final_cost' => isset($line['final_cost'])?$this->num_uf($line['final_cost']):0,
                     'sub_total' => isset($line['sub_total'])?$this->num_uf($line['sub_total']):0,
                     'batch_number' => isset($line['batch_number'])?$line['batch_number']:null,
@@ -1150,13 +1097,12 @@ class ProductUtil extends Util
                         // return $batch_row;
 
                         foreach($batch_row as $batch){
-                            if($batch['product_id']==$line['product_id'] && $batch['variation_id']==$line['variation_id']){
+                            if($batch['product_id']==$line['product_id']){
                                 $add_stock_batch_data = [
                                     'transaction_id' => $transaction->id,
                                     'product_id' => $line['product_id'],
-                                    'variation_id' => $line['variation_id'],
-                                    'quantity' => $line['bounce_qty'] > 0 ? $number_vs_base_unit *($this->num_uf($batch['batch_quantity'])+$line['bounce_qty']): $this->num_uf($batch['batch_quantity']),
-                                    'purchase_price' => $line['bounce_qty'] > 0 ? $line['bounce_purchase_price'] : $this->num_uf($batch['batch_purchase_price']),
+                                    'quantity' => $this->num_uf($batch['batch_quantity']),
+                                    'purchase_price' =>  $this->num_uf($batch['batch_purchase_price']),
                                     'final_cost' => $this->num_uf($batch['batch_final_cost']),
                                     'sub_total' => $this->num_uf($line['sub_total']),
                                     'batch_number' => $batch['new_batch_number'],
@@ -1186,7 +1132,7 @@ class ProductUtil extends Util
                         }
 
                     }
-                    $this->updateProductQuantityStore($line['product_id'], $line['variation_id'], $transaction->store_id,  $batch_qty, 0);
+                    $this->updateProductQuantityStore($line['product_id'], $transaction->store_id,  $batch_qty, 0);
                     $batch_qty=0;
                 }
                 if(isset($line['bounce_purchase_price'])){
@@ -1196,15 +1142,13 @@ class ProductUtil extends Util
                 $batch_numbers[]=$add_stock->batch_number;
 
                 $qty =  $number_vs_base_unit *$this->num_uf($line['quantity']);
-                $this->updateProductQuantityStore($line['product_id'], $line['variation_id'], $transaction->store_id,  $qty, 0);
+                $this->updateProductQuantityStore($line['product_id'], $transaction->store_id,  $qty, 0);
             }
             if(!empty($line['stock_pricechange']) && $line['selling_price']>0){
-                AddStockLine::where('variation_id',$line['variation_id'])
+                AddStockLine::where('product_id',$line['product_id'])
                     ->whereColumn('quantity',">",'quantity_sold')->update([
                         'sell_price' => $line['selling_price'],
                         'updated_by'=>Auth::guard('admin')->user()->id,
-
-                        // 'purchase_price'=>$line['bounce_qty'] > 0 ? $line['bounce_purchase_price']:$this->num_uf($line['purchase_price'])
                     ]);
             }
             }
@@ -1225,7 +1169,7 @@ class ProductUtil extends Util
                     $product_name = Product::find($deleted_line->product_id)->name ?? '';
                     return ['mismatch' => true, 'product_name' => $product_name, 'quantity' => 0];
                 }
-                $this->decreaseProductQuantity($deleted_line['product_id'], $deleted_line['variation_id'], $transaction->store_id, $deleted_line['quantity'], 0);
+                $this->decreaseProductQuantity($deleted_line['product_id'], $transaction->store_id, $deleted_line['quantity'], 0);
                 $deleted_line->delete();
             }
         }
@@ -1445,19 +1389,17 @@ class ProductUtil extends Util
      *
      * @return boolean
      */
-    public function updateProductQuantityStore($product_id, $variation_id, $store_id, $new_quantity, $old_quantity = 0)
+    public function updateProductQuantityStore($product_id, $store_id, $new_quantity, $old_quantity = 0)
     {
         $qty_difference = $new_quantity - $old_quantity;
 
         if ($qty_difference != 0) {
-            $product_store = ProductStore::where('variation_id', $variation_id)
-                ->where('product_id', $product_id)
+            $product_store = ProductStore::where('product_id', $product_id)
                 ->where('store_id', $store_id)
                 ->first();
 
             if (empty($product_store)) {
                 $product_store = new ProductStore();
-                $product_store->variation_id = $variation_id;
                 $product_store->product_id = $product_id;
                 $product_store->store_id = $store_id;
                 $product_store->qty_available = 0;
@@ -1482,17 +1424,15 @@ class ProductUtil extends Util
      *
      * @return boolean
      */
-    public function decreaseProductQuantity($product_id, $variation_id, $store_id, $new_quantity, $old_quantity = 0)
+    public function decreaseProductQuantity($product_id, $store_id, $new_quantity, $old_quantity = 0)
     {
-        $qtyByUnit=Variation::find($variation_id)->number_vs_base_unit==0?1:Variation::find($variation_id)->number_vs_base_unit;
-        $qty_difference = ($qtyByUnit?$qtyByUnit*$new_quantity:$new_quantity) - $old_quantity;
+        $qty_difference = $new_quantity- $old_quantity;
         $product = Product::find($product_id);
 
         //Check if stock is enabled or not.
         if ($product->is_service != 1) {
             //Decrement Quantity in variations store table
-            $details = ProductStore::where('variation_id', $variation_id)
-                ->where('product_id', $product_id)
+            $details = ProductStore::where('product_id', $product_id)
                 ->where('store_id', $store_id)
                 ->first();
 
@@ -1501,7 +1441,6 @@ class ProductUtil extends Util
                 $details = ProductStore::create([
                     'product_id' => $product_id,
                     'store_id' => $store_id,
-                    'variation_id' => $variation_id,
                     'qty_available' => 0
                 ]);
             }

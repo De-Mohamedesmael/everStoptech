@@ -434,7 +434,7 @@
                     [2, 'asc']
                 ],
                 "ajax": {
-                    "url": "/internal-stock-return/get-product-table",
+                    "url": "/internal-stock-return/get-products-table",
                     "data": function(d) {
                         d.product_class_id = $('#product_class_id').val(),
                             d.category_id = $('#category_id').val(),

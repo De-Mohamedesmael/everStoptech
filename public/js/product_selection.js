@@ -20,16 +20,12 @@ $(document).ready(function () {
         serverSide: true,
         aaSorting: [[2, "asc"]],
         ajax: {
-            url: "/product",
+            url: "/products",
             data: function (d) {
-                d.product_class_id = $("#filter_product_class_id").val();
                 d.category_id = $("#filter_category_id").val();
-                d.sub_category_id = $("#filter_sub_category_id").val();
                 d.brand_id = $("#filter_brand_id").val();
-                d.unit_id = $("#filter_unit_id").val();
                 d.color_id = $("#filter_color_id").val();
                 d.size_id = $("#filter_size_id").val();
-                d.grade_id = $("#filter_grade_id").val();
                 d.tax_id = $("#filter_tax_id").val();
                 if ($("#sender_store_id").length) {
                     //in add transfer page
@@ -39,7 +35,6 @@ $(document).ready(function () {
                 }
                 d.customer_type_id = $("#filter_customer_type_id").val();
                 d.created_by = $("#filter_created_by").val();
-                d.is_raw_material = $("#is_raw_material").val();
                 d.is_add_stock = $("#is_add_stock").val();
             },
         },
@@ -58,12 +53,9 @@ $(document).ready(function () {
                 orderable: false,
             },
             { data: "image", name: "image" },
-            { data: "variation_name", name: "products.name" },
-            { data: "sub_sku", name: "variations.sub_sku" },
-            { data: "is_service", name: "products.is_service" },
-            { data: "product_class", name: "product_classes.name" },
-            { data: "category", name: "categories.name" },
-            { data: "sub_category", name: "categories.name" },
+            { data: "name", name: "products.name" },
+            { data: "sku", name: "products.sku" },
+            { data: "categories_names", name: "categories_name" },
             { data: "purchase_history", name: "purchase_history" },
             { data: "batch_number", name: "add_stock_lines.batch_number" },
             {
@@ -72,13 +64,10 @@ $(document).ready(function () {
             },
             { data: "tax", name: "taxes.name" },
             { data: "brand", name: "brands.name" },
-            { data: "unit", name: "units.name" },
             { data: "color", name: "colors.name" },
             { data: "size", name: "sizes.name" },
-            { data: "grade", name: "grades.name" },
             { data: "current_stock", name: "current_stock", searchable: false },
             { data: "customer_type", name: "customer_type" },
-            { data: "exp_date", name: "add_stock_lines.expiry_date" },
             {
                 data: "manufacturing_date",
                 name: "add_stock_lines.manufacturing_date",
@@ -89,7 +78,6 @@ $(document).ready(function () {
                 name: "default_purchase_price",
                 searchable: false,
             },
-            { data: "supplier", name: "supplier" },
             { data: "created_by", name: "users.name" },
             { data: "edited_by_name", name: "edited.name" },
             { data: "action", name: "action" },

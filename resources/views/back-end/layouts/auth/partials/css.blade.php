@@ -34,14 +34,14 @@
         font-family: Raleway, sans-serif;
     }
     .screen {
-        background: linear-gradient(90deg, #2d5cfe, #5715f6);
+        background: linear-gradient(90deg, #8acac0, #3e5d58);
         position: relative;
         height: 600px;
         width: 30%;
-        box-shadow: 0px 0px 24px #2d5cfe;
+        box-shadow: 0px 0px 24px #3e5d58;
     }
     body {
-        background: linear-gradient(90deg, #728de8, #2d5cfe);
+        background: linear-gradient(90deg, #8acac0, #3e5d58);
         height: 90vh;
         overflow: hidden;
         /*padding-top:150px ;*/
@@ -117,7 +117,7 @@
     .screen__background__shape2 {
         height: 220px;
         width: 220px;
-        background: #2d5cfe;
+        background: #3e5d58;
         top: -172px;
         right: 0;
         border-radius: 32px;
@@ -126,7 +126,7 @@
     .screen__background__shape3 {
         height: 540px;
         width: 190px;
-        background: linear-gradient(270deg, #5d7ada, #3147a5);
+    background: linear-gradient(270deg, #8acac0, #3e5d58);
         top: -24px;
         right: 0;
         border-radius: 32px;
@@ -135,7 +135,7 @@
     .screen__background__shape4 {
         height: 400px;
         width: 200px;
-        background: #8194e8;
+        background: #557c73;
         top: 420px;
         right: 50px;
         border-radius: 60px;
@@ -155,7 +155,7 @@
     .login__icon {
         position: absolute;
         top: 30px;
-        color: #2d5cfe;
+        color: #3e5d58;
     }
 
     .login__input {
@@ -173,7 +173,7 @@
     .login__input:focus,
     .login__input:hover {
         outline: none;
-        border-bottom-color: #2d5cfe;
+        border-bottom-color: #3e5d58;
     }
 
     .login__submit {
@@ -188,8 +188,8 @@
         display: flex;
         align-items: center;
         width: 100%;
-        color: #2749ba;
-        box-shadow: 0px 2px 2px #5874d5;
+        color: #27ba93;
+        box-shadow: 0px 2px 2px #42a883;
         cursor: pointer;
         transition: .2s;
     }
@@ -197,14 +197,14 @@
     .login__submit:active,
     .login__submit:focus,
     .login__submit:hover {
-        border-color: #2d5cfe;
+        border-color: #3e5d58;
         outline: none;
     }
 
     .button__icon {
         font-size: 24px;
         margin-left: auto;
-        color: #2d5cfe;
+        color: #3e5d58;
     }
 
     .social-login {
@@ -227,7 +227,7 @@
         padding: 20px 10px;
         color: #fff;
         text-decoration: none;
-        text-shadow: 0px 0px 8px #2d5cfe;
+        text-shadow: 0px 0px 8px #3e5d58;
     }
 
     .social-login__icon:hover {
