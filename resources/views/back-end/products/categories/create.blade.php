@@ -32,14 +32,14 @@
                     </span>
                 </div>
             </div>
-            @include('layouts.partials.translation_inputs', [
+            @include('back-end.layouts.partials.translation_inputs', [
                 'attribute' => 'name',
                 'translations' => [],
                 'type' => 'category',
             ])
 
             <input type="hidden" name="quick_add" value="{{ $quick_add }}">
-            {{--            @include('layouts.partials.image_crop') --}}
+            {{--            @include('back-end.layouts.partials.image_crop') --}}
             <div class="col-md-6 d-flex flex-column mb-2">
 
                 <label

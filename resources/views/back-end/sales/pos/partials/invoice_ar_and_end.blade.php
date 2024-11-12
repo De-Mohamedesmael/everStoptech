@@ -103,7 +103,7 @@
 
     <div id="receipt-data">
         <div class="centered">
-            @include('layouts.partials.print_header')
+            @include('back-end.layouts.partials.print_header')
 
             <p>{{ $transaction->store->name }} {{ $transaction->store->location }}</p>
             <p>{{ $transaction->store->phone_number }} </p>
@@ -448,7 +448,7 @@
             </table>
         </div>
 
-        @include('layouts.partials.print_footer')
+        @include('back-end.layouts.partials.print_footer')
 
         <div style="width: 100%; text-align: center;">
             <p><span class="">Proudly Developed at <a style="text-decoration: none;" target="_blank"

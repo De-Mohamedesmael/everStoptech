@@ -13,7 +13,7 @@
 
         <div class="modal-body">
 
-            @include('transaction_payment.partials.payment_form', ['payment' => $payment])
+            @include('back-end.system.transaction_payment.partials.payment_form', ['payment' => $payment])
         </div>
 
         <div class="modal-footer">

@@ -492,16 +492,16 @@
                         </div>
                     </div>
 
-                    @include('sale_pos.partials.payment_modal')
-                    @include('sale_pos.partials.discount_modal')
-                    {{-- @include('sale_pos.partials.tax_modal') --}}
-                    @include('sale_pos.partials.delivery_cost_modal')
-                    @include('sale_pos.partials.coupon_modal')
-                    @include('sale_pos.partials.contact_details_modal')
-                    @include('sale_pos.partials.weighing_scale_modal')
-                    @include('sale_pos.partials.non_identifiable_item_modal')
-                    @include('sale_pos.partials.customer_sizes_modal')
-                    @include('sale_pos.partials.sale_note')
+                    @include('back-end.sales.partials.payment_modal')
+                    @include('back-end.sales.partials.discount_modal')
+                    {{-- @include('back-end.sales.partials.tax_modal') --}}
+                    @include('back-end.sales.partials.delivery_cost_modal')
+                    @include('back-end.sales.partials.coupon_modal')
+                    @include('back-end.sales.partials.contact_details_modal')
+                    @include('back-end.sales.partials.weighing_scale_modal')
+                    @include('back-end.sales.partials.non_identifiable_item_modal')
+                    @include('back-end.sales.partials.customer_sizes_modal')
+                    @include('back-end.sales.partials.sale_note')
 
                     {!! Form::close() !!}
                 </div>
@@ -535,7 +535,7 @@
                                                     id="power_off_btn"><i class="fa fa-power-off"></i></button></li>
                                             <li class="nav-item"><a id="btnFullscreen" title="Full Screen"><i
                                                         class="dripicons-expand"></i></a></li>
-                                            @include('layouts.partials.notification_list')
+                                            @include('back-end.layouts.partials.notification_list')
                                             @php
                                                 $config_languages = config('constants.langs');
                                                 $languages = [];
@@ -618,7 +618,7 @@
                                 </div>
                         </nav>
                     </header>
-                    @include('sale_pos.partials.right_side')
+                    @include('back-end.sales.partials.right_side')
                 </div>
 
                 <!-- recent transaction modal -->
@@ -674,7 +674,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    @include('sale_pos.partials.recent_transactions')
+                                    @include('back-end.sales.partials.recent_transactions')
                                 </div>
                             </div>
 
@@ -720,7 +720,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    @include('sale_pos.partials.view_draft')
+                                    @include('back-end.sales.partials.view_draft')
                                 </div>
                             </div>
 
@@ -760,7 +760,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    @include('sale_pos.partials.view_online_order')
+                                    @include('back-end.sales.partials.view_online_order')
                                 </div>
                             </div>
 

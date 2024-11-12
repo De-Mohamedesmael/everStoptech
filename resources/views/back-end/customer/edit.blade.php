@@ -135,7 +135,7 @@
                                                 </thead>
                                                 <tbody>
                                                     @foreach ($customer->customer_important_dates as $important_date)
-                                                        @include('customer.partial.important_date_row', [
+                                                        @include('back-end.customer.partial.important_date_row', [
                                                             'index' => $loop->index,
                                                             'important_date' => $important_date,
                                                         ])

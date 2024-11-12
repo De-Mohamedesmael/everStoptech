@@ -232,7 +232,7 @@
     @endif
 
     <div class="row header_div" id="header_div" style="width: 100%;">
-        @include('layouts.partials.print_header')
+        @include('back-end.layouts.partials.print_header')
 
     </div>
     <div class="col-md-12 content_div" id="content_div">
@@ -501,7 +501,7 @@
 
 
     <div class="row footer_div" id="footer_div" style=" width: 100%;">
-        @include('layouts.partials.print_footer')
+        @include('back-end.layouts.partials.print_footer')
     </div>
 
 </body>

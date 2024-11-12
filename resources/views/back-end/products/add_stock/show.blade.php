@@ -5,7 +5,7 @@
 <section class="forms">
     <div class="container-fluid">
         <div class="col-md-12 print-only">
-            @include('layouts.partials.print_header')
+            @include('back-end.layouts.partials.print_header')
         </div>
         <div class="row">
             <div class="col-md-12">
@@ -133,7 +133,7 @@
                         </div>
                         <br>
                         <br>
-                        @include('transaction_payment.partials.payment_table', ['payments' =>
+                        @include('back-end.system.transaction_payment.partials.payment_table', ['payments' =>
                         $add_stock->transaction_payments])
 
                         <div class="row">
@@ -167,7 +167,7 @@
             </div>
         </div>
         <div class="col-md-12 print-only">
-            @include('layouts.partials.print_footer')
+            @include('back-end.layouts.partials.print_footer')
         </div>
     </div>
 

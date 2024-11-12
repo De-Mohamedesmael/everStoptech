@@ -31,7 +31,7 @@
                     </span>
                 </div>
             </div>
-            @include('layouts.partials.translation_inputs', [
+            @include('back-end.layouts.partials.translation_inputs', [
                 'attribute' => 'name',
                 'translations' => $category->translations,
                 'type' => 'category',

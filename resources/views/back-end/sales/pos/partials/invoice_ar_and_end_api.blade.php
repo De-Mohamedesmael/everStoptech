@@ -123,7 +123,7 @@
     @endphp
     <div id="receipt-data">
         <div class="centered">
-            @include('layouts.partials.print_header')
+            @include('back-end.layouts.partials.print_header')
 
             <p>Eltayeb Company Cairo</p>
            @if($transaction->status=="draft")
@@ -506,7 +506,7 @@
             </table>
         </div>
 
-        @include('layouts.partials.print_footer')
+        @include('back-end.layouts.partials.print_footer')
 
         <div style="width: 100%; text-align: center;">
             <p><span class="">Proudly Developed at <a style="text-decoration: none;" target="_blank"

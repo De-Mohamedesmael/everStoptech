@@ -371,7 +371,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @include('product.partial.raw_discount', ['row_id' => 0])
+                            @include('back-end.products.partial.raw_discount', ['row_id' => 0])
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-center">
