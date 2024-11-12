@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        @include('customer.partial.product_selection_tree', [
+                        @include('back-end.customer.partial.product_selection_tree', [
                             'index' => $index, 'key' => $key,
                         ])
                     </div>

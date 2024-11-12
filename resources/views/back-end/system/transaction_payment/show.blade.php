@@ -13,7 +13,7 @@
 
         <div class="modal-body">
 
-           @include('transaction_payment.partials.payment_table', ['payments' => $transaction->transaction_payments, 'show_action' => 'yes'])
+           @include('back-end.system.transaction_payment.partials.payment_table', ['payments' => $transaction->transaction_payments, 'show_action' => 'yes'])
         </div>
 
         <div class="modal-footer">

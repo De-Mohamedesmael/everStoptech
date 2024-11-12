@@ -471,14 +471,14 @@
                     </div>
 
 
-                    @include('sale_pos.partials.payment_modal')
-                    @include('sale_pos.partials.discount_modal')
-                    {{-- @include('sale_pos.partials.tax_modal') --}}
-                    @include('sale_pos.partials.delivery_cost_modal')
-                    @include('sale_pos.partials.coupon_modal')
-                    @include('sale_pos.partials.contact_details_modal')
-                    @include('sale_pos.partials.weighing_scale_modal')
-                    @include('sale_pos.partials.customer_sizes_modal')
+                    @include('back-end.sales.partials.payment_modal')
+                    @include('back-end.sales.partials.discount_modal')
+                    {{-- @include('back-end.sales.partials.tax_modal') --}}
+                    @include('back-end.sales.partials.delivery_cost_modal')
+                    @include('back-end.sales.partials.coupon_modal')
+                    @include('back-end.sales.partials.contact_details_modal')
+                    @include('back-end.sales.partials.weighing_scale_modal')
+                    @include('back-end.sales.partials.customer_sizes_modal')
 
 
 
@@ -609,7 +609,7 @@
                                 </div>
                         </nav>
                     </header>
-                    @include('sale_pos.partials.right_side')
+                    @include('back-end.sales.partials.right_side')
                 </div>
 
                 <!-- recent transaction modal -->
@@ -695,7 +695,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    @include('sale_pos.partials.view_draft')
+                                    @include('back-end.sales.partials.view_draft')
                                 </div>
                             </div>
 

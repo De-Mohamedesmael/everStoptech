@@ -346,7 +346,7 @@
                         </span>
                                     </div>
                                 </div>
-                                @include('layouts.partials.translation_inputs', [
+                                @include('back-end.layouts.partials.translation_inputs', [
                                     'attribute' => 'name',
                                     'translations' => $product->translations,
                                     'type' => 'products',
@@ -541,7 +541,7 @@
                                             ])
                                         @endif --}}
                                         @foreach ($discounts as $discount)
-                                            @include('product.partial.raw_discount', [
+                                            @include('back-end.products.partial.raw_discount', [
                                                 'row_id' => $loop->index + $index_old,
                                                 'discount' => $discount,
                                             ])

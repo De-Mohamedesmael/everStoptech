@@ -109,7 +109,7 @@ if (empty($invoice_lang)) {
 
     <div id="receipt-data">
         <div class="centered">
-            @include('layouts.partials.print_header')
+            @include('back-end.layouts.partials.print_header')
 
             <p>{{ $transaction->store->name }}
                 {{ $transaction->store->location }}</p>
@@ -469,7 +469,7 @@ if (empty($invoice_lang)) {
                 </tbody>
             </table>
         </div>
-        @include('layouts.partials.print_footer')
+        @include('back-end.layouts.partials.print_footer')
         <div style="width: 100%; text-align: center;">
             <p><span class="">Proudly Developed at <a style="text-decoration: none;" target="_blank"
                         href="http://sherifshalaby.tech">sherifshalaby.tech</a></span></p>

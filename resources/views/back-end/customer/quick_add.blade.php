@@ -21,7 +21,7 @@
 
         <div
             class="modal-body row @if (app()->isLocale('ar')) flex-row-reverse justify-content-end @else justify-content-start flex-row @endif align-items-center">
-            @include('customer.partial.create_customer_form')
+            @include('back-end.customer.partial.create_customer_form')
         </div>
 
         <div class="modal-footer d-flex justify-content-center align-content-center gap-3">

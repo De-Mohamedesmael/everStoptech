@@ -135,7 +135,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    @include('quotation.partial.product_selection')
+                                    @include('back-end.products.partial.product_selection')
                                 </div>
                             </div>
 
