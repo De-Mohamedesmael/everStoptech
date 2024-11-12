@@ -144,7 +144,7 @@
                                 @lang('lang.salary_details')
                             </button>
 
-                            @include('employee.partial.salary_details')
+                            @include('back-end.Hr.employees.partial.salary_details')
                         </div>
 
                         <div class="row mt-4">
